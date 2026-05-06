@@ -1,0 +1,257 @@
+---
+import { drawTangleAnimated } from '@/lib/tangles';
+
+interface Props {
+  slug: string;
+  size?: number;
+  lang?: 'zh' | 'en';
+}
+
+const { slug, size = 360, lang = 'zh' } = Astro.props;
+const { svg, frames } = drawTangleAnimated(slug, size, slug);
+
+const labels = frames.map((f, i) => ({
+  index: i,
+  text: lang === 'zh' ? f.label_zh : f.label_en,
+}));
+const playLabel = lang === 'zh' ? '播放' : 'Play';
+const pauseLabel = lang === 'zh' ? '暫停' : 'Pause';
+const restartLabel = lang === 'zh' ? '重新播放' : 'Restart';
+---
+
+<div class="tangle-animation" data-slug={slug} data-frames={frames.length} data-lang={lang}>
+  <div
+    class="tangle-animation-stage hand-drawn text-ink-700 dark:text-ink-50"
+    style="background-color: var(--paper-bg);"
+    set:html={svg}
+  />
+
+  <div class="tangle-animation-controls">
+    <button type="button" class="tangle-anim-btn" data-action="play-pause" aria-label={playLabel}>
+      <span data-state="playing" hidden>{pauseLabel}</span>
+      <span data-state="paused">{playLabel}</span>
+    </button>
+    <button type="button" class="tangle-anim-btn" data-action="restart" aria-label={restartLabel}>
+      {restartLabel}
+    </button>
+    <div class="tangle-animation-progress" role="progressbar" aria-valuemin="0" aria-valuemax={frames.length}>
+      {Array.from({ length: frames.length }, (_, i) => (
+        <span class={`tangle-step-pip${i === 0 ? ' active' : ''}`} data-pip={i}></span>
+      ))}
+    </div>
+  </div>
+
+  <div class="tangle-animation-caption">
+    <span class="tangle-step-counter">1 / {frames.length}</span>
+    <p class="tangle-step-text">{labels[0]?.text}</p>
+  </div>
+
+  <script type="application/json" class="tangle-animation-data" set:html={JSON.stringify(labels)}></script>
+</div>
+
+<style>
+  .tangle-animation {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .tangle-animation-stage {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .tangle-animation-stage :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .tangle-animation-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tangle-anim-btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    border-radius: 0.25rem;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .tangle-anim-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  :global(.dark) .tangle-anim-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .tangle-animation-progress {
+    display: flex;
+    gap: 0.4rem;
+    flex: 1;
+    align-items: center;
+  }
+
+  .tangle-step-pip {
+    width: 14px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: currentColor;
+    opacity: 0.25;
+    transition: opacity 0.3s, width 0.3s;
+  }
+
+  .tangle-step-pip.active {
+    opacity: 0.95;
+    width: 28px;
+  }
+
+  .tangle-animation-caption {
+    min-height: 4.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tangle-step-counter {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+  }
+
+  .tangle-step-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* fade-in for newly revealed steps */
+  :global(.tangle-step) {
+    animation: tangle-step-in 0.6s ease-out;
+  }
+  :global(.tangle-step path),
+  :global(.tangle-step circle),
+  :global(.tangle-step polygon),
+  :global(.tangle-step ellipse),
+  :global(.tangle-step rect) {
+    animation: tangle-line-draw 0.9s ease-out both;
+  }
+
+  @keyframes tangle-step-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes tangle-line-draw {
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.tangle-step),
+    :global(.tangle-step path),
+    :global(.tangle-step circle),
+    :global(.tangle-step polygon),
+    :global(.tangle-step ellipse),
+    :global(.tangle-step rect) {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  type Label = { index: number; text: string };
+
+  function init(root: HTMLElement) {
+    const dataNode = root.querySelector<HTMLElement>('.tangle-animation-data');
+    if (!dataNode || !dataNode.textContent) return;
+    const labels: Label[] = JSON.parse(dataNode.textContent);
+    const total = labels.length;
+    if (total === 0) return;
+    const stage = root.querySelector<HTMLElement>('.tangle-animation-stage');
+    if (!stage) return;
+    const stepEls = stage.querySelectorAll<SVGGElement>('.tangle-step');
+    const pips = root.querySelectorAll<HTMLElement>('.tangle-step-pip');
+    const counter = root.querySelector<HTMLElement>('.tangle-step-counter');
+    const text = root.querySelector<HTMLElement>('.tangle-step-text');
+    const playBtn = root.querySelector<HTMLButtonElement>('[data-action="play-pause"]');
+    const restartBtn = root.querySelector<HTMLButtonElement>('[data-action="restart"]');
+    const playSpans = playBtn?.querySelectorAll<HTMLElement>('[data-state]');
+
+    let current = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let playing = true;
+    const stepDuration = 2200;
+
+    function show(idx: number) {
+      stepEls.forEach((el, i) => {
+        el.style.display = i === idx ? '' : 'none';
+        if (i === idx) {
+          // restart CSS animations on this group
+          const clone = el.cloneNode(true) as SVGGElement;
+          el.parentNode?.replaceChild(clone, el);
+          stepEls[i] = clone as SVGGElement;
+        }
+      });
+      pips.forEach((p, i) => p.classList.toggle('active', i === idx));
+      if (counter) counter.textContent = `${idx + 1} / ${total}`;
+      if (text) text.textContent = labels[idx]?.text ?? '';
+      current = idx;
+    }
+
+    function tick() {
+      const next = (current + 1) % total;
+      show(next);
+      timer = setTimeout(tick, stepDuration);
+    }
+
+    function play() {
+      if (timer) clearTimeout(timer);
+      playing = true;
+      togglePlayLabel();
+      timer = setTimeout(tick, stepDuration);
+    }
+    function pause() {
+      if (timer) clearTimeout(timer);
+      timer = null;
+      playing = false;
+      togglePlayLabel();
+    }
+    function togglePlayLabel() {
+      if (!playSpans) return;
+      playSpans.forEach(s => {
+        const state = s.dataset.state;
+        s.hidden = state === (playing ? 'paused' : 'playing');
+      });
+    }
+
+    playBtn?.addEventListener('click', () => {
+      if (playing) pause();
+      else play();
+    });
+    restartBtn?.addEventListener('click', () => {
+      show(0);
+      play();
+    });
+
+    show(0);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      play();
+    } else {
+      pause();
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('.tangle-animation').forEach(init);
+</script>

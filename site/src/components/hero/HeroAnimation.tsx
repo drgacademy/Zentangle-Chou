@@ -3,11 +3,16 @@ import {
   rngFromSeed,
   wobblyLine,
   stringPath,
-  crescentMoon,
-  florz,
-  printemps,
+  getPattern,
   type Rect,
+  type Rng,
 } from '@/lib/tangles';
+
+function renderTangle(slug: string, rect: Rect, rng: Rng, strokeWidth: number): string {
+  const pattern = getPattern(slug);
+  const frames = pattern.generate(rect, { rng, density: 1.0, strokeWidth });
+  return frames.map(f => f.svg).join('');
+}
 
 interface HeroAnimationProps {
   paused?: boolean;
@@ -67,9 +72,9 @@ export default function HeroAnimation({
       borderD,
       stringD,
       bands: [
-        { svg: crescentMoon(bandTop, { rng, stroke: 'currentColor', strokeWidth: 1.4 }), key: 'crescent' },
-        { svg: florz(bandRight, { rng, stroke: 'currentColor', strokeWidth: 1.0 }), key: 'florz' },
-        { svg: printemps(bandBottom, { rng, stroke: 'currentColor', strokeWidth: 1.2 }), key: 'printemps' },
+        { svg: renderTangle('crescent-moon', bandTop, rng, 1.4), key: 'crescent' },
+        { svg: renderTangle('florz', bandRight, rng, 1.0), key: 'florz' },
+        { svg: renderTangle('printemps', bandBottom, rng, 1.2), key: 'printemps' },
       ],
       shade: {
         cx: inner.x + inner.w * 0.55,

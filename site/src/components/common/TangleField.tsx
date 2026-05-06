@@ -3,12 +3,7 @@ import {
   rngFromSeed,
   randRange,
   pickOne,
-  tipple,
-  florz,
-  printemps,
-  crescentMoon,
-  staticTangle,
-  auras,
+  getPattern,
   type TangleName,
   type Rect,
   type Rng,
@@ -35,15 +30,9 @@ interface TangleFieldProps {
 const KINDS: TangleName[] = ['tipple', 'florz', 'printemps', 'crescent-moon', 'static', 'auras'];
 
 function drawByName(kind: TangleName, rect: Rect, rng: Rng): string {
-  switch (kind) {
-    case 'tipple':       return tipple(rect, { rng, density: 1.4, strokeWidth: 0.7 });
-    case 'florz':        return florz(rect, { rng, density: 1.0, strokeWidth: 0.6 });
-    case 'printemps':    return printemps(rect, { rng, density: 0.8, strokeWidth: 0.7 });
-    case 'crescent-moon':return crescentMoon(rect, { rng, density: 1.0, strokeWidth: 0.7 });
-    case 'static':       return staticTangle(rect, { rng, density: 1.0, strokeWidth: 0.6 });
-    case 'auras':        return auras(rect, { rng, strokeWidth: 0.7 });
-    default:             return tipple(rect, { rng });
-  }
+  const pattern = getPattern(kind);
+  const frames = pattern.generate(rect, { rng, density: 1.0, strokeWidth: 0.7 });
+  return frames.map(f => f.svg).join('');
 }
 
 /**

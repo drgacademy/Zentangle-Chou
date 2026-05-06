@@ -1,0 +1,66 @@
+import type { TanglePattern } from '../types';
+import { florz, knightsbridge, cadent, bales, cubine, chillon, rixty, amaze } from './grid';
+import { crescentMoon, auras, onamato, sparkle, drawingsString, striping } from './auras-tech';
+import { printemps, tipple, mooka, pokeleaf, fescu, zinger, flux, divaDance, bunzo, nipa, verdigogh, wud } from './organic';
+import {
+  staticTangle,
+  sez,
+  paradox,
+  beelight,
+  shattuck,
+  w2,
+  zigzagZander,
+  ahh,
+  tortuca,
+  quib,
+  zingingStatic,
+} from './geometric';
+import { hollibaugh, munchin, arukas, nzeppel } from './illusion';
+
+export const PATTERNS: Record<string, TanglePattern> = {
+  'crescent-moon': crescentMoon,
+  hollibaugh,
+  printemps,
+  cadent,
+  mooka,
+  florz,
+  nzeppel,
+  tipple,
+  ahh,
+  bales,
+  static: staticTangle,
+  onamato,
+  knightsbridge,
+  sez,
+  pokeleaf,
+  beelight,
+  fescu,
+  shattuck,
+  zinger,
+  paradox,
+  munchin,
+  flux,
+  chillon,
+  'diva-dance': divaDance,
+  bunzo,
+  cubine,
+  'drawings-string': drawingsString,
+  'zinging-static': zingingStatic,
+  w2,
+  striping,
+  'zigzag-zander': zigzagZander,
+  nipa,
+  verdigogh,
+  tortuca,
+  auras,
+  sparkle,
+  arukas,
+  rixty,
+  quib,
+  amaze,
+  wud,
+};
+
+export function getPattern(slug: string): TanglePattern {
+  return PATTERNS[slug] ?? PATTERNS.tipple;
+}

@@ -11,7 +11,8 @@ const currentPath = '/en/tangles';
 const title = 'Zentangle Chou — Tangle Dictionary';
 const description = 'Complete dictionary of 41 classic Zentangle patterns';
 
-const animatedTangles = ['crescent-moon', 'hollibaugh', 'printemps', 'cadent', 'mooka', 'florz', 'tipple', 'knightsbridge'];
+// All 41 tangles now have animated steps
+const animatedTangles = tangles.map(t => t.slug.current);
 
 const allCategories = Array.from(new Set(tangles.flatMap(t => t.category)));
 const difficulties = ['beginner', 'intermediate', 'advanced'];
@@ -118,10 +119,10 @@ const difficulties = ['beginner', 'intermediate', 'advanced'];
           </div>
           <div>
             <p class="font-display-en text-4xl text-ink-700 dark:text-ink-50 font-bold mb-2">
-              8
+              41
             </p>
             <p class="font-body text-ink-600 dark:text-ink-300">
-              With Step Animations
+              All With Step Animations
             </p>
           </div>
           <div>
