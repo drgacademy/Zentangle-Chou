@@ -20,7 +20,11 @@ export type TangleName =
   | 'tipple'
   | 'florz'
   | 'static'
-  | 'auras';
+  | 'auras'
+  | 'mooka'
+  | 'paradox'
+  | 'knightsbridge'
+  | 'nautilus';
 
 export interface TileSpec {
   seed: string;

@@ -9,6 +9,10 @@ import { crescentMoon } from './crescent-moon';
 import { hollibaugh } from './hollibaugh';
 import { staticTangle } from './static';
 import { auras } from './auras';
+import { mooka } from './mooka';
+import { paradox } from './paradox';
+import { knightsbridge } from './knightsbridge';
+import { nautilus } from './nautilus';
 
 /**
  * Map between tangle names (English, as stored in artworks.tangles) and
@@ -22,17 +26,20 @@ const drawers: Record<TangleName, (rect: Rect, opts: TangleOptions) => string> =
   florz,
   static: staticTangle,
   auras,
+  mooka,
+  paradox,
+  knightsbridge,
+  nautilus,
 };
 
 const ALIASES: Record<string, TangleName> = {
   'crescent moon': 'crescent-moon',
   crescentmoon: 'crescent-moon',
-  knightsbridge: 'static',
   cadent: 'florz',
   bales: 'florz',
   flux: 'auras',
-  mooka: 'printemps',
-  paradox: 'static',
+  onamato: 'printemps',
+  rixty: 'paradox',
 };
 
 function normalize(name: string): TangleName {
