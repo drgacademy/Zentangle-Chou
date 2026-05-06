@@ -1,0 +1,191 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+import tangles from '@/data/tangles.json';
+
+export async function getStaticPaths() {
+  return tangles.map(tangle => ({
+    params: { slug: tangle.slug.current },
+    props: { tangle }
+  }));
+}
+
+interface Props {
+  tangle: typeof tangles[0];
+}
+
+const { tangle } = Astro.props;
+const lang = 'en';
+const currentPath = `/en/tangles/${tangle.slug.current}`;
+const title = `Zentangle Chou — ${tangle.name_en}`;
+const description = tangle.why_important_en;
+
+const currentIndex = tangles.findIndex(t => t.slug.current === tangle.slug.current);
+const prevTangle = currentIndex > 0 ? tangles[currentIndex - 1] : tangles[tangles.length - 1];
+const nextTangle = currentIndex < tangles.length - 1 ? tangles[currentIndex + 1] : tangles[0];
+
+const difficultyColor = {
+  'beginner': 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200',
+  'intermediate': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
+  'advanced': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200'
+};
+const difficultyLabel = {
+  'beginner': 'Beginner',
+  'intermediate': 'Intermediate',
+  'advanced': 'Advanced'
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Back Link -->
+    <div class="py-6 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <a
+          href="/en/tangles"
+          class="inline-flex items-center text-ink-600 dark:text-ink-300 hover:text-ink-700 dark:hover:text-ink-200 transition-colors"
+        >
+          ← Back to Dictionary
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="py-12 px-4 bg-white dark:bg-ink-700">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="font-display-en text-4xl text-ink-700 dark:text-ink-50 mb-4">
+          {tangle.name_en}
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300 mb-6">
+          {tangle.name_zh}
+        </p>
+
+        <!-- Basic Info -->
+        <div class="grid md:grid-cols-2 gap-6 py-6 border-t border-ink-200 dark:border-ink-600">
+          <div>
+            <h4 class="font-display-en text-sm text-ink-500 dark:text-ink-400 uppercase mb-2">Creator</h4>
+            <p class="font-body text-ink-700 dark:text-ink-50">{tangle.creator_name}</p>
+            <p class="font-body text-sm text-ink-500 dark:text-ink-400">{tangle.creator_role}</p>
+          </div>
+          <div>
+            <h4 class="font-display-en text-sm text-ink-500 dark:text-ink-400 uppercase mb-2">First Published</h4>
+            <p class="font-body text-ink-700 dark:text-ink-50">{tangle.first_published_year}</p>
+            <p class="font-body text-sm text-ink-500 dark:text-ink-400">{tangle.first_published_in}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12">
+        <!-- Left: Content -->
+        <div class="md:col-span-2">
+          <!-- Why Important -->
+          <div class="mb-12">
+            <h2 class="font-display-en text-2xl text-ink-700 dark:text-ink-50 mb-4">
+              Why Important
+            </h2>
+            <p class="font-body text-lg text-ink-600 dark:text-ink-300 leading-relaxed">
+              {tangle.why_important_en}
+            </p>
+          </div>
+
+          <!-- Steps -->
+          <div class="mb-12">
+            <h2 class="font-display-en text-2xl text-ink-700 dark:text-ink-50 mb-6">
+              Step-by-Step
+            </h2>
+            <ol class="space-y-6">
+              {tangle.steps_en.map((step, idx) => (
+                <li class="flex gap-4">
+                  <span class="flex-shrink-0 w-8 h-8 rounded-full bg-ink-200 dark:bg-ink-600 flex items-center justify-center font-display-en font-bold text-ink-700 dark:text-ink-50">
+                    {idx + 1}
+                  </span>
+                  <p class="font-body text-ink-600 dark:text-ink-300 pt-1">
+                    {step}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <!-- Right: Sidebar -->
+        <aside>
+          <!-- Difficulty -->
+          <div class="mb-8">
+            <h4 class="font-display-en text-sm text-ink-500 dark:text-ink-400 uppercase mb-3">Difficulty</h4>
+            <span class={`inline-block px-3 py-1.5 rounded font-medium text-sm ${difficultyColor[tangle.difficulty]}`}>
+              {difficultyLabel[tangle.difficulty]}
+            </span>
+          </div>
+
+          <!-- Family -->
+          <div class="mb-8">
+            <h4 class="font-display-en text-sm text-ink-500 dark:text-ink-400 uppercase mb-2">Family</h4>
+            <p class="font-body text-ink-700 dark:text-ink-50">{tangle.family}</p>
+          </div>
+
+          <!-- Categories -->
+          <div class="mb-8">
+            <h4 class="font-display-en text-sm text-ink-500 dark:text-ink-400 uppercase mb-3">Categories</h4>
+            <div class="flex flex-wrap gap-2">
+              {tangle.category.map(cat => (
+                <span class="px-2 py-1 bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-50 rounded text-sm">
+                  {cat}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Animation Status -->
+          <div class="px-4 py-3 bg-ink-50 dark:bg-ink-800 rounded-sm">
+            <p class="font-body text-sm text-ink-600 dark:text-ink-400 text-center">
+              ✨ Step animation coming soon
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="py-12 px-4 border-t border-ink-200 dark:border-ink-700">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8">
+          <a
+            href={`/en/tangles/${prevTangle.slug.current}`}
+            class="group block p-6 bg-ink-50 dark:bg-ink-800 rounded-sm hover:bg-ink-100 dark:hover:bg-ink-700 transition-colors"
+          >
+            <p class="font-body text-sm text-ink-500 dark:text-ink-400 mb-2">Previous</p>
+            <h3 class="font-display-en text-lg text-ink-700 dark:text-ink-50 group-hover:text-ink-900 dark:group-hover:text-ink-100">
+              ← {prevTangle.name_en}
+            </h3>
+          </a>
+
+          <a
+            href={`/en/tangles/${nextTangle.slug.current}`}
+            class="group block p-6 bg-ink-50 dark:bg-ink-800 rounded-sm hover:bg-ink-100 dark:hover:bg-ink-700 transition-colors text-right"
+          >
+            <p class="font-body text-sm text-ink-500 dark:text-ink-400 mb-2">Next</p>
+            <h3 class="font-display-en text-lg text-ink-700 dark:text-ink-50 group-hover:text-ink-900 dark:group-hover:text-ink-100">
+              {nextTangle.name_en} →
+            </h3>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

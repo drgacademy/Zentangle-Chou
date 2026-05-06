@@ -1,0 +1,1129 @@
+[
+  {
+    "_id": "tangle.crescent-moon",
+    "_type": "tangle",
+    "slug": { "current": "crescent-moon" },
+    "name_en": "Crescent Moon",
+    "name_zh": "新月紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle Method",
+    "first_published_year": 2003,
+    "first_published_in": "Original Zentangle teaching materials",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "auras", "border"],
+    "steps_en": [
+      "Draw a row of inward-facing half-moons along the edge.",
+      "Fill each half-moon solid black.",
+      "Draw a thin aura outside each black bump, following its curve.",
+      "Continue with a second, third aura outward until area is filled."
+    ],
+    "steps_zh": [
+      "沿著區塊邊緣畫一排朝內的半月形（小弧凸起）。",
+      "把每個半月填滿黑色。",
+      "在每個黑色凸起外側畫一條跟著弧度走的細線——這是第一道光環。",
+      "繼續往外畫第二道、第三道光環，直到填滿區塊。"
+    ],
+    "why_important_en": "Crescent Moon teaches the foundational concept of the 'aura' — a line that follows and offsets the contour of a previous shape. This technique reappears in dozens of other tangles.",
+    "why_important_zh": "Crescent Moon 教會「光環」這個基礎概念——一條線跟著前一個形狀的輪廓向外回應——這個技法之後會出現在數十個其他圖樣裡。"
+  },
+  {
+    "_id": "tangle.hollibaugh",
+    "_type": "tangle",
+    "slug": { "current": "hollibaugh" },
+    "name_en": "Hollibaugh",
+    "name_zh": "哈利堡紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle (named after daughter Molly Hollibaugh)",
+    "first_published_year": 2004,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["organic", "3d-illusion"],
+    "steps_en": [
+      "Draw a long ribbon (two parallel curves with rounded ends) across the area.",
+      "Draw a second ribbon that appears to pass behind the first — when the line touches the first ribbon, lift the pen and continue on the other side.",
+      "Continue adding ribbons; each passes behind the previous.",
+      "Fill the gaps between ribbons with solid black."
+    ],
+    "steps_zh": [
+      "畫一條長帶（兩條平行曲線、兩端為圓形），橫越區塊。",
+      "再畫一條帶子，看起來像「從第一條後面穿過去」——當線觸到第一條時，提筆，到另一邊再繼續。",
+      "持續加入帶子，每一條都從前面那條的後方穿過。",
+      "條與條之間的縫隙填黑。"
+    ],
+    "why_important_en": "Hollibaugh teaches the 'draw behind' technique — the most reliable way to create the illusion of three dimensions, like the layered weave of a bamboo basket.",
+    "why_important_zh": "Hollibaugh 教會「畫在後面」這個技法——是製造「立體錯覺」最可靠的方式，就像竹編籃子的層次感。"
+  },
+  {
+    "_id": "tangle.printemps",
+    "_type": "tangle",
+    "slug": { "current": "printemps" },
+    "name_en": "Printemps",
+    "name_zh": "春天紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Original Zentangle deck; One Zentangle a Day Day 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "filler"],
+    "steps_en": [
+      "Start with a small dot or tight inner curl.",
+      "Spiral outward with continuous curves, keeping spacing even.",
+      "End with a small hook or curve.",
+      "Pack many spirals tightly, leaving small triangular gaps."
+    ],
+    "steps_zh": [
+      "從一個小點或緊密的小捲開始。",
+      "用連續的曲線往外旋轉，每一圈間距盡量一致。",
+      "結尾以一個小勾或小弧收住。",
+      "把許多旋紋緊密排列，留下小三角形空隙。"
+    ],
+    "why_important_en": "Printemps is one of the most calming tangles — the repetitive spiral rhythm is like rolling beads in your hand, deeply meditative.",
+    "why_important_zh": "Printemps 是所有圖樣中最讓人冷靜的——重複的旋轉節奏像是手心搓念珠，極具冥想效果。"
+  },
+  {
+    "_id": "tangle.cadent",
+    "_type": "tangle",
+    "slug": { "current": "cadent" },
+    "name_en": "Cadent",
+    "name_zh": "對偶迴環紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2008,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Lightly dot a grid in the area.",
+      "Connect each pair of adjacent dots with an outward-curving arc — first all horizontals, then all verticals.",
+      "The result forms a network of concave-edged diamonds.",
+      "Add a small circle, dot, or solid black center to each diamond."
+    ],
+    "steps_zh": [
+      "在區塊內輕點一格網狀的點。",
+      "用「向外凸的弧線」連接每對相鄰的點——先全部水平方向、再全部垂直方向。",
+      "結果形成一張「凹邊菱形」的網絡。",
+      "在每個菱形中畫一個小圓、一個點，或填一塊黑心。"
+    ],
+    "why_important_en": "Cadent demonstrates how a 'hidden grid' can bring order without rigidity.",
+    "why_important_zh": "Cadent 示範了「隱藏的網格」如何帶來秩序而不顯得僵硬。"
+  },
+  {
+    "_id": "tangle.mooka",
+    "_type": "tangle",
+    "slug": { "current": "mooka" },
+    "name_en": "Mooka",
+    "name_zh": "慕卡藤蔓紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle (inspired by Alphonse Mucha)",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "advanced",
+    "category": ["organic"],
+    "steps_en": [
+      "Start with a long, gentle S-curve as the main stem.",
+      "Extend teardrop-shaped petals from the stem that curl back toward it.",
+      "Draw each petal with a continuous lasso stroke — out from the stem and back to it.",
+      "Add smaller secondary petals inside the main petals for depth."
+    ],
+    "steps_zh": [
+      "從一條柔順的長 S 曲線開始，作為主莖。",
+      "從莖上延伸出水滴形的瓣，往莖的方向回捲。",
+      "每片瓣以連續的「套索」筆法畫成——從莖出發、繞回莖。",
+      "在主瓣裡再加更小的次級瓣，營造層次。"
+    ],
+    "why_important_en": "Mooka is the 'organic representative' of Zentangle — a flowing counterpoint to grid-based tangles, like peony branches in an ink painting.",
+    "why_important_zh": "Mooka 是禪繞中的「有機代表」——與規則網格圖樣完全相反的流動感，像水墨畫裡的牡丹枝條。"
+  },
+  {
+    "_id": "tangle.florz",
+    "_type": "tangle",
+    "slug": { "current": "florz" },
+    "name_en": "Florz",
+    "name_zh": "地磚紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Early Zentangle deck; One Zentangle a Day",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Lay down a grid of dots.",
+      "Connect each dot diagonally to form a grid of standing diamonds.",
+      "At each intersection of four diamond corners, place a small black diamond or filled dot.",
+      "Optionally add a small dot at the center of each large diamond."
+    ],
+    "steps_zh": [
+      "鋪一格網狀的點。",
+      "把每個點對角連接，形成「立著的小方塊」（菱形）格網。",
+      "四個菱形角相交處，放一個小黑菱或填黑點。",
+      "視需要在每個大菱形中心點一個小點。"
+    ],
+    "why_important_en": "Florz is the simplest grid tangle — the first step into a world of repeating rhythm, reminiscent of Taipei's old terrazzo floor tiles.",
+    "why_important_zh": "Florz 是最簡單的網格圖樣，是進入「重複韻律」世界的第一步——像台北老房子的磨石子地磚。"
+  },
+  {
+    "_id": "tangle.nzeppel",
+    "_type": "tangle",
+    "slug": { "current": "nzeppel" },
+    "name_en": "'Nzeppel",
+    "name_zh": "義式麵餃紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle (named after an Italian pasta dumpling)",
+    "first_published_year": 2010,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["grid-based", "organic"],
+    "steps_en": [
+      "Loosely sketch irregular horizontal and vertical lines, dividing the area into cells.",
+      "In each cell, draw a plump 'pillow' shape that almost — but not quite — touches all four edges.",
+      "The thin gaps between pillows form a soft pebble-like grid.",
+      "Optionally shade one side of each pillow."
+    ],
+    "steps_zh": [
+      "鬆鬆地畫一些不太規則的水平與垂直線條，分成許多格子。",
+      "在每個格子裡，畫一個飽滿的「枕頭形」——幾乎、但不完全頂到四個邊。",
+      "枕頭間的細縫形成柔軟的鵝卵石網格。",
+      "視需要在枕頭某一側做陰影。"
+    ],
+    "why_important_en": "Like a steamer of just-cooked dumplings — the pillow shapes give 'Nzeppel a tactile, layered quality even without explicit shading.",
+    "why_important_zh": "像一籠剛蒸好的小餃子——枕頭給 'Nzeppel 一種無需明顯陰影就能感覺到的觸覺與層次。"
+  },
+  {
+    "_id": "tangle.tipple",
+    "_type": "tangle",
+    "slug": { "current": "tipple" },
+    "name_en": "Tipple",
+    "name_zh": "圓珠紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Early Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "filler"],
+    "steps_en": [
+      "Fill the area with circles of varying sizes.",
+      "Place the largest circles first, fill gaps with medium circles, then fill smaller gaps with the smallest circles.",
+      "Optionally add a small shadow on one side of each circle to make it look like a bubble."
+    ],
+    "steps_zh": [
+      "用大小不一的圓填滿區塊。",
+      "先放最大的圓，讓中等的填補空隙，最小的填空隙的空隙。",
+      "視需要在每個圓的某一側加陰影，讓它看起來像泡泡。"
+    ],
+    "why_important_en": "Tipple is the universal 'filler' — when an area needs gentle texture without competing with the main pattern, like a small bamboo coaster under a teacup.",
+    "why_important_zh": "Tipple 是萬用「填料」——當區塊需要溫和質地、又不想搶走主圖樣時就用它，像茶碗下的小竹墊。"
+  },
+  {
+    "_id": "tangle.ahh",
+    "_type": "tangle",
+    "slug": { "current": "ahh" },
+    "name_en": "Ahh",
+    "name_zh": "啊光紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2004,
+    "first_published_in": "Early Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["geometric", "filler"],
+    "steps_en": [
+      "Draw a small Y or three-line star.",
+      "Add fourth and fifth rays to form a small radial starburst.",
+      "Scatter starbursts across the area, varying their size.",
+      "Add small dots between starbursts as breathing space."
+    ],
+    "steps_zh": [
+      "畫一個小「Y」字，或三線星形。",
+      "加上第四、第五條光線，形成小型放射星芒。",
+      "把這種星芒散布在區塊各處，大小變化。",
+      "在星芒之間點上小點，作為呼吸空間。"
+    ],
+    "why_important_en": "Ahh is like a small sigh on paper — the name 'Ahh' is the sound of a relaxed exhale.",
+    "why_important_zh": "Ahh 像是紙上的小聲嘆息——名字「啊」就是放鬆的吐氣聲。"
+  },
+  {
+    "_id": "tangle.bales",
+    "_type": "tangle",
+    "slug": { "current": "bales" },
+    "name_en": "Bales",
+    "name_zh": "包袱紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Original Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["grid-based", "organic"],
+    "steps_en": [
+      "Lay a square grid.",
+      "In each cell, draw two outward-curving arcs from opposite corners — they meet in the middle to form a four-petal pillow.",
+      "Arcs in adjacent cells naturally connect; the whole reads as a quilt of soft pillows.",
+      "Add a dot or shadow at the center of each petal."
+    ],
+    "steps_zh": [
+      "鋪一格方格網。",
+      "每個方格內，從相對的兩個角向外畫兩條外凸的弧——它們在中央相遇，形成一個四瓣枕頭。",
+      "相鄰方格的弧自然連接，整體像鋪滿柔軟枕頭的綢被。",
+      "在花瓣中心加點或陰影。"
+    ],
+    "why_important_en": "Bales is one of the gentlest grid tangles; the curves wash away all the rigidity of the underlying grid.",
+    "why_important_zh": "Bales 是最溫柔的網格圖樣之一；曲線把網格的剛硬感全洗掉了。"
+  },
+  {
+    "_id": "tangle.static",
+    "_type": "tangle",
+    "slug": { "current": "static" },
+    "name_en": "Static",
+    "name_zh": "靜電紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2004,
+    "first_published_in": "Early Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["geometric"],
+    "steps_en": [
+      "Draw a vertical line.",
+      "Shoot a row of zigzag lightning from the line.",
+      "Draw a second vertical line; its zigzags face the first set, like meshing gears.",
+      "Continue with alternating columns; optionally fill inner triangles black."
+    ],
+    "steps_zh": [
+      "畫一條垂直線。",
+      "從線上射出一排鋸齒狀的閃電。",
+      "再畫第二條垂直線；從它射出的鋸齒朝向第一組，像齒輪互咬。",
+      "持續以交替欄位填滿；視需要把內三角填黑。"
+    ],
+    "why_important_en": "Static brings high-contrast, energetic patterns — perfect for visual impact.",
+    "why_important_zh": "Static 帶來高對比、能量感的圖樣——適合製造視覺衝擊。"
+  },
+  {
+    "_id": "tangle.onamato",
+    "_type": "tangle",
+    "slug": { "current": "onamato" },
+    "name_en": "Onamato",
+    "name_zh": "鳴音紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle (pun on 'onomatopoeia')",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["grid-based", "auras"],
+    "steps_en": [
+      "Draw a row of adjacent circles along a baseline.",
+      "Draw a second row of circles offset by half a circle from the first.",
+      "Draw a thin aura inside each circle.",
+      "Fill the small triangular intersections with black."
+    ],
+    "steps_zh": [
+      "沿基線畫一排相鄰的圓。",
+      "上方再畫一排相鄰的圓，與下排錯開半個圓。",
+      "在每個圓的內側畫一道細光環。",
+      "三個圓交會的小縫處填黑。"
+    ],
+    "why_important_en": "Onamato shows that 'inside auras' (auras drawn inward) can also create three-dimensional depth.",
+    "why_important_zh": "Onamato 示範了「光環往內畫」也能創造立體感。"
+  },
+  {
+    "_id": "tangle.knightsbridge",
+    "_type": "tangle",
+    "slug": { "current": "knightsbridge" },
+    "name_en": "Knightsbridge",
+    "name_zh": "棋盤格紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Original Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Draw a square grid.",
+      "Fill alternating squares solid black, like a chessboard.",
+      "Optionally rotate the grid 45° to create a diamond checkerboard."
+    ],
+    "steps_zh": [
+      "畫一格方格網。",
+      "把交錯的方格填黑，像棋盤。",
+      "視需要把方格旋轉 45° 形成菱形棋盤。"
+    ],
+    "why_important_en": "Knightsbridge is the textbook 'anchor tangle' — a pure black-and-white area that makes adjacent tangles look more refined by contrast.",
+    "why_important_zh": "Knightsbridge 是教科書級的「定錨圖樣」——一塊純黑白對比區，會讓旁邊的圖樣看起來更精緻。"
+  },
+  {
+    "_id": "tangle.sez",
+    "_type": "tangle",
+    "slug": { "current": "sez" },
+    "name_en": "Sez",
+    "name_zh": "切疊紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["geometric"],
+    "steps_en": [
+      "Draw a row of upward-pointing triangles along a baseline.",
+      "Above, draw another row of upward triangles, positioned between the points of the row below.",
+      "Continue stacking upward to form a triangular mosaic.",
+      "Fill alternating triangles with black."
+    ],
+    "steps_zh": [
+      "沿基線畫一排朝上的三角形。",
+      "上方再畫一排朝上的三角形，位於下排的兩個尖點之間。",
+      "持續往上堆疊，形成三角的鑲嵌結構。",
+      "把交替的三角形填黑。"
+    ],
+    "why_important_en": "Sez is one of the fastest ways to create a 'woven/scaled' illusion.",
+    "why_important_zh": "Sez 是最快創造「織紋／鱗片」錯覺的方法之一。"
+  },
+  {
+    "_id": "tangle.pokeleaf",
+    "_type": "tangle",
+    "slug": { "current": "pokeleaf" },
+    "name_en": "Pokeleaf",
+    "name_zh": "戳葉紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2010,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "border"],
+    "steps_en": [
+      "Draw a curving stem.",
+      "Grow plump balloon-shaped leaves along the stem.",
+      "Each leaf has a small notch where it joins the stem.",
+      "Add fine veins or one-sided shading."
+    ],
+    "steps_zh": [
+      "畫一條彎彎的莖。",
+      "在莖上長出圓鼓鼓的氣球狀葉。",
+      "每片葉與莖相接處有一個小凹口。",
+      "加細葉脈或單側陰影。"
+    ],
+    "why_important_en": "Pokeleaf is the classic 'vine/round leaf' organic tangle, often used in borders.",
+    "why_important_zh": "Pokeleaf 是經典的「藤蔓／圓葉」有機圖樣，常用於邊框。"
+  },
+  {
+    "_id": "tangle.beelight",
+    "_type": "tangle",
+    "slug": { "current": "beelight" },
+    "name_en": "Beelight",
+    "name_zh": "蜂光紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "intermediate",
+    "category": ["geometric", "organic"],
+    "steps_en": [
+      "Draw a hexagonal or rounded honeycomb cell.",
+      "Inside the cell, draw a curving 'flame' shape.",
+      "Add another cell next to or above it; the flame faces the previous cell.",
+      "Fill surroundings with black or hatching."
+    ],
+    "steps_zh": [
+      "畫一個六角或圓潤的蜂巢格。",
+      "格內畫一個彎曲的「火焰」形。",
+      "上面或旁邊再畫一格，火焰朝向前一格。",
+      "周圍填黑或畫斜線。"
+    ],
+    "why_important_en": "Beelight bridges geometric and organic — a hybrid that opens new possibilities.",
+    "why_important_zh": "Beelight 是「植物與幾何」之間的橋樑。"
+  },
+  {
+    "_id": "tangle.fescu",
+    "_type": "tangle",
+    "slug": { "current": "fescu" },
+    "name_en": "Fescu",
+    "name_zh": "細草紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2004,
+    "first_published_in": "Early Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "filler", "border"],
+    "steps_en": [
+      "From a baseline, draw a thin J-shaped curve ending with a solid dot.",
+      "Draw another J-curve next to it, similar in direction but a slightly different angle.",
+      "Continue along the area; the whole resembles wind-blown grass.",
+      "The dots at the tips are signature."
+    ],
+    "steps_zh": [
+      "從基線畫一條細的 J 字曲線，尾端加一個實心圓點。",
+      "旁邊再畫一條 J 字曲線，方向類似但角度略不同。",
+      "沿區塊持續畫，整體像隨風起伏的草。",
+      "尖端的小點是它的特徵。"
+    ],
+    "why_important_en": "Fescu works as a border or filler, contrasting nicely with heavier neighbors.",
+    "why_important_zh": "Fescu 適合做邊界或填料，與較重的鄰居形成對比。"
+  },
+  {
+    "_id": "tangle.shattuck",
+    "_type": "tangle",
+    "slug": { "current": "shattuck" },
+    "name_en": "Shattuck",
+    "name_zh": "沙塔克紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle (named after a place)",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["geometric"],
+    "steps_en": [
+      "Draw a wavy horizontal line across the area.",
+      "Below the wave, draw a series of vertical 'skirt' arcs.",
+      "Below the arcs, draw another wavy line that echoes the first.",
+      "Continue stacking; fill arc interiors with black."
+    ],
+    "steps_zh": [
+      "在區塊上畫一條波浪狀水平線。",
+      "從波浪向下畫一連串如「裙擺」般的垂直弧。",
+      "在弧下方再畫一條波浪線，與第一條相呼應。",
+      "持續往下堆疊；弧的內部填黑。"
+    ],
+    "why_important_en": "Shattuck offers a strong horizontal rhythm — visually like a row of suspended black fruit.",
+    "why_important_zh": "Shattuck 提供強烈的水平節奏——視覺像一排懸吊的黑色果實。"
+  },
+  {
+    "_id": "tangle.zinger",
+    "_type": "tangle",
+    "slug": { "current": "zinger" },
+    "name_en": "Zinger",
+    "name_zh": "彈簧紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["organic", "filler"],
+    "steps_en": [
+      "Draw a comma-like curving stem.",
+      "Add a small swirl or curl at one end.",
+      "Add parallel diagonal lines or small leaves along the stem.",
+      "Scatter many Zingers in different directions."
+    ],
+    "steps_zh": [
+      "畫一條像逗號的彎莖。",
+      "一端加上一個小旋或小捲。",
+      "在莖上加一些平行斜線或小葉。",
+      "在區塊內隨意散布許多 Zinger，方向各異。"
+    ],
+    "why_important_en": "Zinger is technically a 'decorative element' rather than a fill tangle — a sprinkle of flourish.",
+    "why_important_zh": "Zinger 嚴格說是「裝飾元素」——是錦上添花的小花俏。"
+  },
+  {
+    "_id": "tangle.paradox",
+    "_type": "tangle",
+    "slug": { "current": "paradox" },
+    "name_en": "Paradox",
+    "name_zh": "悖論紋",
+    "creator_name": "Rick Roberts",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2008,
+    "first_published_in": "Original Zentangle teaching materials",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "advanced",
+    "category": ["geometric", "3d-illusion"],
+    "steps_en": [
+      "Start with a triangle (or any near-regular polygon).",
+      "From each vertex, draw a straight line to a point on the adjacent edge — but stop before reaching the edge, then continue inward.",
+      "Each new line creates a smaller inner triangle; spiral toward the center.",
+      "From pure straight lines, create the illusion of a spiral vortex."
+    ],
+    "steps_zh": [
+      "從一個三角形（或任何近正多邊形）開始。",
+      "從每個頂點向相鄰邊上的某一點畫直線——但不畫到底，留一段距離繼續往內走。",
+      "每一條新線在內部創造一個更小的三角形；持續向中心螺旋。",
+      "由純直線製造出「螺旋漩渦」的視覺幻覺。"
+    ],
+    "why_important_en": "Paradox is one of the most visually striking tangles — a classic example of 'straight lines creating curved illusion.'",
+    "why_important_zh": "Paradox 是最具視覺衝擊的圖樣之一——「直線製造曲線錯覺」的經典範例。"
+  },
+  {
+    "_id": "tangle.munchin",
+    "_type": "tangle",
+    "slug": { "current": "munchin" },
+    "name_en": "Munchin",
+    "name_zh": "棕櫚編織紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["organic", "3d-illusion"],
+    "steps_en": [
+      "Draw two parallel curves to form a ribbon.",
+      "Inside the ribbon, draw continuous diagonal weaves — alternating thick and thin strands.",
+      "The strands interlace like bamboo weaving.",
+      "Add deeper shadows to the 'underlying' strands."
+    ],
+    "steps_zh": [
+      "畫兩條平行曲線形成一條帶。",
+      "帶內畫連續的對角編織——粗細交替的緞帶。",
+      "緞帶交織如竹編。",
+      "在「下層」緞帶加深陰影。"
+    ],
+    "why_important_en": "Munchin brings a strong 'woven' texture, often filled into Hollibaugh-style ribbons.",
+    "why_important_zh": "Munchin 帶來強烈的「編織」質感，常被填入 Hollibaugh 式的長帶內。"
+  },
+  {
+    "_id": "tangle.flux",
+    "_type": "tangle",
+    "slug": { "current": "flux" },
+    "name_en": "Flux",
+    "name_zh": "流葉紋",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle (each has their own version)",
+    "first_published_year": 2011,
+    "first_published_in": "Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a flame-like curving leaf.",
+      "Add a curving vein along the leaf's long axis.",
+      "Cluster many such leaves on a stem, varying the curl.",
+      "Vary sizes; let some leaves 'hide' behind others."
+    ],
+    "steps_zh": [
+      "畫一片像火焰般彎曲的葉。",
+      "沿葉長軸加一條彎曲的葉脈。",
+      "在莖上聚集多片這樣的葉，每片捲度不一。",
+      "大小有變化；讓部分葉「藏在」其他葉後面。"
+    ],
+    "why_important_en": "Flux is the workhorse for 'leaves, feathers, flowing edges.' Maria's and Rick's versions differ slightly in leaf shape.",
+    "why_important_zh": "Flux 是「葉、羽、流動邊」的工作主力。共有 Maria 版與 Rick 版，葉形略有差異。"
+  },
+  {
+    "_id": "tangle.chillon",
+    "_type": "tangle",
+    "slug": { "current": "chillon" },
+    "name_en": "Chillon",
+    "name_zh": "西庸城堡紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle (named after Chillon Castle, Switzerland)",
+    "first_published_year": 2003,
+    "first_published_in": "Original Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Lay a square grid.",
+      "In each cell, draw a thick-armed cross with a small square at the center.",
+      "Connect the cross arms of adjacent cells, forming a continuous Greek-key pattern.",
+      "Fill empty spaces with black."
+    ],
+    "steps_zh": [
+      "鋪一格方格網。",
+      "每格內畫一個粗臂十字，中央留一小方塊。",
+      "把相鄰方格的十字臂連接起來，形成連續的「希臘回紋」。",
+      "把空格填黑。"
+    ],
+    "why_important_en": "Chillon transforms a simple grid into a labyrinthine, ancient-architecture-like pattern.",
+    "why_important_zh": "Chillon 把簡單網格變成迷宮般、像古建築外牆的圖樣。"
+  },
+  {
+    "_id": "tangle.diva-dance",
+    "_type": "tangle",
+    "slug": { "current": "diva-dance" },
+    "name_en": "Diva Dance",
+    "name_zh": "女神之舞",
+    "creator_name": "Maria Thomas (popularized by Molly Hollibaugh)",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2012,
+    "first_published_in": "Official Zentangle Diva Dance video lessons",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "intermediate",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a long, asymmetric S-curve — blunt at one end, fine and curling at the other.",
+      "Draw another S-curve next to it, hugging the first.",
+      "Keep stacking; each curve echoes and pushes the previous one.",
+      "The whole resembles long leaves in wind, or dancing flames."
+    ],
+    "steps_zh": [
+      "畫一條長且不對稱的 S 形——一端粗鈍、另一端細捲。",
+      "旁邊再畫一條 S 形，靠著前一條鋪。",
+      "不斷堆疊；每一條都呼應、推移前一條。",
+      "整體像隨風飄動的長葉，或一團跳動的火苗。"
+    ],
+    "why_important_en": "Diva Dance is meditation-as-flow — beloved by practitioners, perfect for filling large empty spaces.",
+    "why_important_zh": "Diva Dance 是「連續流動」的冥想——廣受喜愛，最適合填大塊空白。"
+  },
+  {
+    "_id": "tangle.bunzo",
+    "_type": "tangle",
+    "slug": { "current": "bunzo" },
+    "name_en": "Bunzo",
+    "name_zh": "邦佐紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "intermediate",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a rounded form (a slightly flattened ball).",
+      "Inside, draw a series of parallel half-moon arcs all biased to one side.",
+      "It looks like a rolling, segmented pearl.",
+      "String many Bunzo along a stem."
+    ],
+    "steps_zh": [
+      "畫一個圓潤的形（略扁的球）。",
+      "內部畫一連串平行的半月弧，全部偏向同一邊。",
+      "看起來像一顆滾動、分節的珍珠。",
+      "沿莖串連許多 Bunzo。"
+    ],
+    "why_important_en": "The nested arcs make a string of Bunzo look like a chain of beads.",
+    "why_important_zh": "巢套的弧線讓整串看起來像一條珠鍊。"
+  },
+  {
+    "_id": "tangle.cubine",
+    "_type": "tangle",
+    "slug": { "current": "cubine" },
+    "name_en": "Cubine",
+    "name_zh": "立方體紋",
+    "creator_name": "Maria Thomas",
+    "creator_role": "Co-founder of Zentangle",
+    "first_published_year": 2004,
+    "first_published_in": "Early Zentangle deck",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["grid-based", "3d-illusion"],
+    "steps_en": [
+      "Draw a square grid.",
+      "In each cell, draw diagonal lines from the four corners toward the center but stopping short — leaving a small square in the middle.",
+      "Fill two opposite triangles black, leaving the other two white.",
+      "The whole reads as a tessellation of 3D cubes."
+    ],
+    "steps_zh": [
+      "畫一格方格網。",
+      "每格內從四個角畫向中心的對角線，但不到中心——留下一個小方塊。",
+      "把對角的兩個三角填黑，另兩個留白。",
+      "整片讀起來像 3D 立方體的鑲嵌。"
+    ],
+    "why_important_en": "Cubine is the simplest tangle that produces a strong 3D illusion.",
+    "why_important_zh": "Cubine 是最簡單就能呈現「立體錯覺」的圖樣。"
+  },
+  {
+    "_id": "tangle.drawings-string",
+    "_type": "tangle",
+    "slug": { "current": "drawings-string" },
+    "name_en": "Drawings (the 'string' concept)",
+    "name_zh": "描畫紋（string 概念）",
+    "creator_name": "Rick Roberts & Maria Thomas",
+    "creator_role": "Co-founders of Zentangle",
+    "first_published_year": 2003,
+    "first_published_in": "Official Zentangle method; Zentangle Primer Vol. 1",
+    "family": "Roberts/Thomas Official",
+    "difficulty": "beginner",
+    "category": ["technique"],
+    "steps_en": [
+      "This is the official concept of the 'pencil string' that divides a tile into zones.",
+      "Lightly draw a free curve in pencil — a simple Z, or a meandering doodle — splitting the square into 3-6 areas.",
+      "Each zone becomes the canvas for one tangle."
+    ],
+    "steps_zh": [
+      "這是「鉛筆 string」的官方概念，用以將紙磚分區。",
+      "輕輕用鉛筆在紙磚上畫一條自由曲線——可以是簡單的 Z、也可以是蜿蜒的塗鴉——把方形分成 3–6 個區塊。",
+      "每個區塊就是一個圖樣的畫布。"
+    ],
+    "why_important_en": "String is the soul of Zentangle: it provides structure without dictating outcome.",
+    "why_important_zh": "String 是禪繞的靈魂：它建立結構，卻不規定結果。"
+  },
+  {
+    "_id": "tangle.zinging-static",
+    "_type": "tangle",
+    "slug": { "current": "zinging-static" },
+    "name_en": "Zinging Static",
+    "name_zh": "彈跳靜電紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain' (variation of Static)",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "intermediate",
+    "category": ["geometric"],
+    "steps_en": [
+      "A variation of Static with extra zingy flair — see Static base steps and add curl details."
+    ],
+    "steps_zh": [
+      "Static 的變體，加上更多彈跳裝飾——參考 Static 基本步驟並加上小捲。"
+    ],
+    "why_important_en": "Demonstrates how a base tangle can spawn variations.",
+    "why_important_zh": "示範一個基礎圖樣如何衍生出多種變體。"
+  },
+  {
+    "_id": "tangle.w2",
+    "_type": "tangle",
+    "slug": { "current": "w2" },
+    "name_en": "W2",
+    "name_zh": "W2 結繩紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain; later TanglePatterns.com",
+    "family": "Bartholomew",
+    "difficulty": "intermediate",
+    "category": ["geometric", "3d-illusion"],
+    "steps_en": [
+      "Draw a vertical column of stacked 'W' shapes.",
+      "Draw another column of W's offset by half a W to interlock.",
+      "Both columns weave.",
+      "Fill the small interior diamonds with black."
+    ],
+    "steps_zh": [
+      "畫一直行相疊的「W」形。",
+      "旁邊再畫一直行 W 形，與前一行錯開半個 W，使之互鎖。",
+      "兩行交織。",
+      "中間夾出的小菱形填黑。"
+    ],
+    "why_important_en": "W2 creates a strong woven feeling from a single letter shape.",
+    "why_important_zh": "W2 用單一字母製造強烈的編織感。"
+  },
+  {
+    "_id": "tangle.striping",
+    "_type": "tangle",
+    "slug": { "current": "striping" },
+    "name_en": "Striping",
+    "name_zh": "條紋紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "beginner",
+    "category": ["filler"],
+    "steps_en": [
+      "Draw parallel lines with varying thickness and spacing.",
+      "Optionally let the lines curve to follow the area's contour.",
+      "Group three to five lines with alternating thicknesses."
+    ],
+    "steps_zh": [
+      "在區塊內畫粗細與間距變化的平行線。",
+      "視需要讓線條跟隨區塊輪廓彎曲。",
+      "三到五條為一組，粗細交錯。"
+    ],
+    "why_important_en": "Striping is among the simplest tangles; as a calm filler, it balances busier neighbors.",
+    "why_important_zh": "Striping 是最簡單的圖樣之一；作為冷靜填料，可平衡熱鬧的鄰居。"
+  },
+  {
+    "_id": "tangle.zigzag-zander",
+    "_type": "tangle",
+    "slug": { "current": "zigzag-zander" },
+    "name_en": "Zig zag (Zander)",
+    "name_zh": "茲格紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain' (Zander = her son's name)",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "beginner",
+    "category": ["geometric"],
+    "steps_en": [
+      "Draw a continuous zigzag line — alternating peaks and valleys.",
+      "Draw another zigzag line beside it, mirrored, with diamonds forming between.",
+      "Add diagonal lines or fill the diamonds with black."
+    ],
+    "steps_zh": [
+      "在區塊上畫一條連續的鋸齒線——尖峰與尖谷交替。",
+      "旁邊再畫一條鋸齒線，與前一條鏡射，中間形成一排菱形。",
+      "加斜線或把菱形填黑。"
+    ],
+    "why_important_en": "Zig zag is the dynamic counterpart to Striping.",
+    "why_important_zh": "Zig zag 是 Striping 的「動感版」對照。"
+  },
+  {
+    "_id": "tangle.nipa",
+    "_type": "tangle",
+    "slug": { "current": "nipa" },
+    "name_en": "Nipa",
+    "name_zh": "棕櫚葉紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "intermediate",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a long curving stem.",
+      "Shoot pairs of pointed leaves like palm fronds from both sides.",
+      "Each leaf is a long teardrop; alternate left/right along the stem.",
+      "Fill alternating leaves with diagonal hatching or solid black."
+    ],
+    "steps_zh": [
+      "畫一條彎曲的長莖。",
+      "從莖兩側射出一對對尖葉，像棕櫚葉。",
+      "每片葉是長水滴形；沿莖左右交錯。",
+      "把交替的葉片以斜線或實心黑填滿。"
+    ],
+    "why_important_en": "Nipa adds tropical, fern-like long texture, especially good for Phicops and Zendala.",
+    "why_important_zh": "Nipa 帶來熱帶、蕨類般的長條質感，特別適合 Phicops 與 Zendala。"
+  },
+  {
+    "_id": "tangle.verdigogh",
+    "_type": "tangle",
+    "slug": { "current": "verdigogh" },
+    "name_en": "Verdigogh",
+    "name_zh": "松針紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "beginner",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a curving stem.",
+      "Shoot bundles of short straight lines from the stem — each bundle has 5-7 needles.",
+      "Each bundle radiates from a single point.",
+      "Stagger bundles along the stem."
+    ],
+    "steps_zh": [
+      "畫一條彎曲的莖。",
+      "從莖上射出一束束短直線——每束 5–7 根針。",
+      "每束從同一點放射開來。",
+      "沿莖錯開排列。"
+    ],
+    "why_important_en": "Verdigogh is the 'pine needle representative' for winter or evergreen-themed tiles.",
+    "why_important_zh": "Verdigogh 是冬季或常綠主題紙磚的「松針代表」。"
+  },
+  {
+    "_id": "tangle.tortuca",
+    "_type": "tangle",
+    "slug": { "current": "tortuca" },
+    "name_en": "Tortuca",
+    "name_zh": "龜殼紋",
+    "creator_name": "Sandy Steen Bartholomew",
+    "creator_role": "Author of 'Yoga for Your Brain'",
+    "first_published_year": 2010,
+    "first_published_in": "Yoga for Your Brain",
+    "family": "Bartholomew",
+    "difficulty": "beginner",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Draw a hexagon.",
+      "Inside, draw a slightly smaller hexagon.",
+      "Tile the area with hexagonal honeycomb.",
+      "Add a small cross, dot, or arc inside each hexagon — like turtle-shell markings."
+    ],
+    "steps_zh": [
+      "畫一個六角形。",
+      "內部再畫一個略小的六角形。",
+      "將整片區塊以六角形蜂巢鑲嵌。",
+      "每個六角形內加上一個小十字、點、或弧——像龜殼上的紋路。"
+    ],
+    "why_important_en": "Tortuca is the basic honeycomb texture — also reminiscent of Taiwanese traditional cake molds.",
+    "why_important_zh": "Tortuca 是蜂巢質感的基礎圖樣——也是台灣常見的傳統蛋糕模子上的紋樣。"
+  },
+  {
+    "_id": "tangle.auras",
+    "_type": "tangle",
+    "slug": { "current": "auras" },
+    "name_en": "Auras",
+    "name_zh": "光環紋",
+    "creator_name": "Linda Farmer",
+    "creator_role": "Founder of TanglePatterns.com (named the technique)",
+    "first_published_year": 2010,
+    "first_published_in": "TanglePatterns.com; The Book of Zentangle",
+    "family": "Farmer",
+    "difficulty": "beginner",
+    "category": ["technique", "auras"],
+    "steps_en": [
+      "Auras is technically a 'technique' rather than a single tangle.",
+      "Outside any shape, draw a thin offset contour line (the aura).",
+      "Draw a second, third aura.",
+      "Auras can be uniform or tapered, and can also be drawn 'inward,' contracting toward the center."
+    ],
+    "steps_zh": [
+      "Auras 嚴格來說是個「技法」，不是單一圖樣。",
+      "在任何形狀外側畫一條細的偏移輪廓線（光環）；再畫第二、第三道。",
+      "光環可以等距、可以漸變。",
+      "也可以「往內」畫，向中心收縮。"
+    ],
+    "why_important_en": "Auras is the most universal tool in the Zentangle vocabulary — turning any single line into a 'glow' or 'echo.'",
+    "why_important_zh": "Auras 是禪繞詞彙中最萬用的工具——把單一線條變成「光暈」「回聲」的感覺。"
+  },
+  {
+    "_id": "tangle.sparkle",
+    "_type": "tangle",
+    "slug": { "current": "sparkle" },
+    "name_en": "Sparkle",
+    "name_zh": "閃光紋",
+    "creator_name": "Linda Farmer",
+    "creator_role": "Founder of TanglePatterns.com (named the technique)",
+    "first_published_year": 2010,
+    "first_published_in": "TanglePatterns.com; Joy of Zentangle",
+    "family": "Farmer",
+    "difficulty": "beginner",
+    "category": ["technique"],
+    "steps_en": [
+      "Sparkle is the technique of intentionally leaving an unbroken white line within a pattern to suggest highlight.",
+      "When drawing a long shape (a leaf, a curl, an aura), lift the pen briefly, skip 1-2mm, and continue — the resulting white line is the highlight."
+    ],
+    "steps_zh": [
+      "Sparkle 是「在圖樣中刻意留下一條未斷白線」以暗示高光的技法。",
+      "在描繪長形物（一片葉、一個捲、一道光環）時，提筆瞬間，跳過 1–2 mm 再續筆，留下的白線就是光點。"
+    ],
+    "why_important_en": "Sparkle is the cheapest, most powerful 3D effect — like the bright reflection on the surface of tea.",
+    "why_important_zh": "Sparkle 是最便宜、效果最強的立體感技巧——像茶湯表面那一道反光。"
+  },
+  {
+    "_id": "tangle.arukas",
+    "_type": "tangle",
+    "slug": { "current": "arukas" },
+    "name_en": "Arukas",
+    "name_zh": "雪花輻紋",
+    "creator_name": "Mihoko Kurosaki",
+    "creator_role": "CZT (popularized via TanglePatterns.com)",
+    "first_published_year": 2012,
+    "first_published_in": "TanglePatterns.com",
+    "family": "Farmer",
+    "difficulty": "advanced",
+    "category": ["geometric", "3d-illusion"],
+    "steps_en": [
+      "Draw a small circle in the center.",
+      "Radiate even number of rays outward (8, 12, or 16).",
+      "Between each pair of adjacent rays, draw a triangular wedge that slightly overlaps the next.",
+      "Continue adding outer rings of smaller wedges."
+    ],
+    "steps_zh": [
+      "中央畫一個小圓。",
+      "從圓向外射出偶數條（8、12、16）直線輻射。",
+      "每對相鄰輻射之間畫一個三角楔，輕微疊到下一個楔。",
+      "沿輻射方向往外加一圈又一圈更小的楔。"
+    ],
+    "why_important_en": "Arukas is one of the most popular advanced tangles — symmetrical, hypnotic, and deeply satisfying to complete.",
+    "why_important_zh": "Arukas 是最受歡迎的進階圖樣之一——對稱、催眠般的視覺效果，畫起來特別有成就感。"
+  },
+  {
+    "_id": "tangle.rixty",
+    "_type": "tangle",
+    "slug": { "current": "rixty" },
+    "name_en": "Rixty",
+    "name_zh": "點線交錯紋",
+    "creator_name": "Linda Farmer",
+    "creator_role": "Founder of TanglePatterns.com",
+    "first_published_year": 2011,
+    "first_published_in": "TanglePatterns.com",
+    "family": "Farmer",
+    "difficulty": "beginner",
+    "category": ["grid-based", "filler"],
+    "steps_en": [
+      "Draw a square grid.",
+      "Place a solid dot in every other cell.",
+      "In remaining cells, draw a pair of crossing diagonals.",
+      "Read as a chessboard of dots and X's."
+    ],
+    "steps_zh": [
+      "畫一格方格網。",
+      "每隔一格放一個實心圓點。",
+      "其餘格內畫一對交叉的對角線。",
+      "整片讀起來像「點」與「X」的棋盤。"
+    ],
+    "why_important_en": "Rixty is a clean geometric filler suited for backgrounds.",
+    "why_important_zh": "Rixty 是乾淨幾何的填料，適合做背景。"
+  },
+  {
+    "_id": "tangle.quib",
+    "_type": "tangle",
+    "slug": { "current": "quib" },
+    "name_en": "Quib",
+    "name_zh": "奎布紋",
+    "creator_name": "Linda Farmer",
+    "creator_role": "Founder of TanglePatterns.com",
+    "first_published_year": 2011,
+    "first_published_in": "TanglePatterns.com",
+    "family": "Farmer",
+    "difficulty": "beginner",
+    "category": ["geometric", "filler"],
+    "steps_en": [
+      "Draw a vertical line.",
+      "Shoot a series of thin upward-J strokes from it, evenly spaced.",
+      "Draw another vertical line beside it with another row of J-strokes facing the opposite direction.",
+      "The two columns visually interlock."
+    ],
+    "steps_zh": [
+      "畫一條垂直線。",
+      "從它射出一系列細的向上 J 形筆劃，間距均勻。",
+      "旁邊再畫另一條垂直線與另一組 J 形筆劃，方向相反。",
+      "兩行視覺上互鎖。"
+    ],
+    "why_important_en": "Quib gives vertical rhythm — lighter than Striping.",
+    "why_important_zh": "Quib 給垂直節奏——比 Striping 更輕巧。"
+  },
+  {
+    "_id": "tangle.amaze",
+    "_type": "tangle",
+    "slug": { "current": "amaze" },
+    "name_en": "Amaze",
+    "name_zh": "迷宮紋",
+    "creator_name": "Carole Ohl",
+    "creator_role": "CZT",
+    "first_published_year": 2011,
+    "first_published_in": "TanglePatterns.com; CZT courses",
+    "family": "Other CZT",
+    "difficulty": "intermediate",
+    "category": ["grid-based", "geometric"],
+    "steps_en": [
+      "Sketch a square in pencil.",
+      "Starting at one corner, draw a continuous line spiraling inward — turning 90° at each step like a wall-less labyrinth.",
+      "The line ends at the center of the square.",
+      "Repeat in adjacent squares; alternate starting corners so spirals interlock."
+    ],
+    "steps_zh": [
+      "鉛筆畫一個方形。",
+      "從一個角開始，畫一條連續的線往內螺旋——每一步轉 90°，像沒有牆的迷宮。",
+      "線終結在方形中央。",
+      "在相鄰方形重複；交錯起點，使螺旋互鎖。"
+    ],
+    "why_important_en": "Amaze is the classic 'maze' tangle, deeply meditative when drawn slowly.",
+    "why_important_zh": "Amaze 是經典的「迷宮」圖樣，慢慢畫特別療癒。"
+  },
+  {
+    "_id": "tangle.wud",
+    "_type": "tangle",
+    "slug": { "current": "wud" },
+    "name_en": "Wud",
+    "name_zh": "樹皮紋",
+    "creator_name": "Karry Heun",
+    "creator_role": "CZT",
+    "first_published_year": 2012,
+    "first_published_in": "TanglePatterns.com",
+    "family": "Other CZT",
+    "difficulty": "beginner",
+    "category": ["organic"],
+    "steps_en": [
+      "Draw a row of vertical wavy lines, like cross-sections of stacked planks.",
+      "Inside each plank, draw nested ovals — like wood grain rings.",
+      "Optionally darken one edge of each plank."
+    ],
+    "steps_zh": [
+      "畫一排垂直波浪線，像層層木板的剖面。",
+      "在每塊木板內畫巢套的橢圓——像年輪木紋。",
+      "視需要把每塊木板的一邊加深。"
+    ],
+    "why_important_en": "Wud is the go-to for any 'wood / bark / texture' effect — especially for Taiwanese readers' familiarity with hinoki cypress.",
+    "why_important_zh": "Wud 是任何「木質、樹皮、紋理」效果的首選——特別適合台灣讀者熟悉的檜木質感聯想。"
+  }
+]
+```

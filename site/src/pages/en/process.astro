@@ -1,0 +1,108 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import ProcessTabs from '@/components/process/ProcessTabs';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'en';
+const currentPath = '/en/process';
+const title = 'Zentangle Chou — Eight-Step Creative Process';
+const description = 'The structured method of Zentangle and my personal interpretation';
+
+const steps = [
+  {
+    num: 1,
+    name: 'Define the Border',
+    officialDesc: 'Lightly draw an irregular border on white paper with a pencil (usually 4–6 lines), dividing the tile into different sections. This boundary defines your space while suggesting infinite possibilities.',
+    personalDesc: 'I spend 2–3 minutes imagining the "flow" of the border—letting the lines naturally guide the eye across the paper. Sometimes the border itself feels like a maze.'
+  },
+  {
+    num: 2,
+    name: 'Trace the Edge',
+    officialDesc: 'Use a black ink pen to trace along the pencil lines, solidifying the boundary. This step confirms your "canvas."',
+    personalDesc: 'I like to pause at this step and feel the shape of the border. Sometimes I adjust it slightly to better match my mood in that moment.'
+  },
+  {
+    num: 3,
+    name: 'Weave the String',
+    officialDesc: 'Draw organic curves (usually called "strings") between the borders and sections, connecting different spaces. No straight lines—everything flows naturally.',
+    personalDesc: 'This is my favorite step. The string determines the whole composition's "breath"—slow, rhythmic curves that draw me into flow.'
+  },
+  {
+    num: 4,
+    name: 'Fill with Tangles',
+    officialDesc: 'Select one or more tangles (repeating patterns) and fill each section. Each area is independent, allowing different patterns to coexist.',
+    personalDesc: 'I usually plan 3–4 tangle combinations beforehand, but often change my mind mid-way. The best tiles often come from unexpected discovery, not pre-planning.'
+  },
+  {
+    num: 5,
+    name: 'Add Depth & Layers',
+    officialDesc: 'Add finer lines within certain tangles, or vary stroke width, creating a sense of dimension. This isn\'t shading—it\'s variation in line density.',
+    personalDesc: 'I lightly mark areas to deepen with a pencil, then apply different strokes (thick, thin, broken) to express depth.'
+  },
+  {
+    num: 6,
+    name: 'Shade Selectively',
+    officialDesc: 'Add shading with pencil or gray pen to certain areas, reinforcing dimension and contrast. Shading typically appears at borders, pattern edges, or focal points.',
+    personalDesc: 'Shading is the final adjustment. I step back to view the whole tile and ask, "What needs to be seen?" before adding intentionally.'
+  },
+  {
+    num: 7,
+    name: 'Let It Breathe',
+    officialDesc: 'Review the whole composition and decide if adjustments are needed. Sometimes a perfect tile simply needs white space—don\'t over-fill.',
+    personalDesc: 'I usually walk away for 10 minutes at this step, then return with fresh eyes. Often I discover it\'s already complete.'
+  },
+  {
+    num: 8,
+    name: 'Sign & Date',
+    officialDesc: 'Write your name and date on the tile, declaring this a finished work. This is the spiritual heart of Zentangle—acknowledging your labor.',
+    personalDesc: 'When signing, I write a word or phrase capturing how I felt creating it. Not vanity, but recognition: "I was here. I finished."'
+  }
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="font-display-en text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-6">
+          Eight-Step Creative Process
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          Zentangle's structured method and my personal interpretation
+        </p>
+      </div>
+    </section>
+
+    <!-- Process Content -->
+    <section class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <ProcessTabs steps={steps} lang="en" client:visible />
+      </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-display-en text-2xl text-ink-700 dark:text-ink-50 mb-8 text-center">
+          Why Eight Steps?
+        </h2>
+        <p class="font-body text-ink-600 dark:text-ink-300 leading-relaxed text-center">
+          The eight steps aren't a rigid dogma—they're a rhythm. Each step invites you to slow down, make a decision, see what you're doing. When you repeat this cycle, you gradually enter a flow state—no longer thinking "I'm drawing," just drawing. This is Zentangle's essence: from conscious practice into unconscious focus.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

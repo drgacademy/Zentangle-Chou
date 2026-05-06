@@ -1,0 +1,121 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'zh';
+const currentPath = '/zh/contact';
+const title = 'Zentangle Chou — 聯絡我';
+const description = '有任何問題或合作想法？歡迎聯絡我。';
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="font-display-zh text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-4">
+          聯絡我
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          有任何問題、合作想法或建議？我很樂意聽聽你的想法。
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 px-4">
+      <div class="max-w-2xl mx-auto">
+        <!-- Contact Form -->
+        <form action="https://api.web3forms.com/submit" method="POST" class="mb-16">
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+
+          <div class="mb-6">
+            <label class="block font-body text-sm font-medium text-ink-700 dark:text-ink-50 mb-2">
+              姓名
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              class="w-full px-4 py-3 border border-ink-200 dark:border-ink-600 bg-white dark:bg-ink-700 text-ink-900 dark:text-ink-50 rounded-sm focus:outline-none focus:ring-2 focus:ring-ink-400 dark:focus:ring-ink-500"
+              placeholder="你的名字"
+            />
+          </div>
+
+          <div class="mb-6">
+            <label class="block font-body text-sm font-medium text-ink-700 dark:text-ink-50 mb-2">
+              電郵
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-ink-200 dark:border-ink-600 bg-white dark:bg-ink-700 text-ink-900 dark:text-ink-50 rounded-sm focus:outline-none focus:ring-2 focus:ring-ink-400 dark:focus:ring-ink-500"
+              placeholder="你的電郵"
+            />
+          </div>
+
+          <div class="mb-6">
+            <label class="block font-body text-sm font-medium text-ink-700 dark:text-ink-50 mb-2">
+              主旨
+            </label>
+            <input
+              type="text"
+              name="subject"
+              required
+              class="w-full px-4 py-3 border border-ink-200 dark:border-ink-600 bg-white dark:bg-ink-700 text-ink-900 dark:text-ink-50 rounded-sm focus:outline-none focus:ring-2 focus:ring-ink-400 dark:focus:ring-ink-500"
+              placeholder="訊息主旨"
+            />
+          </div>
+
+          <div class="mb-8">
+            <label class="block font-body text-sm font-medium text-ink-700 dark:text-ink-50 mb-2">
+              訊息
+            </label>
+            <textarea
+              name="message"
+              required
+              rows="6"
+              class="w-full px-4 py-3 border border-ink-200 dark:border-ink-600 bg-white dark:bg-ink-700 text-ink-900 dark:text-ink-50 rounded-sm focus:outline-none focus:ring-2 focus:ring-ink-400 dark:focus:ring-ink-500"
+              placeholder="請在這裡寫下你的訊息..."
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full px-6 py-3 bg-ink-700 dark:bg-ink-100 text-ink-50 dark:text-ink-900 rounded-sm font-medium hover:bg-ink-600 dark:hover:bg-ink-200 transition-colors"
+          >
+            送出訊息
+          </button>
+        </form>
+
+        <!-- Info -->
+        <div class="bg-ink-50 dark:bg-ink-800 rounded-sm p-8 text-center">
+          <h2 class="font-display-zh text-xl text-ink-700 dark:text-ink-50 mb-4">
+            其他聯絡方式
+          </h2>
+          <p class="font-body text-ink-600 dark:text-ink-300 mb-4">
+            你也可以透過以下方式與我聯絡：
+          </p>
+          <p class="font-body text-ink-700 dark:text-ink-50">
+            <a href="mailto:drgacademy1@gmail.com" class="underline hover:text-ink-500">
+              drgacademy1@gmail.com
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

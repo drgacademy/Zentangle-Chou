@@ -1,0 +1,120 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import PortfolioCard from '@/components/portfolio/PortfolioCard.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+import artworks from '@/data/artworks.json';
+
+const lang = 'zh';
+const currentPath = '/zh/portfolio';
+const title = 'Zentangle Chou — 作品集';
+const description = 'YuChiao Chou 的禪繞畫作品集';
+
+// 簡單的篩選邏輯（client-side）
+const allTangles = Array.from(new Set(artworks.flatMap(a => a.tangles)));
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="font-display-zh text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-4">
+          作品集
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          這些作品代表了我在禪繞畫創作旅途中的不同時刻與思考。每一張都是一次完成的確認。
+        </p>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 px-4 bg-white dark:bg-ink-700 border-b border-ink-200 dark:border-ink-600">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex flex-wrap gap-2">
+          <button
+            id="filter-all"
+            class="px-4 py-2 bg-ink-700 dark:bg-ink-100 text-ink-50 dark:text-ink-900 rounded-sm font-medium transition-colors"
+            data-filter="all"
+          >
+            全部
+          </button>
+          {allTangles.map(tangle => (
+            <button
+              class="px-4 py-2 bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-50 rounded-sm hover:bg-ink-200 dark:hover:bg-ink-500 transition-colors"
+              data-filter={tangle}
+            >
+              {tangle}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Masonry Grid -->
+    <section class="py-20 px-4">
+      <div class="max-w-5xl mx-auto">
+        <div
+          id="portfolio-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {artworks.map(artwork => (
+            <div data-tangles={artwork.tangles.join(',')}>
+              <PortfolioCard
+                id={artwork.id}
+                titleZh={artwork.titleZh}
+                titleEn={artwork.titleEn}
+                descZh={artwork.descZh}
+                descEn={artwork.descEn}
+                thumbnail={artwork.thumbnail}
+                date={artwork.date}
+                tangles={artwork.tangles}
+                lang="zh"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+
+  <script>
+    // 簡單的客戶端篩選
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const portfolioItems = document.querySelectorAll('#portfolio-grid > div');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 移除所有按鈕的活躍狀態
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-ink-700', 'dark:bg-ink-100', 'text-ink-50', 'dark:text-ink-900');
+          b.classList.add('bg-ink-100', 'dark:bg-ink-600', 'text-ink-700', 'dark:text-ink-50');
+        });
+
+        // 設置當前按鈕為活躍
+        button.classList.add('bg-ink-700', 'dark:bg-ink-100', 'text-ink-50', 'dark:text-ink-900');
+        button.classList.remove('bg-ink-100', 'dark:bg-ink-600', 'text-ink-700', 'dark:text-ink-50');
+
+        const filter = button.getAttribute('data-filter');
+
+        // 篩選項目
+        portfolioItems.forEach(item => {
+          const tangles = item.getAttribute('data-tangles')?.split(',') || [];
+          const matches = filter === 'all' || tangles.includes(filter);
+          item.style.display = matches ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</Layout>

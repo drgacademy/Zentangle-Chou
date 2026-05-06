@@ -1,0 +1,77 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = Astro.request.headers.get('accept-language')?.startsWith('zh') ? 'zh' : 'en';
+const currentPath = '/404';
+
+const content = {
+  zh: {
+    title: '找不到頁面',
+    message: '這個頁面不存在，或者已經被移除。',
+    subtitle: '就像畫錯了一筆，但在禪繞畫中沒有錯誤。',
+    link: '回到首頁',
+  },
+  en: {
+    title: 'Page Not Found',
+    message: 'This page doesn\'t exist, or has been removed.',
+    subtitle: 'Like a misdrawn line, but in Zentangle, there are no mistakes.',
+    link: 'Back to Home',
+  }
+};
+
+const t = content[lang];
+const homeLink = lang === 'zh' ? '/' : '/en/';
+---
+
+<Layout
+  title={lang === 'zh' ? '404 — 找不到頁面' : '404 — Not Found'}
+  description={t.message}
+  lang={lang}
+  currentPath={currentPath}
+  noIndex={true}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1 flex items-center justify-center py-20 px-4">
+    <div class="text-center max-w-xl">
+      <!-- 簡單的 404 插圖 SVG -->
+      <svg
+        viewBox="0 0 200 200"
+        className="w-24 h-24 mx-auto mb-8 opacity-50"
+        aria-hidden="true"
+      >
+        <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M 70 80 L 130 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="80" cy="100" r="8" fill="currentColor" />
+        <circle cx="120" cy="100" r="8" fill="currentColor" />
+        <path d="M 80 130 Q 100 140, 120 130" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+      </svg>
+
+      <h1 class="font-display-zh md:font-display-en text-6xl font-bold text-ink-700 dark:text-ink-50 mb-4">
+        404
+      </h1>
+      <h2 class="font-display-zh md:font-display-en text-2xl text-ink-600 dark:text-ink-300 mb-4">
+        {t.title}
+      </h2>
+      <p class="font-body text-ink-500 dark:text-ink-400 mb-2">
+        {t.message}
+      </p>
+      <p class="font-body text-sm text-ink-400 dark:text-ink-500 mb-8">
+        {t.subtitle}
+      </p>
+
+      <a
+        href={homeLink}
+        class="inline-block px-6 py-3 bg-ink-700 dark:bg-ink-100 text-ink-50 dark:text-ink-900 rounded-sm font-medium hover:bg-ink-600 dark:hover:bg-ink-200 transition-colors"
+      >
+        {t.link}
+      </a>
+    </div>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

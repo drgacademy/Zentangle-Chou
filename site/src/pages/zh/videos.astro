@@ -1,0 +1,109 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'zh';
+const currentPath = '/zh/videos';
+const title = 'Zentangle Chou — 影片教學';
+const description = '禪繞畫步驟示範與創作過程';
+
+const videos = [
+  {
+    id: 1,
+    titleZh: 'Crescent Moon 初級教學',
+    titleEn: 'Crescent Moon Beginner Tutorial',
+    youtubeId: 'dQw4w9WgXcQ',
+    descZh: '學習禪繞畫最基礎的圖樣：新月紋。完美適合初學者。'
+  },
+  {
+    id: 2,
+    titleZh: '完整紙磚創作過程',
+    titleEn: 'Complete Tile Creation Process',
+    youtubeId: 'jNQXAC9IVRw',
+    descZh: '從邊框到簽名，看一張完整的紙磚是如何誕生的。約 20 分鐘。'
+  },
+  {
+    id: 3,
+    titleZh: '暗模式繪製技巧',
+    titleEn: 'Shading & Depth Techniques',
+    youtubeId: '9bZkp7q19f0',
+    descZh: '用陰影和光環技巧營造立體感。適合中級練習者。'
+  }
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="font-display-zh text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-4">
+          影片教學
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          跟著影片逐步學習禪繞畫的各項技巧與圖樣。
+        </p>
+      </div>
+    </section>
+
+    <!-- Videos Grid -->
+    <section class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid md:grid-cols-1 lg:grid-cols-1 gap-8">
+          {videos.map(video => (
+            <div class="bg-white dark:bg-ink-700 rounded-sm overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+              <!-- YouTube Embed -->
+              <div class="relative w-full aspect-video bg-ink-900">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0`}
+                  title={video.titleZh}
+                  class="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- Content -->
+              <div class="p-6">
+                <h3 class="font-display-zh text-xl font-semibold text-ink-700 dark:text-ink-50 mb-2">
+                  {video.titleZh}
+                </h3>
+                <p class="font-body text-sm text-ink-500 dark:text-ink-400 mb-3">
+                  {video.titleEn}
+                </p>
+                <p class="font-body text-ink-600 dark:text-ink-300 leading-relaxed">
+                  {video.descZh}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Coming Soon -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-4">
+          更多課程即將推出
+        </h2>
+        <p class="font-body text-ink-600 dark:text-ink-300 max-w-2xl mx-auto">
+          我們正在準備更多深入的教學影片，涵蓋進階技巧、創意應用與特殊效果。敬請期待！
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

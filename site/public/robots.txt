@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: *.xml
+Disallow: *.pdf
+
+Sitemap: https://yuchiaochou.github.io/Zentangle-Chou/sitemap-index.xml
+
+User-agent: GPTBot
+User-agent: ChatGPT-User
+Disallow: /

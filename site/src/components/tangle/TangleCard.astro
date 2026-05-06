@@ -1,0 +1,91 @@
+---
+interface Props {
+  slug: string;
+  nameZh: string;
+  nameEn: string;
+  creatorName: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  categories: string[];
+  hasAnimation: boolean;
+  lang: 'zh' | 'en';
+}
+
+const {
+  slug,
+  nameZh,
+  nameEn,
+  creatorName,
+  difficulty,
+  categories,
+  hasAnimation,
+  lang
+} = Astro.props;
+
+const name = lang === 'zh' ? nameZh : nameEn;
+const detailLink = lang === 'zh' ? `/zh/tangles/${slug}` : `/en/tangles/${slug}`;
+const difficultyColor = {
+  'beginner': 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200',
+  'intermediate': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
+  'advanced': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200'
+};
+const difficultyLabel = {
+  'beginner': lang === 'zh' ? '初級' : 'Beginner',
+  'intermediate': lang === 'zh' ? '中級' : 'Intermediate',
+  'advanced': lang === 'zh' ? '進階' : 'Advanced'
+};
+---
+
+<a
+  href={detailLink}
+  class="group block bg-white dark:bg-ink-700 rounded-sm overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+  transition:name={`tangle-${slug}`}
+>
+  <!-- 縮圖區域 - 預留動畫位置 -->
+  <div class="relative aspect-square bg-gradient-to-br from-ink-50 to-ink-100 dark:from-ink-700 dark:to-ink-600 overflow-hidden flex items-center justify-center">
+    {hasAnimation ? (
+      <div class="text-center text-ink-400 dark:text-ink-500 text-sm">
+        <p class="font-display-zh md:font-display-en">
+          {lang === 'zh' ? '步驟動畫' : 'Step Animation'}
+        </p>
+      </div>
+    ) : (
+      <div class="text-center text-ink-300 dark:text-ink-600 text-xs">
+        <p>{lang === 'zh' ? '動畫即將上線' : 'Coming Soon'}</p>
+      </div>
+    )}
+  </div>
+
+  <!-- 文字區域 -->
+  <div class="p-4">
+    <!-- 標題 -->
+    <h3 class="font-display-zh md:font-display-en text-lg font-semibold text-ink-700 dark:text-ink-50 mb-2">
+      {name}
+    </h3>
+
+    <!-- 創作者 -->
+    <p class="font-body text-xs text-ink-500 dark:text-ink-400 mb-3">
+      {creatorName}
+    </p>
+
+    <!-- 難度徽章 -->
+    <div class="flex items-center gap-2 mb-3">
+      <span class={`inline-block px-2 py-1 text-xs rounded font-medium ${difficultyColor[difficulty]}`}>
+        {difficultyLabel[difficulty]}
+      </span>
+    </div>
+
+    <!-- 分類標籤 -->
+    <div class="flex flex-wrap gap-1">
+      {categories.slice(0, 2).map(cat => (
+        <span class="inline-block px-2 py-0.5 text-xs bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-200 rounded">
+          {cat}
+        </span>
+      ))}
+      {categories.length > 2 && (
+        <span class="inline-block px-2 py-0.5 text-xs text-ink-500 dark:text-ink-400">
+          +{categories.length - 2}
+        </span>
+      )}
+    </div>
+  </div>
+</a>

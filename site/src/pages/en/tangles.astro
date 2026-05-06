@@ -1,0 +1,185 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCard from '@/components/tangle/TangleCard.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+import tangles from '@/data/tangles.json';
+
+const lang = 'en';
+const currentPath = '/en/tangles';
+const title = 'Zentangle Chou — Tangle Dictionary';
+const description = 'Complete dictionary of 41 classic Zentangle patterns';
+
+const animatedTangles = ['crescent-moon', 'hollibaugh', 'printemps', 'cadent', 'mooka', 'florz', 'tipple', 'knightsbridge'];
+
+const allCategories = Array.from(new Set(tangles.flatMap(t => t.category)));
+const difficulties = ['beginner', 'intermediate', 'advanced'];
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="font-display-en text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-4">
+          Tangle Dictionary
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          41 classic Zentangle patterns. Each represents a rhythm of repetition and meditation.
+        </p>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 px-4 bg-white dark:bg-ink-700 border-b border-ink-200 dark:border-ink-600 sticky top-16 z-40">
+      <div class="max-w-5xl mx-auto">
+        <div class="mb-4">
+          <h3 class="font-display-en text-sm text-ink-600 dark:text-ink-400 uppercase mb-2">Difficulty</h3>
+          <div class="flex flex-wrap gap-2">
+            <button data-filter-type="difficulty" data-filter="all" class="px-3 py-1.5 bg-ink-700 dark:bg-ink-100 text-ink-50 dark:text-ink-900 rounded-sm text-sm font-medium">
+              All
+            </button>
+            {difficulties.map(d => (
+              <button
+                data-filter-type="difficulty"
+                data-filter={d}
+                class="px-3 py-1.5 bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-50 rounded-sm text-sm hover:bg-ink-200 dark:hover:bg-ink-500 transition-colors"
+              >
+                {d === 'beginner' ? 'Beginner' : d === 'intermediate' ? 'Intermediate' : 'Advanced'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-display-en text-sm text-ink-600 dark:text-ink-400 uppercase mb-2">Category</h3>
+          <div class="flex flex-wrap gap-2">
+            <button data-filter-type="category" data-filter="all" class="px-3 py-1.5 bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-50 rounded-sm text-sm">
+              All Categories
+            </button>
+            {allCategories.map(cat => (
+              <button
+                data-filter-type="category"
+                data-filter={cat}
+                class="px-3 py-1.5 bg-ink-100 dark:bg-ink-600 text-ink-700 dark:text-ink-50 rounded-sm text-sm hover:bg-ink-200 dark:hover:bg-ink-500 transition-colors"
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="py-20 px-4">
+      <div class="max-w-5xl mx-auto">
+        <div id="tangles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tangles.map(tangle => (
+            <div
+              data-difficulty={tangle.difficulty}
+              data-categories={tangle.category.join(',')}
+            >
+              <TangleCard
+                slug={tangle.slug.current}
+                nameZh={tangle.name_zh}
+                nameEn={tangle.name_en}
+                creatorName={tangle.creator_name}
+                difficulty={tangle.difficulty}
+                categories={tangle.category}
+                hasAnimation={animatedTangles.includes(tangle.slug.current)}
+                lang="en"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-16 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <p class="font-display-en text-4xl text-ink-700 dark:text-ink-50 font-bold mb-2">
+              41
+            </p>
+            <p class="font-body text-ink-600 dark:text-ink-300">
+              Classic Patterns
+            </p>
+          </div>
+          <div>
+            <p class="font-display-en text-4xl text-ink-700 dark:text-ink-50 font-bold mb-2">
+              8
+            </p>
+            <p class="font-body text-ink-600 dark:text-ink-300">
+              With Step Animations
+            </p>
+          </div>
+          <div>
+            <p class="font-display-en text-4xl text-ink-700 dark:text-ink-50 font-bold mb-2">
+              3
+            </p>
+            <p class="font-body text-ink-600 dark:text-ink-300">
+              Difficulty Levels
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter-type]');
+    const tangleItems = document.querySelectorAll('#tangles-grid > div');
+
+    let activeDifficultyFilter = 'all';
+    let activeCategoryFilter = 'all';
+
+    function updateGrid() {
+      tangleItems.forEach(item => {
+        const difficulty = item.getAttribute('data-difficulty');
+        const categories = item.getAttribute('data-categories')?.split(',') || [];
+
+        const difficultyMatch = activeDifficultyFilter === 'all' || difficulty === activeDifficultyFilter;
+        const categoryMatch = activeCategoryFilter === 'all' || categories.includes(activeCategoryFilter);
+
+        item.style.display = difficultyMatch && categoryMatch ? '' : 'none';
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filterType = button.getAttribute('data-filter-type');
+        const filterValue = button.getAttribute('data-filter');
+
+        document.querySelectorAll(`[data-filter-type="${filterType}"]`).forEach(b => {
+          b.classList.remove('bg-ink-700', 'dark:bg-ink-100', 'text-ink-50', 'dark:text-ink-900');
+          b.classList.add('bg-ink-100', 'dark:bg-ink-600', 'text-ink-700', 'dark:text-ink-50');
+        });
+
+        button.classList.add('bg-ink-700', 'dark:bg-ink-100', 'text-ink-50', 'dark:text-ink-900');
+        button.classList.remove('bg-ink-100', 'dark:bg-ink-600', 'text-ink-700', 'dark:text-ink-50');
+
+        if (filterType === 'difficulty') {
+          activeDifficultyFilter = filterValue;
+        } else {
+          activeCategoryFilter = filterValue;
+        }
+
+        updateGrid();
+      });
+    });
+  </script>
+</Layout>
