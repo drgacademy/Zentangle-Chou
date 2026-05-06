@@ -202,7 +202,7 @@ export default function ProcessTabs({ steps, lang = 'zh' }: ProcessTabsProps) {
           />
         </svg>
 
-        <div className="relative grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3">
+        <div className="relative z-10 grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3">
           {steps.map((step, idx) => {
             const isActive = idx === activeStep;
             const isPast = idx < activeStep;
@@ -431,6 +431,8 @@ export default function ProcessTabs({ steps, lang = 'zh' }: ProcessTabsProps) {
 
         .process-tabs .step-tab {
           opacity: 0;
+          pointer-events: auto;
+          cursor: pointer;
           animation: processFadeIn 0.7s var(--easing-smooth, cubic-bezier(0.4,0,0.2,1)) forwards;
         }
         .process-tabs .step-tab.is-active {
