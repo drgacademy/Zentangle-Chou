@@ -1,4 +1,6 @@
 ---
+import { drawTinyTangle } from '@/lib/tangles';
+
 interface Props {
   slug: string;
   nameZh: string;
@@ -21,6 +23,10 @@ const {
   lang
 } = Astro.props;
 
+// Generate a procedural preview tile for this tangle. Seeded by slug so the
+// same tangle always looks identical across renders.
+const previewSvg = drawTinyTangle(slug, 200, slug);
+
 const name = lang === 'zh' ? nameZh : nameEn;
 const detailLink = lang === 'zh' ? `/zh/tangles/${slug}` : `/en/tangles/${slug}`;
 const difficultyColor = {
@@ -40,20 +46,13 @@ const difficultyLabel = {
   class="group block bg-white dark:bg-ink-700 rounded-sm overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
   transition:name={`tangle-${slug}`}
 >
-  <!-- 縮圖區域 - 預留動畫位置 -->
-  <div class="relative aspect-square bg-gradient-to-br from-ink-50 to-ink-100 dark:from-ink-700 dark:to-ink-600 overflow-hidden flex items-center justify-center">
-    {hasAnimation ? (
-      <div class="text-center text-ink-400 dark:text-ink-500 text-sm">
-        <p class="font-display-zh md:font-display-en">
-          {lang === 'zh' ? '步驟動畫' : 'Step Animation'}
-        </p>
-      </div>
-    ) : (
-      <div class="text-center text-ink-300 dark:text-ink-600 text-xs">
-        <p>{lang === 'zh' ? '動畫即將上線' : 'Coming Soon'}</p>
-      </div>
-    )}
-  </div>
+  <!-- 縮圖:程式化禪繞圖樣 -->
+  <div
+    class="relative aspect-square overflow-hidden flex items-center justify-center hand-drawn text-ink-700 dark:text-ink-100 group-hover:scale-[1.04] transition-transform duration-500"
+    style="background-color: var(--paper-bg);"
+    set:html={previewSvg}
+  />
+
 
   <!-- 文字區域 -->
   <div class="p-4">

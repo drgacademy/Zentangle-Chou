@@ -1,6 +1,10 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '@/styles/globals.css';
+import PaperTexture from '@/components/common/PaperTexture.astro';
+import HandDrawnFilter from '@/components/common/HandDrawnFilter.astro';
+import BreathingAmbient from '@/components/common/BreathingAmbient';
+import TangleField from '@/components/common/TangleField';
 
 interface Props {
   title: string;
@@ -31,8 +35,8 @@ const siteDescription = description || (
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={siteDescription} />
-    <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAF7F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1B1A18" media="(prefers-color-scheme: dark)" />
 
     <!-- SEO -->
     <title>{title} | {siteTitle}</title>
@@ -60,7 +64,11 @@ const siteDescription = description || (
   </head>
 
   <body>
-    <div class="flex flex-col min-h-screen bg-ink-50 dark:bg-ink-900 text-ink-600 dark:text-ink-200 transition-colors">
+    <HandDrawnFilter />
+    <PaperTexture />
+    <TangleField client:idle />
+    <BreathingAmbient client:idle />
+    <div class="flex flex-col min-h-screen text-ink-600 dark:text-ink-200 transition-colors relative" style="background-color: var(--paper-bg); z-index: 1;">
       <slot />
     </div>
   </body>

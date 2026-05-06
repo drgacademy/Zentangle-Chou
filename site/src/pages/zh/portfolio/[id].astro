@@ -4,6 +4,7 @@ import SiteHeader from '@/components/layout/SiteHeader.astro';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import artworks from '@/data/artworks.json';
+import { drawTile } from '@/lib/tangles';
 
 export async function getStaticPaths() {
   return artworks.map(artwork => ({
@@ -29,6 +30,11 @@ const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex +
 
 const dateObj = new Date(artwork.date);
 const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+
+const hasRealImage = artwork.full && !artwork.full.endsWith('.svg');
+const proceduralTile = !hasRealImage
+  ? drawTile({ seed: `artwork-${artwork.id}-${artwork.titleEn}`, size: 800, tangles: artwork.tangles.map(t => t.toLowerCase().replace(/\s+/g, '-')) as any })
+  : null;
 ---
 
 <Layout
@@ -57,12 +63,20 @@ const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateOb
     <section class="py-12 px-4 bg-white dark:bg-ink-700">
       <div class="max-w-4xl mx-auto">
         <div class="relative aspect-square bg-ink-100 dark:bg-ink-600 rounded-sm overflow-hidden mb-8">
-          <img
-            src={artwork.full}
-            alt={artwork.titleZh}
-            class="w-full h-full object-contain"
-            id="artwork-image"
-          />
+          {hasRealImage ? (
+            <img
+              src={artwork.full}
+              alt={artwork.titleZh}
+              class="w-full h-full object-contain"
+              id="artwork-image"
+            />
+          ) : (
+            <div
+              class="w-full h-full flex items-center justify-center text-ink-700 dark:text-ink-100 hand-drawn"
+              style="background-color: var(--paper-bg);"
+              set:html={proceduralTile}
+            />
+          )}
         </div>
       </div>
     </section>
