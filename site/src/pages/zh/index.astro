@@ -1,0 +1,25 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getT } from '@lib/i18n';
+
+const t = getT('zh');
+const currentPath = '/zh/';
+---
+
+<Layout
+  title={t.site.title}
+  description={t.site.description}
+  lang="zh"
+  currentPath={currentPath}
+>
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-3xl text-center">
+      <h1 class="font-display-zh text-5xl md:text-hero text-ink-700 dark:text-ink-50 leading-tight mb-6">
+        {t.hero.title}
+      </h1>
+      <p class="font-body text-lg md:text-xl text-ink-500 dark:text-ink-400">
+        {t.hero.subtitle}
+      </p>
+    </div>
+  </div>
+</Layout>

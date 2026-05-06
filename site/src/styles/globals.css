@@ -1,0 +1,103 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lora', 'Noto Serif TC', Georgia, serif;
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tr-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Crimson Pro', 'Lora', 'Noto Serif TC', Georgia, serif;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--color-text-bold);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--fs-4xl);
+}
+
+h1.hero {
+  font-family: 'Caveat Brush', 'Caveat', cursive;
+  font-size: var(--fs-hero);
+}
+
+h2 {
+  font-size: var(--fs-3xl);
+}
+
+h3 {
+  font-size: var(--fs-2xl);
+}
+
+h4 {
+  font-size: var(--fs-xl);
+}
+
+h5, h6 {
+  font-size: var(--fs-lg);
+}
+
+/* Paragraphs */
+p {
+  margin: 0;
+}
+
+:lang(zh-Hant) p,
+:lang(zh) p {
+  line-height: var(--lh-zh-body);
+  letter-spacing: 0.03em;
+}
+
+/* Links */
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mixed Script Support */
+.mixed-script {
+  font-feature-settings: 'palt' 1;
+  letter-spacing: 0.03em;
+}
+
+.mixed-script en {
+  letter-spacing: 0;
+}

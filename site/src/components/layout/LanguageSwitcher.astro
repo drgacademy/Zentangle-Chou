@@ -1,0 +1,41 @@
+---
+interface Props {
+  currentPath: string;
+  lang: 'zh' | 'en';
+}
+
+const { currentPath, lang } = Astro.props;
+
+const cleanPath = currentPath
+  .replace(/^\/(zh|en)/, '')
+  .replace(/\/$/, '') || '/';
+
+const zhHref = `/zh${cleanPath}`;
+const enHref = `/en${cleanPath}`;
+---
+
+<div class="flex items-center gap-2 text-sm font-body">
+  <a
+    href={zhHref}
+    hreflang="zh-Hant"
+    class={`px-2 py-1 rounded-sm transition-colors ${
+      lang === 'zh'
+        ? 'bg-ink-200 dark:bg-ink-700 text-ink-700 dark:text-ink-50 font-semibold'
+        : 'text-ink-500 dark:text-ink-400 hover:text-sepia-500'
+    }`}
+  >
+    中文
+  </a>
+  <span class="text-ink-300 dark:text-ink-600">/</span>
+  <a
+    href={enHref}
+    hreflang="en"
+    class={`px-2 py-1 rounded-sm transition-colors ${
+      lang === 'en'
+        ? 'bg-ink-200 dark:bg-ink-700 text-ink-700 dark:text-ink-50 font-semibold'
+        : 'text-ink-500 dark:text-ink-400 hover:text-sepia-500'
+    }`}
+  >
+    EN
+  </a>
+</div>

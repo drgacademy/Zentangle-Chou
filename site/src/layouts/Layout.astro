@@ -1,0 +1,72 @@
+---
+import '../styles/globals.css';
+import SiteHeader from '@components/layout/SiteHeader.astro';
+import SiteFooter from '@components/layout/SiteFooter.astro';
+import TangleCursor from '@components/cursor/TangleCursor';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: 'zh' | 'en';
+  currentPath?: string;
+  ogImage?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  lang,
+  currentPath = '/',
+  ogImage,
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = 'https://drgacademy.github.io/Zentangle-Chou';
+---
+
+<!doctype html>
+<html lang={lang === 'zh' ? 'zh-Hant-TW' : 'en'} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    {/* OG Meta */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${siteUrl}${currentPath}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    {/* Favicon */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* Google Fonts CDN - Sprint 1 temporary solution */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Caveat+Brush&family=Lora:wght@400;600&family=Crimson+Pro:wght@400;600&family=Noto+Serif+TC:wght@400;600&family=Allura&display=swap"
+      rel="stylesheet"
+    />
+
+    {/* Preload hero fonts */}
+    <link rel="preload" href="https://fonts.gstatic.com/s/caveatbrush/v11/vm8zudTKh36l8-rw5ouM2z_T2I1fVKhq8mM.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body class="bg-ink-50 text-ink-600 dark:bg-ink-900 dark:text-ink-100">
+    <SiteHeader lang={lang} currentPath={currentPath} />
+
+    <main>
+      <slot />
+    </main>
+
+    <SiteFooter lang={lang} />
+
+    {/* Custom Cursor (desktop only) */}
+    <TangleCursor client:idle />
+  </body>
+</html>

@@ -1,0 +1,65 @@
+:root {
+  /* Colors */
+  --color-bg:        #FAFAFA;
+  --color-bg-card:   #F5F4F1;
+  --color-border:    #E8E6E1;
+  --color-text:      #2E2D2A;
+  --color-text-bold: #1A1917;
+  --color-text-muted:#8E8B85;
+  --color-accent:    #C9A961;
+  --color-link:      #2E2D2A;
+  --color-link-hover:#8B7355;
+
+  /* Type Scale (Major Third = 1.250) */
+  --fs-xs:   0.80rem;   /* 12.8px */
+  --fs-sm:   0.90rem;   /* 14.4px */
+  --fs-base: 1.00rem;   /* 16px */
+  --fs-md:   1.125rem;  /* 18px */
+  --fs-lg:   1.25rem;   /* 20px */
+  --fs-xl:   1.563rem;  /* 25px */
+  --fs-2xl:  1.953rem;  /* 31.2px */
+  --fs-3xl:  2.441rem;  /* 39px */
+  --fs-4xl:  3.052rem;  /* 48.8px */
+  --fs-5xl:  3.815rem;  /* 61px */
+  --fs-hero: 4.768rem;  /* 76.3px */
+
+  /* Line Heights */
+  --lh-tight:    1.20;
+  --lh-snug:     1.45;
+  --lh-relaxed:  1.75;
+  --lh-zh-body:  1.85;
+  --lh-loose:    2.00;
+
+  /* Letter Spacing */
+  --tr-tight:  -0.02em;
+  --tr-normal:  0em;
+  --tr-wide:    0.04em;
+  --tr-wider:   0.08em;
+
+  /* Animations */
+  --animation-slow:   4s cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-medium: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-fast:   0.3s cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+.dark {
+  --color-bg:        #0A0A0A;
+  --color-bg-card:   #1A1917;
+  --color-border:    #2E2D2A;
+  --color-text:      #E8E6E1;
+  --color-text-bold: #FAFAFA;
+  --color-text-muted:#8E8B85;
+  --color-accent:    #E8D5A8;
+  --color-link:      #E8E6E1;
+  --color-link-hover:#D4C4A8;
+}
+
+/* Responsive Type Scale */
+@media (max-width: 768px) {
+  :root {
+    --fs-hero: 3.052rem;  /* 48.8px */
+    --fs-5xl:  2.441rem;
+    --fs-4xl:  1.953rem;
+    --fs-3xl:  1.563rem;
+  }
+}

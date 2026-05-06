@@ -1,0 +1,53 @@
+---
+import { getT } from '@lib/i18n';
+
+interface Props {
+  lang: 'zh' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = getT(lang);
+const basePath = lang === 'zh' ? '/zh' : '/en';
+---
+
+<footer class="mt-24 border-t border-ink-200 dark:border-ink-700 bg-ink-50 dark:bg-ink-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      {/* Brand */}
+      <div>
+        <p class="font-display-zh text-xl text-ink-700 dark:text-ink-100 mb-2">禪繞</p>
+        <p class="text-sm text-ink-500 dark:text-ink-400">
+          {lang === 'zh' ? '個人禪繞畫作品集' : 'Personal Zentangle Portfolio'}
+        </p>
+      </div>
+
+      {/* Links */}
+      <div>
+        <p class="font-semibold text-ink-700 dark:text-ink-100 mb-4">
+          {lang === 'zh' ? '導航' : 'Navigation'}
+        </p>
+        <ul class="space-y-2 text-sm">
+          <li><a href={`${basePath}/portfolio`} class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">{lang === 'zh' ? '作品集' : 'Portfolio'}</a></li>
+          <li><a href={`${basePath}/tangles`} class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">{lang === 'zh' ? '圖樣字典' : 'Tangle Dictionary'}</a></li>
+          <li><a href={`${basePath}/about`} class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">{lang === 'zh' ? '關於' : 'About'}</a></li>
+          <li><a href={`${basePath}/contact`} class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">{lang === 'zh' ? '聯絡' : 'Contact'}</a></li>
+        </ul>
+      </div>
+
+      {/* Social */}
+      <div>
+        <p class="font-semibold text-ink-700 dark:text-ink-100 mb-4">
+          {lang === 'zh' ? '連結' : 'Connect'}
+        </p>
+        <ul class="space-y-2 text-sm">
+          <li><a href="https://instagram.com/drgacademy_zentangle" target="_blank" rel="noopener noreferrer" class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">Instagram</a></li>
+          <li><a href="mailto:hello@drg-academy.com" class="text-ink-500 dark:text-ink-400 hover:text-sepia-500">Email</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-ink-200 dark:border-ink-700 pt-8 text-center text-xs text-ink-400 dark:text-ink-500">
+      <p>{t.footer.copyright}</p>
+    </div>
+  </div>
+</footer>
