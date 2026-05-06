@@ -1,7 +1,21 @@
 import type { TanglePattern } from '../types';
 import { florz, knightsbridge, cadent, bales, cubine, chillon, rixty, amaze } from './grid';
 import { crescentMoon, auras, onamato, sparkle, drawingsString, striping } from './auras-tech';
-import { printemps, tipple, mooka, pokeleaf, fescu, zinger, flux, divaDance, bunzo, nipa, verdigogh, wud } from './organic';
+import {
+  printemps,
+  tipple,
+  mooka,
+  pokeleaf,
+  fescu,
+  zinger,
+  flux,
+  divaDance,
+  bunzo,
+  nipa,
+  verdigogh,
+  nautilus,
+  wud,
+} from './organic';
 import {
   staticTangle,
   sez,
@@ -59,6 +73,7 @@ export const PATTERNS: Record<string, TanglePattern> = {
   quib,
   amaze,
   wud,
+  nautilus,
 };
 
 export function getPattern(slug: string): TanglePattern {

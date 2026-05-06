@@ -8,10 +8,12 @@ import ScrollReveal from '@/components/common/ScrollReveal';
 import Tile from '@/components/common/Tile.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import { useT } from '@/i18n/useT';
+import { withBase } from '@/lib/withBase';
 
 const t = useT('en');
 const lang = 'en';
 const currentPath = '/en/';
+const heroImage = withBase('/artworks/hero-tile.jpg');
 ---
 
 <Layout
@@ -26,13 +28,13 @@ const currentPath = '/en/';
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div class="w-full max-w-3xl">
-        <HeroAnimation client:visible />
+        <HeroAnimation client:visible title={t('hero.title')} subtitle={t('hero.subtitle')} imageSrc={heroImage} />
       </div>
       <ScrollCue client:visible />
     </section>
 
     <!-- About Zentangle Section -->
-    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+    <section id="zentangle-intro" class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
       <div class="max-w-3xl mx-auto">
         <ScrollReveal client:visible drawBorder={true}>
           <h2 class="font-display-en text-3xl md:text-4xl text-ink-700 dark:text-ink-50 mb-8 text-center">

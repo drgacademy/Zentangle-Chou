@@ -498,6 +498,64 @@ export const verdigogh: TanglePattern = {
 };
 
 /* ------------------------------------------------------------------ */
+/* Nautilus — single oversized chambered spiral                          */
+/* ------------------------------------------------------------------ */
+export const nautilus: TanglePattern = {
+  slug: 'nautilus',
+  generate(rect, ctx) {
+    const cx = rect.x + rect.w * 0.45;
+    const cy = rect.y + rect.h * 0.55;
+    const maxR = Math.min(rect.w, rect.h) * 0.45;
+    const turns = 3.2;
+    const segs = Math.floor(turns * 36);
+    const offset = maxR * 0.06;
+
+    function spiral(rngLocal: () => number, r0Factor: number) {
+      const pts: Pt[] = [];
+      for (let i = 0; i <= segs; i++) {
+        const t = i / segs;
+        const a = t * turns * Math.PI * 2;
+        const r = Math.max(2, maxR * Math.pow(t, 1.3) - r0Factor) + (rngLocal() - 0.5) * 0.4;
+        pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+      }
+      let d = `M ${f(pts[0].x)} ${f(pts[0].y)}`;
+      for (let i = 1; i < pts.length; i++) {
+        const prev = pts[i - 1];
+        const cur = pts[i];
+        const mid: Pt = { x: (prev.x + cur.x) / 2, y: (prev.y + cur.y) / 2 };
+        d += ` Q ${f(prev.x)} ${f(prev.y)} ${f(mid.x)} ${f(mid.y)}`;
+      }
+      return d;
+    }
+
+    const outerD = spiral(ctx.rng, 0);
+    const innerD = spiral(ctx.rng, offset);
+
+    const chambers: string[] = [];
+    const chamberCount = 18;
+    for (let i = 0; i < chamberCount; i++) {
+      const t = 0.15 + (i / chamberCount) * 0.85;
+      const a = t * turns * Math.PI * 2;
+      const r1 = Math.max(2, maxR * Math.pow(t, 1.3) - offset);
+      const r2 = maxR * Math.pow(t, 1.3);
+      chambers.push(
+        `<path d="M ${f(cx + Math.cos(a) * r1)} ${f(cy + Math.sin(a) * r1)} L ${f(cx + Math.cos(a) * r2)} ${f(cy + Math.sin(a) * r2)}" />`
+      );
+    }
+
+    const outerSvg = strokeGroup(`<path d="${outerD}" />`, ctx.strokeWidth);
+    const innerSvg = `<g stroke="currentColor" stroke-width="${ctx.strokeWidth * 0.6}" fill="none" opacity="0.7" stroke-linecap="round"><path d="${innerD}" /></g>`;
+    const chambersSvg = strokeGroup(chambers.join(''), ctx.strokeWidth * 0.6);
+
+    return [
+      { svg: outerSvg, label_zh: '從中心畫一條向外擴的對數螺旋——主螺殼線', label_en: 'Draw a logarithmic spiral outward from the center — the main shell line' },
+      { svg: outerSvg + innerSvg, label_zh: '在內側偏移一條平行螺旋，形成螺殼層', label_en: 'Offset a parallel spiral inside to suggest the shell wall' },
+      { svg: outerSvg + innerSvg + chambersSvg, label_zh: '加上輻射的小短線當作鸚鵡螺的隔層', label_en: 'Add short radial lines as the chambered partitions of the nautilus' },
+    ];
+  },
+};
+
+/* ------------------------------------------------------------------ */
 /* Wud — wood planks with grain rings                                    */
 /* ------------------------------------------------------------------ */
 export const wud: TanglePattern = {

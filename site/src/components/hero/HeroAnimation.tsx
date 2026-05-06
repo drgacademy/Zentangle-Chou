@@ -2,94 +2,85 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   rngFromSeed,
   wobblyLine,
-  stringPath,
   getPattern,
   type Rect,
   type Rng,
 } from '@/lib/tangles';
 
-function renderTangle(slug: string, rect: Rect, rng: Rng, strokeWidth: number): string {
+function renderTangle(
+  slug: string,
+  rect: Rect,
+  rng: Rng,
+  opts: { density?: number; strokeWidth?: number } = {}
+): string {
   const pattern = getPattern(slug);
-  const frames = pattern.generate(rect, { rng, density: 1.0, strokeWidth });
+  const frames = pattern.generate(rect, {
+    rng,
+    density: opts.density ?? 1.0,
+    strokeWidth: opts.strokeWidth ?? 0.9,
+  });
   return frames.map(f => f.svg).join('');
 }
 
 interface HeroAnimationProps {
-  paused?: boolean;
+  /** localized hero headline. Required so this component is i18n-safe. */
+  title: string;
+  /** localized hero subtitle. */
+  subtitle: string;
+  /** path to the real artwork to reveal (default `/artworks/hero-tile.jpg`).
+   *  If the file is missing, we fall back to a procedural tile drawn from
+   *  the same region geometry so the page still looks like a zentangle. */
+  imageSrc?: string;
   isReduced?: boolean;
   seed?: string;
 }
 
 /**
- * HeroAnimation — the 3.5s zentangle ritual that opens the site.
- * Phases:
- *   0.00–0.20s  four corner dots
- *   0.20–0.80s  wobbly border draws
- *   0.80–1.40s  pencil string (light graphite) glides in
- *   1.10–1.50s  hero text fades in (parallel; viewer is not waiting)
- *   1.20–2.40s  tangle bands ink in, one after another
- *   2.40–3.00s  shading + signature
- *   3.00s+      permanent breathing loop (subtle scale)
+ * HeroAnimation — slowly "draws" a real zentangle artwork onto the page.
+ *
+ * Sequence (~21 seconds total, but text is readable by 5s):
+ *   0.0–1.2s    four corner dots fade in (staggered)
+ *   1.2–4.0s    wobbly hand-drawn border draws (4 edges)
+ *   4.0–8.4s    pencil-graphite "string" sketches the region boundaries
+ *   4.6–5.6s    hero text fades in (parallel — viewer never waits)
+ *   8.4–19.4s   10 regions of the real artwork "develop" one after another
+ *               (each starts from heavy blur + low opacity and sharpens to
+ *               the photographic ink, like a darkroom print emerging)
+ *   19.4–21.0s  shading + signature
+ *   21.0s+      enters permanent breathing loop
+ *
+ * If `/artworks/hero-tile.jpg` is missing, each region falls back to a
+ * procedurally-drawn tangle that matches the reference composition, so the
+ * page is never empty and dev/preview always works.
  */
 export default function HeroAnimation({
-  paused = false,
+  title,
+  subtitle,
+  imageSrc = '/artworks/hero-tile.jpg',
   isReduced = false,
-  seed = 'zentangle-chou-hero',
+  seed = 'zentangle-chou-hero-v3',
 }: HeroAnimationProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [replayKey, setReplayKey] = useState(0);
+  const [imageStatus, setImageStatus] = useState<'pending' | 'loaded' | 'failed'>('pending');
 
-  // Build the tile content deterministically from a seed so it never re-rolls
-  // on re-render and looks the same on SSR + client.
-  const tile = useMemo(() => {
-    const size = 800;
-    const rng = rngFromSeed(seed);
-    const padding = 40;
-    const inner: Rect = { x: padding, y: padding, w: size - padding * 2, h: size - padding * 2 };
+  const tile = useMemo(() => buildTileGeometry(seed), [seed]);
 
-    // Border: 4 wobbly edges (open polyline)
-    const tl = { x: inner.x, y: inner.y };
-    const tr = { x: inner.x + inner.w, y: inner.y };
-    const br = { x: inner.x + inner.w, y: inner.y + inner.h };
-    const bl = { x: inner.x, y: inner.y + inner.h };
-    const borderD = [
-      wobblyLine(tl, tr, rng, 1.4, 18),
-      wobblyLine(tr, br, rng, 1.4, 18),
-      wobblyLine(br, bl, rng, 1.4, 18),
-      wobblyLine(bl, tl, rng, 1.4, 18),
-    ];
-
-    const stringD = stringPath(inner, rng);
-
-    // Three bands holding three different tangles
-    const bandTop: Rect    = { x: inner.x, y: inner.y, w: inner.w * 0.55, h: inner.h * 0.5 };
-    const bandRight: Rect  = { x: inner.x + inner.w * 0.55, y: inner.y, w: inner.w * 0.45, h: inner.h * 0.55 };
-    const bandBottom: Rect = { x: inner.x, y: inner.y + inner.h * 0.5, w: inner.w, h: inner.h * 0.5 };
-
-    return {
-      size,
-      inner,
-      borderD,
-      stringD,
-      bands: [
-        { svg: renderTangle('crescent-moon', bandTop, rng, 1.4), key: 'crescent' },
-        { svg: renderTangle('florz', bandRight, rng, 1.0), key: 'florz' },
-        { svg: renderTangle('printemps', bandBottom, rng, 1.2), key: 'printemps' },
-      ],
-      shade: {
-        cx: inner.x + inner.w * 0.55,
-        cy: inner.y + inner.h * 0.55,
-        rx: inner.w * 0.22,
-        ry: inner.h * 0.16,
-      },
-      sig: {
-        x: inner.x + inner.w - 28,
-        y: inner.y + inner.h - 24,
-      },
+  // Probe the image so we can swap to the procedural fallback before the
+  // reveal phase starts (~8s in).
+  useEffect(() => {
+    if (!imageSrc) { setImageStatus('failed'); return; }
+    const img = new window.Image();
+    img.onload  = () => setImageStatus('loaded');
+    img.onerror = () => setImageStatus('failed');
+    img.src = imageSrc;
+    return () => {
+      img.onload = null;
+      img.onerror = null;
     };
-  }, [seed]);
+  }, [imageSrc, replayKey]);
 
-  // Set --length on each border path so the dasharray animation works
+  // For each path tagged data-draw, set --length so the dasharray reveal works.
   useEffect(() => {
     if (!svgRef.current || isReduced) return;
     const paths = svgRef.current.querySelectorAll<SVGPathElement>('[data-draw]');
@@ -99,204 +90,199 @@ export default function HeroAnimation({
       path.style.strokeDasharray = `${length}`;
       path.style.strokeDashoffset = `${length}`;
     });
-  }, [isReduced, replayKey]);
+  }, [isReduced, replayKey, tile, imageStatus]);
 
   if (isReduced) {
     return (
-      <div className="relative w-full" style={{ maxWidth: '600px' }}>
-        <StaticTileFallback tile={tile} />
+      <div className="relative w-full" style={{ maxWidth: '640px' }}>
+        <svg viewBox="0 0 1000 1000" className="w-full h-auto block">
+          <rect x="0" y="0" width="1000" height="1000" fill="var(--paper-bg, #FAF7F1)" />
+          {imageStatus === 'loaded' && (
+            <image href={imageSrc} x="0" y="0" width="1000" height="1000" preserveAspectRatio="xMidYMid slice" />
+          )}
+        </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-          <h1 className="text-3xl md:text-4xl font-heading text-ink-700 dark:text-ink-50">
-            一筆一畫,皆是可能
-          </h1>
-          <p className="text-sm md:text-base text-ink-500 dark:text-ink-400 mt-3">
-            YuChiao Chou 的禪繞畫作品集
-          </p>
+          <h1 className="text-3xl md:text-4xl font-heading text-ink-700 dark:text-ink-50 px-4">{title}</h1>
+          <p className="text-sm md:text-base text-ink-500 dark:text-ink-400 mt-3">{subtitle}</p>
         </div>
       </div>
     );
   }
 
+  const useImage = imageStatus !== 'failed';
+
   return (
-    <div className="relative w-full hero-anim breathe" style={{ maxWidth: '600px' }} key={replayKey}>
+    <div className="relative w-full hero-anim-v3 breathe" style={{ maxWidth: '640px' }} key={replayKey}>
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${tile.size} ${tile.size}`}
+        viewBox="0 0 1000 1000"
         className="w-full h-auto block hand-drawn"
-        aria-label="Zentangle hero — drawing in progress"
+        aria-label="Zentangle tile drawing in progress"
         role="img"
       >
         <defs>
+          {tile.regions.map(r => (
+            <clipPath key={r.id} id={`hero-clip-${r.id}`}>
+              <polygon points={r.polygon.map(p => `${p[0]},${p[1]}`).join(' ')} />
+            </clipPath>
+          ))}
           <style>{`
-            .hero-anim svg [data-stage] { opacity: 0; }
-            @keyframes hero-fade-in {
-              from { opacity: 0; }
-              to { opacity: 1; }
-            }
-            @keyframes hero-draw {
+            .hero-anim-v3 svg [data-stage] { opacity: 0; }
+
+            @keyframes hv3-fade-in { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes hv3-draw {
               from { stroke-dashoffset: var(--length, 1000); opacity: 0; }
               to   { stroke-dashoffset: 0; opacity: 1; }
             }
-
-            /* Stage 1: corner dots — 0.0 to 0.45s, staggered */
-            .hero-anim svg .h-dot {
-              animation: hero-fade-in 0.25s var(--easing-smooth) forwards;
-            }
-            .hero-anim svg .h-dot.dot-1 { animation-delay: 0.00s; }
-            .hero-anim svg .h-dot.dot-2 { animation-delay: 0.10s; }
-            .hero-anim svg .h-dot.dot-3 { animation-delay: 0.20s; }
-            .hero-anim svg .h-dot.dot-4 { animation-delay: 0.30s; }
-
-            /* Stage 2: border edges — 0.20 to 0.85s */
-            .hero-anim svg .h-border {
-              animation: hero-draw 0.55s var(--easing-smooth) forwards;
-              animation-delay: var(--border-delay, 0.2s);
-            }
-            .hero-anim svg .h-border.b-1 { --border-delay: 0.20s; }
-            .hero-anim svg .h-border.b-2 { --border-delay: 0.32s; }
-            .hero-anim svg .h-border.b-3 { --border-delay: 0.44s; }
-            .hero-anim svg .h-border.b-4 { --border-delay: 0.56s; }
-
-            /* Stage 3: pencil string — 0.80 to 1.40s */
-            .hero-anim svg .h-string {
-              animation: hero-draw 0.7s var(--easing-smooth) forwards;
-              animation-delay: 0.80s;
+            /* ink-developing reveal: starts heavily blurred & desaturated,
+               sharpens to the final crisp photograph. */
+            @keyframes hv3-develop {
+              0%   { opacity: 0; filter: blur(14px) saturate(0.4) brightness(1.08); }
+              30%  { opacity: 0.55; filter: blur(8px) saturate(0.65) brightness(1.05); }
+              70%  { opacity: 0.95; filter: blur(2px) saturate(0.9) brightness(1.02); }
+              100% { opacity: 1; filter: blur(0) saturate(1) brightness(1); }
             }
 
-            /* Stage 4: tangle bands ink in — 1.20 to 2.40s */
-            .hero-anim svg .h-tangle {
-              animation: hero-fade-in 0.45s var(--easing-smooth) forwards;
-            }
-            .hero-anim svg .h-tangle.t-1 { animation-delay: 1.20s; }
-            .hero-anim svg .h-tangle.t-2 { animation-delay: 1.55s; }
-            .hero-anim svg .h-tangle.t-3 { animation-delay: 1.95s; }
+            /* 1) corner dots */
+            .hero-anim-v3 .hv3-dot { animation: hv3-fade-in 0.35s var(--easing-smooth) forwards; }
+            .hero-anim-v3 .hv3-dot.d-1 { animation-delay: 0.0s; }
+            .hero-anim-v3 .hv3-dot.d-2 { animation-delay: 0.4s; }
+            .hero-anim-v3 .hv3-dot.d-3 { animation-delay: 0.8s; }
+            .hero-anim-v3 .hv3-dot.d-4 { animation-delay: 1.1s; }
 
-            /* Stage 5: shading and signature — 2.40 to 3.00s */
-            .hero-anim svg .h-shade {
-              animation: hero-fade-in 0.6s var(--easing-smooth) forwards;
-              animation-delay: 2.40s;
-            }
-            .hero-anim svg .h-sig {
-              animation: hero-fade-in 0.5s var(--easing-smooth) forwards;
-              animation-delay: 2.80s;
-            }
+            /* 2) wobbly border, slow */
+            .hero-anim-v3 .hv3-border { animation: hv3-draw 0.85s var(--easing-smooth) forwards; }
+            .hero-anim-v3 .hv3-border.b-1 { animation-delay: 1.2s; }
+            .hero-anim-v3 .hv3-border.b-2 { animation-delay: 1.85s; }
+            .hero-anim-v3 .hv3-border.b-3 { animation-delay: 2.5s; }
+            .hero-anim-v3 .hv3-border.b-4 { animation-delay: 3.15s; }
 
-            /* Hero text — appears early, viewer doesn't wait */
-            .hero-anim .h-text { opacity: 0; }
-            .hero-anim .h-text.t-h1 {
-              animation: hero-fade-in 0.7s var(--easing-smooth) forwards;
-              animation-delay: 1.10s;
-            }
-            .hero-anim .h-text.t-sub {
-              animation: hero-fade-in 0.7s var(--easing-smooth) forwards;
-              animation-delay: 1.40s;
-            }
+            /* 3) pencil string lays out the regions */
+            .hero-anim-v3 .hv3-string { animation: hv3-draw 1.3s var(--easing-smooth) forwards; }
+            .hero-anim-v3 .hv3-string.s-1 { animation-delay: 4.00s; }
+            .hero-anim-v3 .hv3-string.s-2 { animation-delay: 4.55s; }
+            .hero-anim-v3 .hv3-string.s-3 { animation-delay: 5.10s; }
+            .hero-anim-v3 .hv3-string.s-4 { animation-delay: 5.65s; }
+            .hero-anim-v3 .hv3-string.s-5 { animation-delay: 6.20s; }
+            .hero-anim-v3 .hv3-string.s-6 { animation-delay: 6.75s; }
+            .hero-anim-v3 .hv3-string.s-7 { animation-delay: 7.30s; }
+            .hero-anim-v3 .hv3-string.s-8 { animation-delay: 7.85s; }
+
+            /* 4) regions develop one at a time, slow & deliberate */
+            .hero-anim-v3 .hv3-region { animation: hv3-develop 1.8s cubic-bezier(0.45, 0, 0.3, 1) forwards; }
+            .hero-anim-v3 .hv3-region.r-1  { animation-delay: 8.40s; }
+            .hero-anim-v3 .hv3-region.r-2  { animation-delay: 9.45s; }
+            .hero-anim-v3 .hv3-region.r-3  { animation-delay: 10.50s; }
+            .hero-anim-v3 .hv3-region.r-4  { animation-delay: 11.55s; }
+            .hero-anim-v3 .hv3-region.r-5  { animation-delay: 12.60s; }
+            .hero-anim-v3 .hv3-region.r-6  { animation-delay: 13.65s; }
+            .hero-anim-v3 .hv3-region.r-7  { animation-delay: 14.70s; }
+            .hero-anim-v3 .hv3-region.r-8  { animation-delay: 15.75s; animation-duration: 2.4s; }
+            .hero-anim-v3 .hv3-region.r-9  { animation-delay: 17.40s; }
+            .hero-anim-v3 .hv3-region.r-10 { animation-delay: 18.45s; }
+
+            /* 5) finishing touches */
+            .hero-anim-v3 .hv3-shade { animation: hv3-fade-in 1.0s var(--easing-smooth) forwards; animation-delay: 19.80s; }
+            .hero-anim-v3 .hv3-sig   { animation: hv3-fade-in 0.8s var(--easing-smooth) forwards; animation-delay: 20.40s; }
+
+            /* hero text — visible by 5.5s */
+            .hero-anim-v3 .hv3-text { opacity: 0; }
+            .hero-anim-v3 .hv3-text.t-h1  { animation: hv3-fade-in 0.9s var(--easing-smooth) forwards; animation-delay: 4.6s; }
+            .hero-anim-v3 .hv3-text.t-sub { animation: hv3-fade-in 0.9s var(--easing-smooth) forwards; animation-delay: 5.2s; }
 
             @media (prefers-reduced-motion: reduce) {
-              .hero-anim svg [data-stage] { opacity: 1 !important; animation: none !important; stroke-dashoffset: 0 !important; }
-              .hero-anim .h-text { opacity: 1 !important; animation: none !important; }
+              .hero-anim-v3 svg [data-stage] { opacity: 1 !important; animation: none !important; stroke-dashoffset: 0 !important; filter: none !important; }
+              .hero-anim-v3 .hv3-text { opacity: 1 !important; animation: none !important; }
             }
           `}</style>
         </defs>
 
-        {/* Corner dots */}
-        <g data-stage stroke="none" fill="currentColor" className="text-ink-700 dark:text-ink-100">
-          <circle cx={tile.inner.x} cy={tile.inner.y} r="3" className="h-dot dot-1" data-stage />
-          <circle cx={tile.inner.x + tile.inner.w} cy={tile.inner.y} r="3" className="h-dot dot-2" data-stage />
-          <circle cx={tile.inner.x + tile.inner.w} cy={tile.inner.y + tile.inner.h} r="3" className="h-dot dot-3" data-stage />
-          <circle cx={tile.inner.x} cy={tile.inner.y + tile.inner.h} r="3" className="h-dot dot-4" data-stage />
-        </g>
+        {/* paper backing */}
+        <rect x="0" y="0" width="1000" height="1000" fill="var(--paper-bg, #FAF7F1)" />
 
-        {/* Border (4 wobbly edges) */}
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          className="text-ink-700 dark:text-ink-100"
-        >
-          {tile.borderD.map((d, i) => (
-            <path
-              key={i}
-              d={d}
-              data-draw
-              data-stage
-              className={`h-border b-${i + 1}`}
-            />
+        {/* corner dots */}
+        <g fill="currentColor" stroke="none" className="text-ink-700 dark:text-ink-100">
+          {tile.corners.map((c, i) => (
+            <circle key={i} cx={c[0]} cy={c[1]} r="4" data-stage className={`hv3-dot d-${i + 1}`} />
           ))}
         </g>
 
-        {/* String — pencil graphite layer (under the tangles) */}
-        <g
-          fill="none"
-          stroke="var(--ink-pencil)"
-          strokeWidth="1"
-          strokeLinecap="round"
-          opacity="0.85"
-        >
-          <path d={tile.stringD} data-draw data-stage className="h-string" />
+        {/* wobbly border */}
+        <g fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"
+           className="text-ink-700 dark:text-ink-100">
+          {tile.borders.map((d, i) => (
+            <path key={i} d={d} data-draw data-stage className={`hv3-border b-${i + 1}`} />
+          ))}
         </g>
 
-        {/* Tangle bands — ink layer */}
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          className="text-ink-700 dark:text-ink-100"
-        >
-          {tile.bands.map((b, i) => (
+        {/* pencil string — graphite layer that sketches the composition */}
+        <g fill="none" stroke="var(--ink-pencil)" strokeWidth="1.2" strokeLinecap="round" opacity="0.85">
+          {tile.strings.map((d, i) => (
+            <path key={i} d={d} data-draw data-stage className={`hv3-string s-${i + 1}`} />
+          ))}
+        </g>
+
+        {/* tangle regions — either real image or procedural fallback */}
+        <g className="text-ink-700 dark:text-ink-100">
+          {tile.regions.map((r, i) => (
             <g
-              key={b.key}
+              key={r.id}
+              clipPath={`url(#hero-clip-${r.id})`}
               data-stage
-              className={`h-tangle t-${i + 1}`}
-              dangerouslySetInnerHTML={{ __html: b.svg }}
-            />
+              className={`hv3-region r-${i + 1}`}
+            >
+              {useImage ? (
+                <image
+                  href={imageSrc}
+                  x="0"
+                  y="0"
+                  width="1000"
+                  height="1000"
+                  preserveAspectRatio="xMidYMid slice"
+                />
+              ) : (
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  dangerouslySetInnerHTML={{ __html: r.svg }}
+                />
+              )}
+            </g>
           ))}
         </g>
 
-        {/* Shading */}
+        {/* shading wash */}
         <ellipse
-          cx={tile.shade.cx}
-          cy={tile.shade.cy}
-          rx={tile.shade.rx}
-          ry={tile.shade.ry}
+          cx="450" cy="640" rx="240" ry="170"
           fill="currentColor"
-          className="text-ink-700 dark:text-ink-100 h-shade"
+          className="text-ink-700 dark:text-ink-100 hv3-shade"
           data-stage
-          style={{ opacity: 0 }}
-          opacity="0.07"
+          opacity="0.05"
         />
 
-        {/* Signature dot */}
-        <g data-stage className="h-sig">
-          <circle
-            cx={tile.sig.x}
-            cy={tile.sig.y}
-            r="2.4"
-            fill="currentColor"
-            className="text-ink-700 dark:text-ink-100"
-            opacity="0.6"
-          />
+        {/* signature dot */}
+        <g data-stage className="hv3-sig">
+          <circle cx={tile.signature[0]} cy={tile.signature[1]} r="3.6"
+                  fill="currentColor" className="text-ink-700 dark:text-ink-100" opacity="0.65" />
         </g>
       </svg>
 
-      {/* Text overlay — appears at 1.1s, well before tile finishes */}
+      {/* Text overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
         <h1
-          className="h-text t-h1 font-heading text-3xl md:text-4xl text-ink-700 dark:text-ink-50"
-          style={{ opacity: 0 }}
+          className="hv3-text t-h1 font-heading text-3xl md:text-5xl text-ink-700 dark:text-ink-50 px-4 drop-shadow-[0_2px_10px_rgba(250,247,241,0.85)] dark:drop-shadow-[0_2px_10px_rgba(27,26,24,0.85)]"
         >
-          一筆一畫,皆是可能
+          {title}
         </h1>
         <p
-          className="h-text t-sub text-sm md:text-base text-ink-500 dark:text-ink-400 mt-3"
-          style={{ opacity: 0 }}
+          className="hv3-text t-sub text-sm md:text-base text-ink-600 dark:text-ink-300 mt-4 px-4 drop-shadow-[0_2px_10px_rgba(250,247,241,0.85)] dark:drop-shadow-[0_2px_10px_rgba(27,26,24,0.85)]"
         >
-          YuChiao Chou 的禪繞畫作品集
+          {subtitle}
         </p>
       </div>
 
-      {/* Replay */}
+      {/* Replay button */}
       <button
         type="button"
         onClick={() => setReplayKey(k => k + 1)}
@@ -309,32 +295,85 @@ export default function HeroAnimation({
   );
 }
 
-interface TileData {
-  size: number;
-  inner: Rect;
-  borderD: string[];
-  stringD: string;
-  bands: { svg: string; key: string }[];
-  shade: { cx: number; cy: number; rx: number; ry: number };
-  sig: { x: number; y: number };
+// ─────────────────────────────────────────────────────────────────
+// Tile geometry: 10 polygon regions matching the reference artwork's
+// composition. Used both for clipping the real image and for the
+// procedural fallback when the image is missing.
+// ─────────────────────────────────────────────────────────────────
+
+interface RegionSpec {
+  id: string;
+  polygon: [number, number][];
+  svg: string;
 }
 
-function StaticTileFallback({ tile }: { tile: TileData }) {
-  return (
-    <svg viewBox={`0 0 ${tile.size} ${tile.size}`} className="w-full h-auto block opacity-50">
-      <g stroke="currentColor" fill="none" className="text-ink-700 dark:text-ink-100">
-        <circle cx={tile.inner.x} cy={tile.inner.y} r="3" fill="currentColor" />
-        <circle cx={tile.inner.x + tile.inner.w} cy={tile.inner.y} r="3" fill="currentColor" />
-        <circle cx={tile.inner.x + tile.inner.w} cy={tile.inner.y + tile.inner.h} r="3" fill="currentColor" />
-        <circle cx={tile.inner.x} cy={tile.inner.y + tile.inner.h} r="3" fill="currentColor" />
-        <rect
-          x={tile.inner.x}
-          y={tile.inner.y}
-          width={tile.inner.w}
-          height={tile.inner.h}
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
+interface TileGeometry {
+  corners: [number, number][];
+  borders: string[];
+  strings: string[];
+  regions: RegionSpec[];
+  signature: [number, number];
+}
+
+function buildTileGeometry(seed: string): TileGeometry {
+  const rng = rngFromSeed(seed);
+  const PAD = 38;
+  const corners: [number, number][] = [
+    [PAD, PAD],
+    [1000 - PAD, PAD],
+    [1000 - PAD, 1000 - PAD],
+    [PAD, 1000 - PAD],
+  ];
+  const borders = [
+    wobblyLine({ x: corners[0][0], y: corners[0][1] }, { x: corners[1][0], y: corners[1][1] }, rng, 1.8, 22),
+    wobblyLine({ x: corners[1][0], y: corners[1][1] }, { x: corners[2][0], y: corners[2][1] }, rng, 1.8, 22),
+    wobblyLine({ x: corners[2][0], y: corners[2][1] }, { x: corners[3][0], y: corners[3][1] }, rng, 1.8, 22),
+    wobblyLine({ x: corners[3][0], y: corners[3][1] }, { x: corners[0][0], y: corners[0][1] }, rng, 1.8, 22),
+  ];
+
+  const regions: RegionSpec[] = [
+    { id: 'r1', polygon: [[40, 40], [380, 40], [400, 200], [330, 290], [180, 360], [60, 410], [40, 350]],
+      svg: renderTangle('hollibaugh', rectFor([[40, 40], [400, 200]]), rng, { density: 1.6, strokeWidth: 1.2 }) },
+    { id: 'r2', polygon: [[380, 40], [600, 40], [580, 240], [430, 230], [400, 200]],
+      svg: renderTangle('tipple', rectFor([[380, 40], [600, 240]]), rng, { density: 1.8, strokeWidth: 0.9 }) },
+    { id: 'r3', polygon: [[600, 40], [770, 40], [760, 320], [580, 360], [490, 280], [580, 240]],
+      svg: renderTangle('mooka', rectFor([[490, 40], [770, 360]]), rng, { density: 1.4, strokeWidth: 1.2 }) },
+    { id: 'r4', polygon: [[770, 40], [960, 40], [960, 340], [820, 320], [760, 320]],
+      svg: renderTangle('florz', rectFor([[760, 40], [960, 340]]), rng, { density: 1.4, strokeWidth: 0.8 }) },
+    { id: 'r5', polygon: [[820, 320], [960, 340], [960, 600], [780, 580], [700, 540], [580, 460], [490, 280], [580, 360], [760, 320]],
+      svg: renderTangle('florz', rectFor([[580, 320], [960, 600]]), rng, { density: 1.0, strokeWidth: 0.7 }) },
+    { id: 'r6', polygon: [[40, 350], [60, 410], [180, 360], [330, 290], [400, 360], [380, 580], [310, 700], [40, 720]],
+      svg: renderTangle('crescent-moon', rectFor([[40, 290], [400, 720]]), rng, { density: 1.1, strokeWidth: 1.0 }) },
+    { id: 'r7', polygon: [[40, 720], [310, 700], [320, 880], [240, 960], [40, 960]],
+      svg: renderTangle('knightsbridge', rectFor([[40, 700], [320, 960]]), rng, { density: 1.2 }) },
+    { id: 'r8', polygon: [[400, 360], [490, 280], [580, 460], [700, 540], [780, 580], [720, 760], [560, 870], [380, 870], [320, 740], [380, 580]],
+      svg: renderTangle('nautilus', rectFor([[300, 280], [780, 870]]), rng, { strokeWidth: 1.4 }) },
+    { id: 'r9', polygon: [[240, 960], [320, 880], [380, 870], [560, 870], [660, 920], [660, 960]],
+      svg: renderTangle('paradox', rectFor([[240, 870], [660, 960]]), rng, { density: 1.4, strokeWidth: 0.8 }) },
+    { id: 'r10', polygon: [[720, 760], [780, 580], [960, 600], [960, 960], [660, 960], [660, 920], [560, 870]],
+      svg: renderTangle('printemps', rectFor([[660, 580], [960, 960]]), rng, { density: 1.4, strokeWidth: 1.0 }) },
+  ];
+
+  const strings = [
+    bezier(rng, [40, 350], [180, 360], [330, 290], [400, 200]),
+    bezier(rng, [400, 200], [430, 230], [490, 280], [580, 240]),
+    bezier(rng, [580, 240], [580, 360], [700, 540], [780, 580]),
+    bezier(rng, [780, 580], [820, 320], [780, 200], [770, 40]),
+    bezier(rng, [400, 360], [380, 580], [320, 740], [310, 700]),
+    bezier(rng, [310, 700], [320, 880], [560, 870], [720, 760]),
+    bezier(rng, [380, 580], [490, 600], [580, 460], [580, 360]),
+    bezier(rng, [380, 870], [560, 870], [660, 920], [660, 960]),
+  ];
+
+  return { corners, borders, strings, regions, signature: [925, 925] };
+}
+
+function rectFor(box: [[number, number], [number, number]]): Rect {
+  const [tl, br] = box;
+  return { x: tl[0], y: tl[1], w: br[0] - tl[0], h: br[1] - tl[1] };
+}
+
+function bezier(rng: () => number, a: [number, number], b: [number, number], c: [number, number], d: [number, number]): string {
+  const j = () => (rng() - 0.5) * 8;
+  return `M ${a[0]} ${a[1]} C ${b[0] + j()} ${b[1] + j()}, ${c[0] + j()} ${c[1] + j()}, ${d[0]} ${d[1]}`;
 }
