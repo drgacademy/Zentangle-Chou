@@ -9,16 +9,26 @@
     "tangles": "Tangle Dictionary",
     "videos": "Videos",
     "process": "Process",
-    "about": "About",
+    "about": "About Me",
     "contact": "Contact"
   },
   "hero": {
     "title": "Every line, every stroke, all possibilities",
-    "subtitle": "Personal Zentangle Portfolio · 41 Tangle Dictionary"
+    "subtitle": "YuChiao Chou's Zentangle Portfolio"
+  },
+  "homepage": {
+    "cta_portfolio": "Browse Portfolio",
+    "cta_tangles": "Explore Dictionary",
+    "section_about": "What is Zentangle?",
+    "about_intro": "Zentangle is a structured meditative drawing method created by Rick Roberts and Maria Thomas. No rules, no mistakes, only lines and stillness.",
+    "section_featured": "Featured Work",
+    "section_quote": "There are no mistakes, only opportunities. — Maria Thomas",
+    "quote_author": "Maria Thomas, Zentangle Creators"
   },
   "footer": {
     "learn": "Learn",
     "connect": "Connect",
-    "about": "About"
+    "about": "About",
+    "credit": "YuChiao Chou — Zentangle Art Studio"
   }
 }

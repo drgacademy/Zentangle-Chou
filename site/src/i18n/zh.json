@@ -9,16 +9,26 @@
     "tangles": "圖樣字典",
     "videos": "影片",
     "process": "創作流程",
-    "about": "關於",
+    "about": "關於我",
     "contact": "聯絡"
   },
   "hero": {
     "title": "一筆一畫，皆是可能",
-    "subtitle": "Personal Zentangle Portfolio · 41 Tangle Dictionary"
+    "subtitle": "YuChiao Chou 的禪繞畫作品集"
+  },
+  "homepage": {
+    "cta_portfolio": "瀏覽作品集",
+    "cta_tangles": "探索圖樣字典",
+    "section_about": "關於禪繞畫",
+    "about_intro": "禪繞畫是一種結構化的冥想繪畫法，源於美國創作者 Rick Roberts 與 Maria Thomas 的方法。沒有規則、沒有錯誤，只有線條與寧靜。",
+    "section_featured": "近期作品",
+    "section_quote": "There are no mistakes, only opportunities. — Maria Thomas",
+    "quote_author": "Maria Thomas，禪繞畫創辦人"
   },
   "footer": {
     "learn": "學習",
     "connect": "聯絡",
-    "about": "關於"
+    "about": "關於",
+    "credit": "YuChiao Chou — 禪繞畫藝術空間"
   }
 }

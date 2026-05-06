@@ -2,6 +2,9 @@
 import Layout from '@/layouts/Layout.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
+import HeroAnimation from '@/components/hero/HeroAnimation';
+import ScrollCue from '@/components/common/ScrollCue';
+import Tile from '@/components/common/Tile.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import { useT } from '@/i18n/useT';
 
@@ -18,18 +21,80 @@ const currentPath = '/zh/';
 >
   <SiteHeader currentPath={currentPath} lang={lang} />
 
-  <main class="flex-1 flex items-center justify-center px-4 py-32">
-    <div class="max-w-4xl text-center">
-      <h1 class="font-display-zh text-hero md:text-5xl text-ink-700 dark:text-ink-50 leading-tight mb-6">
-        {t('hero.title')}
-      </h1>
-      <p class="font-body text-lg md:text-xl text-ink-500 dark:text-ink-400 mb-12">
-        {t('hero.subtitle')}
-      </p>
-      <div class="h-32 flex items-center justify-center text-ink-400 dark:text-ink-600">
-        <p class="text-sm">— Sprint 1 Placeholder —</p>
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+      <div class="w-full max-w-3xl">
+        <HeroAnimation client:visible />
       </div>
-    </div>
+      <ScrollCue client:visible />
+    </section>
+
+    <!-- About Zentangle Section -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-display-zh text-3xl md:text-4xl text-ink-700 dark:text-ink-50 mb-8 text-center">
+          {t('homepage.section_about')}
+        </h2>
+        <p class="font-body text-base md:text-lg text-ink-600 dark:text-ink-300 leading-relaxed text-center">
+          {t('homepage.about_intro')}
+        </p>
+      </div>
+    </section>
+
+    <!-- Three Entry Points -->
+    <section class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Tile
+            title="作品集"
+            description="瀏覽我的禪繞畫創作，探索每件作品背後的靈感與故事。"
+            href="/zh/portfolio"
+            lang="zh"
+          />
+          <Tile
+            title="圖樣字典"
+            description="41 個經典 tangle 圖樣的詳細教學與動畫演示。"
+            href="/zh/tangles"
+            lang="zh"
+          />
+          <Tile
+            title="關於我"
+            description="了解我的禪繞畫之旅與創作理念。"
+            href="/zh/about"
+            lang="zh"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Works (Placeholder) -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-display-zh text-3xl md:text-4xl text-ink-700 dark:text-ink-50 mb-12 text-center">
+          {t('homepage.section_featured')}
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => (
+            <div key={i} class="aspect-square bg-ink-200 dark:bg-ink-700 rounded-sm animate-pulse flex items-center justify-center">
+              <p class="text-ink-400 dark:text-ink-500">作品 {i}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="py-20 px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <blockquote class="font-body text-lg md:text-xl text-ink-600 dark:text-ink-300 italic mb-6">
+          "{t('homepage.section_quote')}"
+        </blockquote>
+        <p class="font-body text-sm text-ink-500 dark:text-ink-400">
+          — {t('homepage.quote_author')}
+        </p>
+      </div>
+    </section>
   </main>
 
   <SiteFooter lang={lang} />

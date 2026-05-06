@@ -1,0 +1,108 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import ProcessTabs from '@/components/process/ProcessTabs';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'zh';
+const currentPath = '/zh/process';
+const title = 'Zentangle Chou — 八步驟創作流程';
+const description = '禪繞畫的結構化方法與個人應用';
+
+const steps = [
+  {
+    num: 1,
+    name: '釐清邊界',
+    officialDesc: '在白紙上用鉛筆輕輕畫出不規則的邊框（通常 4–6 條線），將紙磚分成不同的區塊。這限定了繪畫的空間，也暗示無限的可能。',
+    personalDesc: '我會花 2–3 分鐘想像邊框的「動線」——讓線條自然引導視線穿過整張紙。有時候邊框本身就像一個迷宮。'
+  },
+  {
+    num: 2,
+    name: '描邊',
+    officialDesc: '用黑墨筆沿著鉛筆線條描邊，將邊界固定下來。這個步驟也確認了你的「版面」。',
+    personalDesc: '我喜歡在這一步停頓，感受邊框的形狀。有時候我會稍微調整，讓邊框更符合當時的心情。'
+  },
+  {
+    num: 3,
+    name: '編織連線',
+    officialDesc: '在邊界和其他區塊之間畫出有機的曲線（通常稱為「string」），連接不同的空間。沒有直線，一切都是自然的弧線。',
+    personalDesc: '這是我最喜歡的步驟。string 決定了整個構圖的「呼吸」——慢速、有節奏的曲線，讓我進入心流。'
+  },
+  {
+    num: 4,
+    name: '填充圖樣',
+    officialDesc: '選擇一個或多個 tangle（重複圖樣），在各個區塊內填充。每個區塊獨立進行，允許不同的圖樣並存。',
+    personalDesc: '我通常預先規劃 3–4 個圖樣組合，但常常中途改主意。最好的紙磚往往來自於靈感的發現，而非事先的計劃。'
+  },
+  {
+    num: 5,
+    name: '深度與層次',
+    officialDesc: '在某些圖樣內添加更細緻的線條，或用不同的線寬度，營造立體感。這不是陰影，而是線條密度的變化。',
+    personalDesc: '我會用鉛筆輕輕標記要深化的區域，然後用不同筆觸（粗、細、斷線）來表現深度。'
+  },
+  {
+    num: 6,
+    name: '陰影',
+    officialDesc: '選擇性地在某些區域用鉛筆或灰色筆增加陰影，强化立體感與對比。陰影通常在邊界、圖樣邊緣或特定焦點上。',
+    personalDesc: '陰影是最後的調整。我會退後看整張紙，問自己「哪裡需要被看見」，然後有意識地添加。'
+  },
+  {
+    num: 7,
+    name: '讓它呼吸',
+    officialDesc: '檢視全幅，決定是否需要額外的調整。有時候，一張完美的紙磚只需要留白——不要過度填充。',
+    personalDesc: '這一步我通常會走開 10 分鐘，回來用新鮮的眼光再看一次。往往我發現「已經完成了」。'
+  },
+  {
+    num: 8,
+    name: '簽名與日期',
+    officialDesc: '在紙磚上簽上你的名字與日期，宣告這是一件完成的作品。這是 Zentangle 方法的精神核心——認可你的工作。',
+    personalDesc: '簽名時我會寫一句話或一個單詞，捕捉創作時的感受。這不是虛榮，而是承認「我在這裡，我完成了。」'
+  }
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="font-display-zh text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-6">
+          八步驟創作流程
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          禪繞畫的結構化方法，與我的個人詮釋
+        </p>
+      </div>
+    </section>
+
+    <!-- Process Content -->
+    <section class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <ProcessTabs steps={steps} lang="zh" client:visible />
+      </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-8 text-center">
+          為什麼是八個步驟？
+        </h2>
+        <p class="font-body text-ink-600 dark:text-ink-300 leading-relaxed text-center">
+          八步驟不是「必須」遵循的教條，而是一套節奏。每個步驟都邀請你放慢速度、做一個決定、看見自己正在做的事。當你重複這個過程，你會發現自己漸漸進入一種心流狀態——不再想著「我在畫畫」，而只是畫。這就是禪繞畫的本質：從有意識的練習，進入無意識的專注。
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

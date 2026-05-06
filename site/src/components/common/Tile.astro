@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  icon?: string;
+  lang?: 'zh' | 'en';
+}
+
+const { title, description, href, icon = '→', lang = 'zh' } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group relative block p-6 bg-ink-50 dark:bg-ink-700 border border-ink-200 dark:border-ink-600 rounded-sm hover:shadow-lg transition-shadow duration-300"
+>
+  <div class="flex flex-col h-full">
+    <h3 class="font-display-zh text-xl md:text-2xl text-ink-700 dark:text-ink-50 mb-3 group-hover:text-gold-500 dark:group-hover:text-gold-400 transition-colors">
+      {title}
+    </h3>
+    <p class="font-body text-sm md:text-base text-ink-600 dark:text-ink-300 flex-1 mb-4">
+      {description}
+    </p>
+    <div class="flex items-center text-ink-500 dark:text-ink-400 group-hover:text-gold-500 dark:group-hover:text-gold-400 transition-colors">
+      <span class="text-xs">{lang === 'zh' ? '了解更多' : 'Learn More'}</span>
+      <span class="ml-2">{icon}</span>
+    </div>
+  </div>
+
+  <!-- Hover string decoration -->
+  <svg class="absolute bottom-0 left-0 w-full h-1 overflow-visible opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 4" preserveAspectRatio="none">
+    <path
+      d="M 0 2 Q 50 0 100 2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+      class="text-gold-500 dark:text-gold-400"
+      style="stroke-dasharray: 110; stroke-dashoffset: 110; transition: stroke-dashoffset 0.4s cubic-bezier(0.0, 0, 0.2, 1);"
+    />
+  </svg>
+</a>
+
+<style is:global>
+  .group:hover svg path {
+    stroke-dashoffset: 0;
+  }
+</style>

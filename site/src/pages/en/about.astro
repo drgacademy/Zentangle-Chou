@@ -1,0 +1,113 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'en';
+const currentPath = '/en/about';
+const title = 'Zentangle Chou — About Me';
+const description = "YuChiao Chou's Zentangle Creative Journey";
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="font-display-en text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-6">
+          Line by Line, Finding Stillness
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          The Zentangle Journey of YuChiao Chou
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-20 px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- Essay -->
+        <article class="font-body text-ink-600 dark:text-ink-300 space-y-6 mb-20">
+          <p class="text-base leading-relaxed">
+            I first encountered Zentangle on a very hurried afternoon. My life was full of to-do lists, deadlines, and expectations from all directions—nothing ever seemed to finish. A friend handed me a 3.5-inch tile and a black pen, saying, "Try this. It only takes 30 minutes."
+          </p>
+
+          <p class="text-base leading-relaxed">
+            Those 30 minutes changed something. Not in a dramatic, instant way, but rather a subtle, gradually spreading stillness—lines forming under my hand, one stroke after another, no eraser, no such thing as "wrong." I began to realize that completing a tile didn't require me to be brilliant or talented. It only required me to sit down and take one tangle at a time. That sense of permission felt like my first deep breath.
+          </p>
+
+          <p class="text-base leading-relaxed">
+            Since then, I've been consciously collecting tiles. Each one is dated, marked with my mood at the time, sometimes with a few words. I've drawn in cafés, in late-night studios, in hotel corners while traveling. Some tiles become what I hoped they'd be; others don't. But regardless, they are all finished. In an age when tasks never seem to end, that sense of completion carries a special weight.
+          </p>
+
+          <p class="text-base leading-relaxed">
+            Three years ago, I began studying Zentangle's deeper method—not just following tutorials, but understanding why Rick Roberts and Maria Thomas designed this system the way they did. I discovered that Zentangle doesn't ask you to empty your mind; rather, it invites you into a specific kind of focus: hand, eyes, and breath all aligned to the same moment. That is a form of inner stillness very few people ever feel.
+          </p>
+
+          <p class="text-base leading-relaxed">
+            This website exists for one simple reason: I want to share. To share why these 41 patterns matter, how I apply them, and the stories of mistakes, experiments, and new beginnings. I also want friends, family, and the stranger who accidentally discovers the word "Zentangle" in a search engine, to see in one place someone who takes this practice seriously—who believes deeply in what it means.
+          </p>
+        </article>
+
+        <!-- Timeline -->
+        <div class="border-t border-ink-200 dark:border-ink-700 pt-12">
+          <h2 class="font-display-en text-2xl text-ink-700 dark:text-ink-50 mb-12">
+            Creative Milestones
+          </h2>
+
+          <div class="space-y-12">
+            {[
+              { year: '2022', title: 'First Encounter', desc: 'Discovered Zentangle and became captivated by its simplicity and depth.' },
+              { year: '2023', title: 'Systematic Learning', desc: 'Began studying Rick & Maria's original method, completed hundreds of practice tiles.' },
+              { year: '2024', title: 'Deep Exploration', desc: 'Researched 41 classic tangles, developed personal style and application combinations.' },
+              { year: '2025', title: 'Sharing Plan', desc: 'Launched this website to share the practice of stillness with others.' },
+            ].map(item => (
+              <div key={item.year} class="flex gap-6">
+                <div class="flex-shrink-0">
+                  <span class="font-display-en text-2xl text-gold-500 dark:text-gold-400 font-bold">
+                    {item.year}
+                  </span>
+                </div>
+                <div>
+                  <h3 class="font-display-en text-lg text-ink-700 dark:text-ink-50 mb-2">
+                    {item.title}
+                  </h3>
+                  <p class="font-body text-sm text-ink-600 dark:text-ink-400">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Grid Placeholder -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-display-en text-2xl text-ink-700 dark:text-ink-50 mb-12 text-center">
+          Photo Gallery
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} class="aspect-square bg-ink-200 dark:bg-ink-700 rounded-sm animate-pulse flex items-center justify-center">
+              <p class="text-ink-400 dark:text-ink-500">Photo {i}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>

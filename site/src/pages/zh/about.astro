@@ -1,0 +1,113 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+
+const lang = 'zh';
+const currentPath = '/zh/about';
+const title = 'Zentangle Chou — 關於我';
+const description = 'YuChiao Chou 的禪繞畫創作之旅';
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+>
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="font-display-zh text-4xl md:text-5xl text-ink-700 dark:text-ink-50 mb-6">
+          一筆一畫，找到安靜
+        </h1>
+        <p class="font-body text-lg text-ink-600 dark:text-ink-300">
+          YuChiao Chou 的禪繞畫創作之旅
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-20 px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- 散文 -->
+        <article class="font-body text-ink-600 dark:text-ink-300 space-y-6 mb-20">
+          <p class="text-base leading-relaxed">
+            我第一次接觸禪繞畫是在一個很倉促的午後。那時候我的生活滿是待辦清單、截止日期、來自四面八方的期望，彷彿永遠做不完。一位朋友遞給我一張 3.5 吋的紙磚和一支黑筆，說：「試試這個，只需要 30 分鐘。」
+          </p>
+
+          <p class="text-base leading-relaxed">
+            那 30 分鐘改變了什麼。不是立竿見影的戲劇化轉變，而是一種很細微的、逐漸蔓延的寧靜——線條在我手下生成，一筆接著一筆，沒有橡皮擦、沒有「畫錯」這件事。我開始意識到，完成一張紙磚並不需要我有多聰慧、多天才，只需要我願意坐下來，一次一個圖樣。那份被允許（permission）的感覺，像第一次深呼吸。
+          </p>
+
+          <p class="text-base leading-relaxed">
+            從那之後，我開始有意識地收集紙磚。每一張都標註了日期、我當時的心情，有時候還寫幾個字。我畫過在咖啡廳、在深夜的書房、在出差旅館的角落。有些紙磚會變成我喜歡的樣子，有些則不會——但無論如何，它們都是完成品。在這個任務永遠做不完的時代，這份「完成」有著特殊的意義。
+          </p>
+
+          <p class="text-base leading-relaxed">
+            三年前，我開始研究禪繞畫的深層方法——不只是跟著教學畫，而是去了解 Rick Roberts 與 Maria Thomas 為什麼設計這套系統。我發現禪繞畫並非叫你「放空」，而是邀請你進入一種特定的專注：手、眼、呼吸，都對齊到同一個時刻。那是一種很少人能感受到的內在寧靜。
+          </p>
+
+          <p class="text-base leading-relaxed">
+            建立這個網站的原因很簡單：我想分享。分享這 41 個圖樣為什麼重要、我怎麼應用它們、以及那些失誤、試驗、重新開始的故事。我也想讓朋友、家人、還有那些在搜尋引擎裡無意中發現「禪繞畫」這個詞的陌生人，能在一個地方看見「有人在認真地畫，而且把這件事的意義看得很重」。
+          </p>
+        </article>
+
+        <!-- 時間線 -->
+        <div class="border-t border-ink-200 dark:border-ink-700 pt-12">
+          <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-12">
+            創作里程
+          </h2>
+
+          <div class="space-y-12">
+            {[
+              { year: '2022', title: '初識禪繞畫', desc: '第一次接觸這個方法，深為其簡潔與深度著迷。' },
+              { year: '2023', title: '系統學習', desc: '開始研究 Rick & Maria 的原始教學法，完成百張練習紙磚。' },
+              { year: '2024', title: '深入探索', desc: '研究 41 個經典 tangle，建立個人風格與應用組合。' },
+              { year: '2025', title: '分享計畫', desc: '決定建立網站，與更多人分享這個平靜的實踐。' },
+            ].map(item => (
+              <div key={item.year} class="flex gap-6">
+                <div class="flex-shrink-0">
+                  <span class="font-display-zh text-2xl text-gold-500 dark:text-gold-400 font-bold">
+                    {item.year}
+                  </span>
+                </div>
+                <div>
+                  <h3 class="font-display-zh text-lg text-ink-700 dark:text-ink-50 mb-2">
+                    {item.title}
+                  </h3>
+                  <p class="font-body text-sm text-ink-600 dark:text-ink-400">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Grid Placeholder -->
+    <section class="py-20 px-4 bg-ink-50 dark:bg-ink-800">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-12 text-center">
+          作品快照
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} class="aspect-square bg-ink-200 dark:bg-ink-700 rounded-sm animate-pulse flex items-center justify-center">
+              <p class="text-ink-400 dark:text-ink-500">照片 {i}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
+</Layout>
