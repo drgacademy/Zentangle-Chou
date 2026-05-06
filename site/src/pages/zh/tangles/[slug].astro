@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleAnimation from '@/components/tangle/TangleAnimation.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import tangles from '@/data/tangles.json';
 
@@ -90,6 +91,14 @@ const difficultyLabel = {
       <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12">
         <!-- Left: Content -->
         <div class="md:col-span-2">
+          <!-- Step animation -->
+          <div class="mb-12">
+            <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-4">
+              繪製步驟動畫
+            </h2>
+            <TangleAnimation slug={tangle.slug.current} lang="zh" size={420} />
+          </div>
+
           <!-- Why Important -->
           <div class="mb-12">
             <h2 class="font-display-zh text-2xl text-ink-700 dark:text-ink-50 mb-4">
@@ -151,7 +160,7 @@ const difficultyLabel = {
           <!-- Animation Status -->
           <div class="px-4 py-3 bg-ink-50 dark:bg-ink-800 rounded-sm">
             <p class="font-body text-sm text-ink-600 dark:text-ink-400 text-center">
-              ✨ 步驟動畫即將上線
+              步驟動畫已上線（左側自動播放）
             </p>
           </div>
         </aside>

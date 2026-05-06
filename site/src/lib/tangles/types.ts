@@ -13,18 +13,7 @@ export interface TangleOptions {
   fill?: string;
 }
 
-export type TangleName =
-  | 'crescent-moon'
-  | 'hollibaugh'
-  | 'printemps'
-  | 'tipple'
-  | 'florz'
-  | 'static'
-  | 'auras'
-  | 'mooka'
-  | 'paradox'
-  | 'knightsbridge'
-  | 'nautilus';
+export type TangleName = string;
 
 export interface TileSpec {
   seed: string;
@@ -32,4 +21,24 @@ export interface TileSpec {
   tangles?: TangleName[];
   stroke?: string;
   bg?: string;
+}
+
+export interface PatternFrame {
+  /** SVG inner content for the cumulative geometry of this step. */
+  svg: string;
+  label_zh: string;
+  label_en: string;
+}
+
+export interface PatternContext {
+  rng: Rng;
+  density: number;
+  strokeWidth: number;
+}
+
+export interface TanglePattern {
+  /** Slug matches site/src/data/tangles.json `slug.current`. */
+  slug: string;
+  /** Builds an ordered list of cumulative drawing frames. */
+  generate: (rect: Rect, ctx: PatternContext) => PatternFrame[];
 }

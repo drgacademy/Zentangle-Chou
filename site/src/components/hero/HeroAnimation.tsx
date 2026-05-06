@@ -2,17 +2,25 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   rngFromSeed,
   wobblyLine,
-  hollibaugh,
-  tipple,
-  mooka,
-  florz,
-  crescentMoon,
-  knightsbridge,
-  nautilus,
-  paradox,
-  printemps,
+  getPattern,
   type Rect,
+  type Rng,
 } from '@/lib/tangles';
+
+function renderTangle(
+  slug: string,
+  rect: Rect,
+  rng: Rng,
+  opts: { density?: number; strokeWidth?: number } = {}
+): string {
+  const pattern = getPattern(slug);
+  const frames = pattern.generate(rect, {
+    rng,
+    density: opts.density ?? 1.0,
+    strokeWidth: opts.strokeWidth ?? 0.9,
+  });
+  return frames.map(f => f.svg).join('');
+}
 
 interface HeroAnimationProps {
   /** localized hero headline. Required so this component is i18n-safe. */
@@ -325,25 +333,25 @@ function buildTileGeometry(seed: string): TileGeometry {
 
   const regions: RegionSpec[] = [
     { id: 'r1', polygon: [[40, 40], [380, 40], [400, 200], [330, 290], [180, 360], [60, 410], [40, 350]],
-      svg: hollibaugh(rectFor([[40, 40], [400, 200]]), { rng, density: 1.6, strokeWidth: 1.2 }) },
+      svg: renderTangle('hollibaugh', rectFor([[40, 40], [400, 200]]), rng, { density: 1.6, strokeWidth: 1.2 }) },
     { id: 'r2', polygon: [[380, 40], [600, 40], [580, 240], [430, 230], [400, 200]],
-      svg: tipple(rectFor([[380, 40], [600, 240]]), { rng, density: 1.8, strokeWidth: 0.9 }) },
+      svg: renderTangle('tipple', rectFor([[380, 40], [600, 240]]), rng, { density: 1.8, strokeWidth: 0.9 }) },
     { id: 'r3', polygon: [[600, 40], [770, 40], [760, 320], [580, 360], [490, 280], [580, 240]],
-      svg: mooka(rectFor([[490, 40], [770, 360]]), { rng, density: 1.4, strokeWidth: 1.2 }) },
+      svg: renderTangle('mooka', rectFor([[490, 40], [770, 360]]), rng, { density: 1.4, strokeWidth: 1.2 }) },
     { id: 'r4', polygon: [[770, 40], [960, 40], [960, 340], [820, 320], [760, 320]],
-      svg: florz(rectFor([[760, 40], [960, 340]]), { rng, density: 1.4, strokeWidth: 0.8 }) },
+      svg: renderTangle('florz', rectFor([[760, 40], [960, 340]]), rng, { density: 1.4, strokeWidth: 0.8 }) },
     { id: 'r5', polygon: [[820, 320], [960, 340], [960, 600], [780, 580], [700, 540], [580, 460], [490, 280], [580, 360], [760, 320]],
-      svg: florz(rectFor([[580, 320], [960, 600]]), { rng, density: 1.0, strokeWidth: 0.7 }) },
+      svg: renderTangle('florz', rectFor([[580, 320], [960, 600]]), rng, { density: 1.0, strokeWidth: 0.7 }) },
     { id: 'r6', polygon: [[40, 350], [60, 410], [180, 360], [330, 290], [400, 360], [380, 580], [310, 700], [40, 720]],
-      svg: crescentMoon(rectFor([[40, 290], [400, 720]]), { rng, density: 1.1, strokeWidth: 1.0 }) },
+      svg: renderTangle('crescent-moon', rectFor([[40, 290], [400, 720]]), rng, { density: 1.1, strokeWidth: 1.0 }) },
     { id: 'r7', polygon: [[40, 720], [310, 700], [320, 880], [240, 960], [40, 960]],
-      svg: knightsbridge(rectFor([[40, 700], [320, 960]]), { rng, density: 1.2 }) },
+      svg: renderTangle('knightsbridge', rectFor([[40, 700], [320, 960]]), rng, { density: 1.2 }) },
     { id: 'r8', polygon: [[400, 360], [490, 280], [580, 460], [700, 540], [780, 580], [720, 760], [560, 870], [380, 870], [320, 740], [380, 580]],
-      svg: nautilus(rectFor([[300, 280], [780, 870]]), { rng, strokeWidth: 1.4 }) },
+      svg: renderTangle('nautilus', rectFor([[300, 280], [780, 870]]), rng, { strokeWidth: 1.4 }) },
     { id: 'r9', polygon: [[240, 960], [320, 880], [380, 870], [560, 870], [660, 920], [660, 960]],
-      svg: paradox(rectFor([[240, 870], [660, 960]]), { rng, density: 1.4, strokeWidth: 0.8 }) },
+      svg: renderTangle('paradox', rectFor([[240, 870], [660, 960]]), rng, { density: 1.4, strokeWidth: 0.8 }) },
     { id: 'r10', polygon: [[720, 760], [780, 580], [960, 600], [960, 960], [660, 960], [660, 920], [560, 870]],
-      svg: printemps(rectFor([[660, 580], [960, 960]]), { rng, density: 1.4, strokeWidth: 1.0 }) },
+      svg: renderTangle('printemps', rectFor([[660, 580], [960, 960]]), rng, { density: 1.4, strokeWidth: 1.0 }) },
   ];
 
   const strings = [

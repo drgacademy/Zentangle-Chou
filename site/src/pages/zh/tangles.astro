@@ -11,8 +11,8 @@ const currentPath = '/zh/tangles';
 const title = 'Zentangle Chou — 圖樣字典';
 const description = '41 個經典禪繞圖樣的完整字典';
 
-// 8 個有動畫的 tangle
-const animatedTangles = ['crescent-moon', 'hollibaugh', 'printemps', 'cadent', 'mooka', 'florz', 'tipple', 'knightsbridge'];
+// 所有 41 個 tangle 都有步驟動畫
+const animatedTangles = tangles.map(t => t.slug.current);
 
 // 獲取所有分類和難度等級
 const allCategories = Array.from(new Set(tangles.flatMap(t => t.category)));
@@ -123,10 +123,10 @@ const difficulties = ['beginner', 'intermediate', 'advanced'];
           </div>
           <div>
             <p class="font-display-zh text-4xl text-ink-700 dark:text-ink-50 font-bold mb-2">
-              8
+              41
             </p>
             <p class="font-body text-ink-600 dark:text-ink-300">
-              有步驟動畫
+              皆有步驟動畫
             </p>
           </div>
           <div>
