@@ -1,0 +1,409 @@
+# Animation Patterns — 個人纏繞畫網站
+
+## 設計哲學
+
+每一條線都應該是「被畫出來的」，而不是「突然出現」。
+動畫是這個網站的靈魂，但要克制——慢、有意圖、可暫停。
+原則：**訪客體驗到的是「靜心」，不是「炫技」**。
+
+---
+
+## 三層速度系統
+
+| 層級 | 時長 | 用途 | 緩動 |
+|---|---|---|---|
+| **Slow** | 4–6s | 永續慢繪：背景裝飾 tangle、scroll cue、hero 完整動畫 | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| **Medium** | 1.5–3s | 頁面切換、區塊 reveal、tangle step animation | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| **Fast** | 0.3–0.6s | hover 回饋、按鈕互動、cursor trail | `ease-out` 或 `cubic-bezier(0.0, 0, 0.2, 1)` |
+
+**Reduced motion**：`prefers-reduced-motion: reduce` 全部改 `0.01s` + 直接顯示終態。
+
+---
+
+## Pattern 1：SVG Path Drawing（核心）
+
+**用途**：所有「線條被畫出來」的動畫——hero、tangle step、hover、頁面切換。
+
+### 純 CSS 版（首選）
+
+```css
+.draw-path {
+  stroke-dasharray: var(--length, 1000);
+  stroke-dashoffset: var(--length, 1000);
+  animation: draw 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.draw-path.delay-1 { animation-delay: 0.5s; }
+.draw-path.delay-2 { animation-delay: 1.0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+```
+
+**動態取得 path 長度**（精確）：
+
+```ts
+function setupDrawPath(svg: SVGSVGElement) {
+  svg.querySelectorAll<SVGPathElement>('.draw-path').forEach(path => {
+    const length = path.getTotalLength();
+    path.style.setProperty('--length', `${length}`);
+  });
+}
+```
+
+### React Hook 版（互動）
+
+```tsx
+import { useEffect, useRef } from 'react';
+
+export function useDrawPath(duration = 2, delay = 0) {
+  const ref = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    const path = ref.current;
+    if (!path) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      path.style.strokeDashoffset = '0';
+      return;
+    }
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = `${length}`;
+    path.style.strokeDashoffset = `${length}`;
+    path.getBoundingClientRect(); // force reflow
+    path.style.transition = `stroke-dashoffset ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`;
+    path.style.strokeDashoffset = '0';
+  }, [duration, delay]);
+
+  return ref;
+}
+```
+
+### GSAP 版（升級用）
+
+```tsx
+import gsap from 'gsap';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+gsap.registerPlugin(DrawSVGPlugin);
+
+const tl = gsap.timeline();
+tl.fromTo('.path-1', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.5, ease: 'power2.inOut' })
+  .fromTo('.path-2', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.0 }, '-=0.5');
+```
+
+---
+
+## Pattern 2：Hero Animation（首頁 8 步驟）
+
+完整 timeline（總 ~10 秒）：
+
+```
+時間軸（秒）：
+0.0  ──┐  Dot 1 fade in (0.3s)
+0.15 ──┤  Dot 2 fade in (0.3s)
+0.30 ──┤  Dot 3 fade in (0.3s)
+0.45 ──┘  Dot 4 fade in (0.3s)
+0.80 ──── Border draw (1.2s) ─────────────┐
+2.00 ──── String draw (1.5s) ─────────────┤
+3.60 ──── Crescent Moon paths (4 stagger) │
+5.20 ──── Hollibaugh paths (3 stagger)    │
+7.00 ──── Shading fade in (1.0s)          │
+8.00 ──── Signature draw (1.5s)           │
+9.00 ──── H1 fade in (0.8s)               │
+9.40 ──── Subtitle fade in (0.8s)         │
+10.0 ──── 完成                            │
+```
+
+完整 React 元件 code 見 `Claude_Code_Project_Brief.md` Part 6.1。
+
+---
+
+## Pattern 3：Tangle Cursor Trail
+
+桌機版滑鼠移動時留下淡淡 tangle 線條（fade out 2 秒）。
+
+實作要點：
+- Canvas 而非 DOM（效能）
+- 16ms throttle（~60fps）
+- 200 點 buffer cap
+- 線條顏色：`rgba(46, 45, 42, opacity*0.4)`（ink-600 with fade）
+- 線寬 1.5px
+- `prefers-reduced-motion` 隱藏
+
+完整 code 見 `Claude_Code_Project_Brief.md` Part 2.4.3。
+
+---
+
+## Pattern 4：Page Transition
+
+從 A 頁切到 B 頁時：
+
+1. A 頁所有 path 反向 dash（0.3s）
+2. A 頁 fade out（0.3s）
+3. 路由切換
+4. B 頁 fade in（0.3s）+ B 頁 hero string 從畫面外延伸進來（1.5s）
+
+```tsx
+// 用 Framer Motion 的 AnimatePresence
+<AnimatePresence mode="wait">
+  <motion.div
+    key={router.pathname}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+  >
+    {children}
+  </motion.div>
+</AnimatePresence>
+```
+
+Astro 的 ViewTransitions API（v3+）也支援：
+
+```astro
+---
+import { ViewTransitions } from 'astro:transitions';
+---
+<head>
+  <ViewTransitions />
+</head>
+```
+
+---
+
+## Pattern 5：Hover Path Drawing
+
+連結 / 按鈕 hover 時，下方畫一條 string：
+
+```tsx
+<a href="#" className="group relative inline-block">
+  <span>Read more</span>
+  <svg className="absolute -bottom-1 left-0 w-full h-1.5 overflow-visible" viewBox="0 0 100 4">
+    <path
+      d="M 0 2 Q 50 0 100 2"
+      className="hover-string"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+    />
+  </svg>
+</a>
+```
+
+```css
+.hover-string {
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+.group:hover .hover-string,
+.group:focus-visible .hover-string {
+  stroke-dashoffset: 0;
+}
+```
+
+---
+
+## Pattern 6：Portfolio Card Hover
+
+Hover 時 SVG overlay 重新 draw 主 tangle 輪廓（0.5s）：
+
+```tsx
+<div className="group relative">
+  <img src={cover} alt={title} className="w-full" />
+  <svg className="absolute inset-0 w-full h-full pointer-events-none">
+    <path d={mainOutlinePathD} className="card-outline" stroke="white" strokeWidth="1.5" fill="none" />
+  </svg>
+</div>
+```
+
+```css
+.card-outline {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  opacity: 0;
+  transition: stroke-dashoffset 0.5s ease-out, opacity 0.2s;
+}
+
+.group:hover .card-outline {
+  stroke-dashoffset: 0;
+  opacity: 0.7;
+}
+```
+
+---
+
+## Pattern 7：Theme Toggle（Tile Flip）
+
+切換暗 / 淺模式時：整個畫面 `rotateY(180deg)`（1 秒），中途切換 theme class。
+
+```tsx
+function toggleTheme() {
+  const html = document.documentElement;
+  html.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+  html.style.transformStyle = 'preserve-3d';
+  html.style.transform = 'rotateY(180deg)';
+
+  setTimeout(() => {
+    html.classList.toggle('dark');
+    html.style.transform = 'rotateY(0deg)';
+  }, 500);
+}
+```
+
+注意：要先設定 `body { backface-visibility: hidden }`，否則 180deg 時看到鏡像。
+
+---
+
+## Pattern 8：Scroll-triggered Reveal
+
+進入 viewport 時：fade up + 內部 path draw。
+
+```tsx
+import { useInView } from 'react-intersection-observer';
+
+function FadeUpSection({ children }) {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+```
+
+更精緻：用 IntersectionObserver native + CSS only：
+
+```css
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+```
+
+```ts
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in-view');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+```
+
+---
+
+## Pattern 9：Tangle Step Animation（字典核心）
+
+每個 tangle 的 step animation 結構：
+
+```ts
+interface TangleStep {
+  step: number;      // 1, 2, 3, ...
+  path_d: string;    // SVG path d 屬性
+  duration: number;  // 繪製時長（秒），通常 0.5–1.5
+  description: string; // 該步說明（zh / en 兩版）
+}
+```
+
+播放邏輯：
+1. 全部 path 預設 `opacity: 0`、`stroke-dashoffset: length`
+2. 依序逐步顯示 + draw
+3. 全部畫完停留 1.5 秒
+4. 全部 reset，重新播放（loop）
+5. 使用者可暫停
+
+實作 code 見 `Claude_Code_Project_Brief.md` Part 6.2.3。
+
+---
+
+## Pattern 10：Background Ambient Tangle
+
+About 頁、Process 頁右下角，一個慢慢生長的 Mooka 藤蔓：
+
+```css
+.ambient-mooka {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 200px;
+  height: 200px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-mooka path {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: ambient-grow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes ambient-grow {
+  0%   { stroke-dashoffset: 500; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .ambient-mooka { display: none; }
+}
+```
+
+---
+
+## Performance 守則
+
+1. **同一畫面動畫總數 ≤ 30 個**——超過會掉幀
+2. **行動版 disable 多餘動畫**：cursor trail、ambient tangle、複雜 hero
+3. **使用 `transform` / `opacity`**——不要動畫 `width` / `height` / `top` / `left`（造成 layout）
+4. **大型 SVG 用 `will-change: stroke-dashoffset`**——但用完移除
+5. **iOS Safari 注意**：`backdrop-filter` 在 < iPhone 12 可能掉幀
+6. **rAF 統一管理**：cursor trail + scroll reveal 共用一個 RAF loop
+7. **lazy-mount 動畫元件**：tangle dictionary 卡片進入 viewport 才掛載 step animation
+
+---
+
+## 動畫檢查清單
+
+寫完每頁後，問自己：
+
+- [ ] 行動版總動畫時長 ≤ 5 秒？
+- [ ] `prefers-reduced-motion` 完全尊重？
+- [ ] iPhone SE 上 FPS ≥ 30？
+- [ ] 進站第一個動畫不阻塞 LCP（< 2.5s）？
+- [ ] 暫停 / 重播 button 工作？
+- [ ] 動畫期間鍵盤導航仍可用？
+- [ ] 動畫不會因 tab 切換中斷後反覆重播（visibilitychange 處理）？
+
+---
+
+## 推薦資源
+
+- GSAP DrawSVGPlugin docs: https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/
+- Framer Motion docs: https://www.framer.com/motion/
+- Cubic Bezier 工具: https://cubic-bezier.com
+- SVG path editor: https://yqnn.github.io/svg-path-editor/
+- Astro ViewTransitions: https://docs.astro.build/en/guides/view-transitions/

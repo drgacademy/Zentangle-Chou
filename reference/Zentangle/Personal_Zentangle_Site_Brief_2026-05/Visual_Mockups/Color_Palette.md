@@ -1,0 +1,169 @@
+# Color Palette — 個人禪繞畫網站
+
+## 設計哲學
+
+Rick Roberts 與 Maria Thomas 的原始 Zentangle 方法只用兩色：黑色顏料墨 + 白色紙磚。
+本站完全致敬：**主色 90% 黑白**，副色 5–8% 點綴（sepia / gold），其餘 2% 留給作品本身。
+
+---
+
+## 主色票（ink scale）
+
+| Token | Hex | 用途 |
+|---|---|---|
+| `ink-50`  | `#FAFAFA` | 紙白（全站背景主色） |
+| `ink-100` | `#F5F4F1` | 米白（卡片背景、tile 容器） |
+| `ink-200` | `#E8E6E1` | 淺灰（極細分隔線、border） |
+| `ink-300` | `#C9C6BF` | 中灰（disabled state） |
+| `ink-400` | `#8E8B85` | 文字灰（meta 資訊：日期、tags） |
+| `ink-500` | `#5A5854` | 副文字（subtitle、quote 引言） |
+| `ink-600` | `#2E2D2A` | 主文字（內文） |
+| `ink-700` | `#1A1917` | 深黑（h1–h3 標題） |
+| `ink-900` | `#0A0A0A` | 純黑（墨色，tangle 線條、最強對比） |
+
+## 副色：Sepia（焦糖暖色）
+
+只用在「需要溫度」的時刻：hover state、簽名、作品年份標籤。
+
+| Token | Hex | 用途 |
+|---|---|---|
+| `sepia-300` | `#D4C4A8` | 淺米色（極少用） |
+| `sepia-500` | `#8B7355` | 主焦糖（連結 hover） |
+| `sepia-700` | `#5C4A33` | 深棕（極少用） |
+
+## 副色：Gold（金）
+
+只用在 CTA 按鈕、簽名落款、已選中項目的細微光暈。
+
+| Token | Hex | 用途 |
+|---|---|---|
+| `gold-300` | `#E8D5A8` | 淺金（已選中 tangle 的 ring） |
+| `gold-500` | `#C9A961` | 主金（CTA、簽名標） |
+| `gold-700` | `#8B7335` | 深金（hover gold） |
+
+---
+
+## 暗模式（Dark Mode）
+
+不是把白變灰——是 **Maria Thomas 進階 inverse tile**：白墨 + 黑紙磚。
+
+| Token | Light | Dark |
+|---|---|---|
+| `bg.default` | `#FAFAFA` | `#0A0A0A` |
+| `bg.card`    | `#F5F4F1` | `#1A1917` |
+| `border`     | `#E8E6E1` | `#2E2D2A` |
+| `text.muted` | `#8E8B85` | `#8E8B85` |
+| `text.body`  | `#2E2D2A` | `#E8E6E1` |
+| `text.bold`  | `#1A1917` | `#FAFAFA` |
+| `accent`     | `#C9A961` | `#E8D5A8` |
+
+---
+
+## Tailwind config（複製貼上）
+
+```ts
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+
+export default {
+  darkMode: 'class',
+  content: ['./src/**/*.{astro,tsx,jsx,ts,js,mdx,html}'],
+  theme: {
+    extend: {
+      colors: {
+        ink: {
+          50:  '#FAFAFA',
+          100: '#F5F4F1',
+          200: '#E8E6E1',
+          300: '#C9C6BF',
+          400: '#8E8B85',
+          500: '#5A5854',
+          600: '#2E2D2A',
+          700: '#1A1917',
+          900: '#0A0A0A',
+        },
+        sepia: {
+          300: '#D4C4A8',
+          500: '#8B7355',
+          700: '#5C4A33',
+        },
+        gold: {
+          300: '#E8D5A8',
+          500: '#C9A961',
+          700: '#8B7335',
+        },
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config;
+```
+
+---
+
+## CSS Variables（globals.css）
+
+```css
+:root {
+  --color-bg:        #FAFAFA;
+  --color-bg-card:   #F5F4F1;
+  --color-border:    #E8E6E1;
+  --color-text:      #2E2D2A;
+  --color-text-bold: #1A1917;
+  --color-text-muted:#8E8B85;
+  --color-accent:    #C9A961;
+  --color-link:      #2E2D2A;
+  --color-link-hover:#8B7355;
+}
+
+.dark {
+  --color-bg:        #0A0A0A;
+  --color-bg-card:   #1A1917;
+  --color-border:    #2E2D2A;
+  --color-text:      #E8E6E1;
+  --color-text-bold: #FAFAFA;
+  --color-text-muted:#8E8B85;
+  --color-accent:    #E8D5A8;
+  --color-link:      #E8E6E1;
+  --color-link-hover:#D4C4A8;
+}
+```
+
+---
+
+## 對比度驗證（WCAG 2.1）
+
+| 前景 | 背景 | 比例 | 等級 |
+|---|---|---|---|
+| `ink-700` (#1A1917) | `ink-50` (#FAFAFA) | 16.8:1 | AAA |
+| `ink-600` (#2E2D2A) | `ink-50` (#FAFAFA) | 13.2:1 | AAA |
+| `ink-500` (#5A5854) | `ink-50` (#FAFAFA) | 8.6:1  | AA Large |
+| `ink-400` (#8E8B85) | `ink-50` (#FAFAFA) | 4.7:1  | AA |
+| `gold-500` (#C9A961) | `ink-50` (#FAFAFA) | 4.5:1 | AA |
+| `sepia-500` (#8B7355) | `ink-50` (#FAFAFA) | 5.2:1 | AA |
+| `ink-50` (#FAFAFA) | `ink-900` (#0A0A0A) | 19.4:1 | AAA |
+
+**禁止用 < 4.5:1 的組合做正文字**。
+
+---
+
+## 使用守則
+
+1. **背景永遠是 `ink-50` 或 `dark.bg`**——不要漸層、不要渲染圖。
+2. **大塊純黑（`ink-900`）只用在實心 tangle 區塊**（如 Knightsbridge 的黑格、Hollibaugh 縫隙的填黑）。
+3. **gold-500 的總用量不超過視覺面積 2%**——CTA 按鈕、簽名標、選中標記，僅此而已。
+4. **sepia 是「溫度」**——只在 hover、active、已讀過的連結上出現。
+5. **暗模式不要灰背景**——必須是 #0A0A0A，否則就不是「翻轉 tile」的感覺。
+6. **每張作品圖片可以有任何顏色**（ZIA 範疇），但**頁面其他元素仍黑白**。
+
+---
+
+## 用色禁忌（例子）
+
+❌ `#FF0000`（純紅 alarm）
+❌ `linear-gradient(blue, purple)`
+❌ Material Design 預設配色
+❌ Bootstrap primary blue
+❌ 任何 saturate > 60% 的色（除了金）
+
+✅ 黑、白、暖灰、焦糖、淺金

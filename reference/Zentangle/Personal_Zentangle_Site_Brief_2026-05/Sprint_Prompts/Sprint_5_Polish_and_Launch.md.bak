@@ -1,0 +1,226 @@
+# Sprint 5: Polish & Launch — Claude Code Prompt
+
+> 前置條件：Sprint 1–4 完成。
+> 預估 wall-clock：4–8 小時。
+
+---
+
+## 給 Claude Code 的指令
+
+你正執行 Sprint 5：Polish & Launch。目標：上線。
+
+### Step 0：閱讀順序
+
+1. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Claude_Code_Project_Brief.md` Part 3.2.4（Videos）、Part 3.2.10（Contact）、Part 6.6（暗模式）、Part 6.7（行動版）、Part 6.8（A11y）
+2. `docs/sprints/sprint-4-report.md`
+
+### Step 1：Videos 頁
+
+`src/pages/[lang]/videos/index.astro`：
+
+1. H1 + 副標
+2. Filter bar（type：tutorial / time-lapse / reflection / demo）
+3. 2 欄影片網格（行動版 1 欄）
+4. `VideoCard.astro`：custom thumbnail（不用 YouTube 預設樣式）+ 時長 + 標題
+5. 點擊：用 `<dialog>` 開啟 modal 嵌入影片，或進 `/videos/[slug]` detail 頁
+
+`VideoEmbed.tsx`：lazy embed（點擊才載 iframe），用 `youtube-nocookie.com` 或 Vimeo player.
+
+如果 Sanity 還沒有影片資料：先寫腳本匯入 3–5 支假資料（用 YouTube 上的 Zentangle time-lapse 公開影片試）。
+
+### Step 2：Contact 頁
+
+`src/pages/[lang]/contact.astro`：
+
+1. H1 + 一段「歡迎來信」
+2. email link、IG link、LINE link
+3. ContactForm.tsx（React island）：
+   - fields: name / email / message
+   - 送出按鈕 hover 時邊框 string 畫出來
+   - 整合 Web3Forms（free 250/mo）：
+
+```tsx
+const onSubmit = async (data) => {
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: new URLSearchParams({
+      access_key: import.meta.env.PUBLIC_WEB3FORMS_KEY,
+      ...data
+    })
+  });
+  // success state
+};
+```
+
+驗證：填完表單，確認你的 inbox 收到測試訊息。
+
+### Step 3：行動版 Bottom Nav
+
+`MobileNav.tsx`（已在 Component_Library.md 規格）：
+
+```tsx
+export function MobileNav({ currentPath, lang }) {
+  const items = [
+    { href: `/${lang}/`, icon: HomeIcon, label: lang === 'zh' ? '首頁' : 'Home' },
+    { href: `/${lang}/portfolio`, icon: GalleryIcon, label: lang === 'zh' ? '作品' : 'Work' },
+    { href: `/${lang}/tangles`, icon: GridIcon, label: lang === 'zh' ? '字典' : 'Tangles' },
+    { href: `/${lang}/about`, icon: PersonIcon, label: lang === 'zh' ? '關於' : 'About' },
+    { href: `/${lang}/contact`, icon: MailIcon, label: lang === 'zh' ? '聯絡' : 'Contact' },
+  ];
+
+  return (
+    <nav className="fixed bottom-0 inset-x-0 bg-ink-50/95 backdrop-blur border-t border-ink-200 md:hidden z-50">
+      <div className="grid grid-cols-5 max-w-md mx-auto">
+        {items.map(item => {
+          const isActive = currentPath === item.href;
+          return (
+            <a key={item.href} href={item.href}
+              className={`flex flex-col items-center py-3 min-h-[44px]
+                ${isActive ? 'text-ink-700' : 'text-ink-400'}`}>
+              <item.icon className="w-5 h-5" />
+              <span className="text-[10px] mt-1">{item.label}</span>
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+```
+
+確認：iPhone SE 上 5 個圖示都看得清楚、touch target ≥ 44px。
+
+### Step 4：暗模式完整實作
+
+`ThemeToggle.tsx` 已在 Sprint 1 寫過骨架，現在完整化：
+
+1. 初始載入：先讀 `localStorage['theme']`，無則讀 `prefers-color-scheme`
+2. 切換動畫：`html` 元素 rotateY 1s，中途切 `dark` class
+3. 確認所有元件在 dark mode 下對比仍 ≥ AA：
+   - Hero SVG 線條：dark 下用 white stroke
+   - portfolio card thumbnail：用 backdrop hover overlay
+   - Tangle SVG：dark 下背景 #0A0A0A、線條 #FAFAFA
+4. 處理 SSR：用 `<script is:inline>` 在 body 之前先注入 dark class（避免 flash）
+
+```html
+<script is:inline>
+  const theme = localStorage.getItem('theme') ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (theme === 'dark') document.documentElement.classList.add('dark');
+</script>
+```
+
+### Step 5：A11y 全面檢查
+
+跑 axe-core：
+
+```bash
+pnpm add -D @axe-core/playwright
+```
+
+寫 e2e test：
+
+```ts
+// tests/e2e/a11y.spec.ts
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+['/zh/', '/zh/portfolio', '/zh/tangles', '/zh/about', '/zh/contact'].forEach(path => {
+  test(`a11y: ${path}`, async ({ page }) => {
+    await page.goto(`http://localhost:4321${path}`);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa']).analyze();
+    expect(results.violations).toEqual([]);
+  });
+});
+```
+
+修掉所有 violation。
+
+### Step 6：效能優化
+
+1. 跑 `pnpm build` + `npx serve dist`，用 Lighthouse CLI 測：
+   ```bash
+   pnpm dlx @lhci/cli@latest autorun --collect.url=http://localhost:3000/zh/ --collect.url=http://localhost:3000/zh/portfolio
+   ```
+2. 目標：Performance ≥ 95 桌機 / ≥ 90 行動
+3. 常見修法：
+   - 字體 preload + subset（已做）
+   - 圖片 AVIF + responsive（已做）
+   - JS 裁切：所有 React island 用 `client:visible` 而非 `client:load`
+   - prefetch 重要頁：`<link rel="prefetch">` 給 portfolio、tangles
+   - 移除未用的 Tailwind classes（content config 完整）
+
+### Step 7：404 頁
+
+`src/pages/[lang]/404.astro`：
+- 一張紙磚動畫（簡化版 hero）
+- 中央：「這頁迷路了」「Go back home →」
+- 不要過度設計
+
+### Step 8：robots.txt + sitemap
+
+`public/robots.txt`：
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://drg-academy.com/sitemap-index.xml
+```
+
+Astro sitemap 整合會自動產 `/sitemap-index.xml` + `/sitemap-0.xml`。確認 build 後存在。
+
+### Step 9：上線 checklist
+
+- [ ] DNS：把 domain 指到 Cloudflare Pages
+- [ ] HTTPS：Cloudflare 自動配 cert
+- [ ] OG image 用真實 1200×630 圖
+- [ ] favicon 全套（16/32/180/512）
+- [ ] manifest.json（PWA 預備）
+- [ ] Plausible script 加到 Layout（如預算允許）/ 或 Cloudflare Web Analytics
+- [ ] Google Search Console：提交 sitemap
+- [ ] Bing Webmaster：提交 sitemap
+- [ ] 測 lighthouse ≥ 95 全綠
+- [ ] 至少 3 位朋友（含 1 位非技術）測過、無 critical bug
+- [ ] 跨裝置：iPhone SE / iPhone 15 Pro / iPad / Galaxy A12 / 13" Mac / 27" iMac 都實測
+
+### Step 10：上線文案準備
+
+寫一個簡短的「上線通知」貼文（zh / en 雙語）給使用者貼在 IG、Threads、FB：
+
+範例：
+
+```
+🌱 我的纏繞畫個人作品集網站正式上線了
+
+drg-academy.com
+
+過去三個月把所有作品、創作筆記、與 41 個經典圖樣的雙語介紹整理成一個地方。網站本身的視覺也是用纏繞畫的精神做的——線條會慢慢被畫出來、滑鼠會留下淡淡的痕跡。
+
+歡迎來看看，慢慢逛，一筆一畫，皆是可能。
+```
+
+### Acceptance Criteria
+
+- [ ] 所有頁面 Lighthouse ≥ 95（Perf / A11y / Best Practices / SEO）
+- [ ] axe a11y 0 violation
+- [ ] 上線後 5 個朋友訪問 0 critical bug
+- [ ] iPhone SE 行動版動畫 FPS ≥ 30
+- [ ] 暗模式無對比問題
+- [ ] Search Console / Bing 已提交 sitemap
+- [ ] git tag `v1.0.0`
+
+### Step 11：commit + Sprint 5 報告 + 慶祝
+
+寫 `docs/sprints/sprint-5-report.md`：完成項、上線時間、第一週數據（如有）、v1.1 待補事項清單。
+
+最後 push + tag：
+```bash
+git tag -a v1.0.0 -m "🎉 Initial public release"
+git push origin v1.0.0
+```
+
+去喝一杯茶。
+
+開始吧。預估 4–8 小時。

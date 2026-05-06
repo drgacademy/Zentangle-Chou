@@ -1,0 +1,2104 @@
+# Claude Code 開發企劃書 — 個人纏繞畫作品集網站
+
+**版本：** v1.0
+**作者：** Dr. G. Academy
+**目標讀者：** 即將執行此專案的 Claude Code（與專案發起人本人）
+**完成日期目標：** 2026 年 7 月底（10 週開發週期）
+**最後更新：** 2026-05-06
+
+---
+
+## 目錄
+
+- Part 1：產品願景
+- Part 2：視覺設計系統
+- Part 3：資訊架構與頁面
+- Part 4：技術選型
+- Part 5：資料模型（CMS schema）
+- Part 6：核心功能規格
+- Part 7：開發階段（5 個 Sprint）
+- Part 8：Claude Code 執行 Prompts
+- Part 9：成本與預期工時
+- Part 10：未來擴充
+- 附錄 A：參考檔案路徑表
+- 附錄 B：詞彙表
+
+---
+
+## Part 1：產品願景
+
+### 1.1 為什麼這個網站存在
+
+這個網站不是 zentangle.com、不是 TanglePatterns.com、也不是任何商業課程站的台灣版本。這是**一位台灣纏繞畫創作者的個人作品集**——一個讓朋友、家人、藝術同好、潛在客戶與治療工作者，在一個地方看見「她畫了什麼」「她怎麼想這件事」「她從這裡走到哪裡」的空間。
+
+商業課程站的設計目標是**轉換**（讓你報名、讓你付費、讓你訂閱）。個人作品集的設計目標是**駐足**——讓你願意慢下來，看完一張紙磚、再看一張、再看一張。這兩種設計的呼吸節奏完全不同。
+
+### 1.2 目標讀者（從近到遠）
+
+1. **藝術愛好者 / 收藏者**（核心）：可能在 Instagram 看到作品、想看更高解析度與創作脈絡。會想知道作品有沒有販售、能不能訂製。
+2. **學習纏繞畫的人**（次核心）：可能透過搜尋「Hollibaugh 怎麼畫」進來，發現這裡有 41 個經典 tangle 的雙語介紹與作者本人的應用範例。
+3. **治療師、藝術教師、社工**（重要）：尋找成人靜心、創傷修復、注意力訓練的工具與作品案例。需要的是「可信、有深度、有實作」的證據，而不是促銷話術。
+4. **朋友與家人**：想看你最近在畫什麼，可能會分享給其他人。動線要極簡。
+5. **未來的合作機會**（畫廊、出版、品牌）：他們需要在 60 秒內了解「這個人是誰、做什麼、怎麼聯絡」。
+
+### 1.3 核心情緒體驗
+
+整個網站要讓訪客在 5 秒內感受到的**四種氛圍**：
+
+- **Contemplative（沉思）**：不是 flashy、不是「賣力推銷」，而是讓人想多停一下。
+- **Stillness（靜定）**：動畫慢、留白多、字距寬。整體像深呼吸。
+- **Wonder（驚奇）**：當 hero 動畫的線條一筆一筆延伸出第一個 tangle 時，訪客會不自覺地「哇」一下。
+- **Permission（被允許）**：讓訪客感受到「我也可以畫」「我不用是天才」「失誤就是機會」——這是 Rick & Maria 整套方法的核心精神。
+
+### 1.4 與 zentangle.com / TanglePatterns.com 的差異
+
+| 維度 | zentangle.com（官方） | TanglePatterns.com（典藏） | 本站 |
+|---|---|---|---|
+| 主要目標 | 銷售產品、CZT 認證 | 圖樣百科、社群投稿 | 個人作品集 + tangle 字典 |
+| 內容主體 | 教材、商品、新聞 | 1,800+ 個 tangle 圖樣 | 個人作品 + 41 個經典 tangle |
+| 視覺風格 | 簡潔、商業、靜態 | 資訊密度高、靜態 | 動態、有呼吸、像紙磚本身 |
+| 雙語支援 | 英文為主 | 英文 only | zh-TW + en 平等 |
+| 動畫密度 | 幾乎無 | 無 | 高（核心識別） |
+
+我們不要跟它們比資料量、比商品線。我們比的是**「這個網站本身的閱讀體驗就像一次靜心練習」**。
+
+### 1.5 成功指標（不是流量 KPI）
+
+第一年不追求高流量。追求的是：
+
+1. **平均停留時間 ≥ 3 分鐘**（GA4：Engaged Sessions Avg Time）
+2. **重訪率 ≥ 25%**（90 天內 returning users）
+3. **至少 10 則情緒回饋**（電郵、IG DM、留言：「你的網站讓我感到平靜」「我看完想拿筆」這類）
+4. **作品集頁面深度 ≥ 4**（GA4：每 session 平均瀏覽 4 個 portfolio item 以上）
+5. **Tangle 字典頁深度 ≥ 6**（每 session 平均看 6 個 tangle）
+6. **零跳出率焦慮**：不在乎首頁跳出率高，因為訪客可能「看完就靜靜地走了」——這對作品集是好事。
+
+第二年才考慮：作品銷售線索、工作坊預約、newsletter 訂閱。
+
+### 1.6 範圍邊界（明確不做）
+
+- **不做** 線上付費課程系統（v2 才考慮）
+- **不做** 社群投稿、會員制（v2 才考慮）
+- **不做** 商品電商（連結到外部 Etsy / Pinkoi 即可）
+- **不做** 強迫 newsletter 彈窗（如有訂閱表單，放在頁尾，不彈窗、不擋讀）
+- **不做** 「下載免費 PDF 換 Email」的內容行銷套路——與 contemplative 品牌精神衝突
+- **不做** Cookie banner 以外的追蹤（Plausible / Umami 不需 Cookie）
+
+---
+
+## Part 2：視覺設計系統
+
+這是整個網站的靈魂，必須極為詳盡。Claude Code 在 Sprint 1 結束前必須把這套系統落實到 `tailwind.config.ts`、`globals.css`、與 `tokens/*.ts` 三處。
+
+### 2.1 色彩系統
+
+#### 2.1.1 設計哲學
+
+Rick Roberts 與 Maria Thomas 的原始方法只用兩種顏色：**黑色顏料墨 + 白色紙磚 + 鉛筆灰階陰影**。原因是：「拿掉色彩決策，讓專注力回到筆觸本身。」
+
+本站完全致敬這個哲學。**主色只有黑與白**。所有其他顏色都是極微量的點綴（accent），總用量不超過全站視覺面積的 5%。
+
+#### 2.1.2 完整色票
+
+```ts
+// tokens/colors.ts
+export const colors = {
+  // === 主色（佔 90% 視覺面積）===
+  ink: {
+    50:  '#FAFAFA',  // 紙白（背景主色）
+    100: '#F5F4F1',  // 米白（卡片背景）
+    200: '#E8E6E1',  // 淺灰（分隔線）
+    300: '#C9C6BF',  // 中灰
+    400: '#8E8B85',  // 文字灰
+    500: '#5A5854',  // 副文字
+    600: '#2E2D2A',  // 主文字
+    700: '#1A1917',  // 深黑
+    900: '#0A0A0A',  // 純黑（墨色，最強對比）
+  },
+
+  // === 副色（佔 5–8% 視覺面積，純粹點綴）===
+  sepia: {
+    300: '#D4C4A8',  // 暖紙色
+    500: '#8B7355',  // 焦糖色（hover state、refrain link）
+    700: '#5C4A33',  // 深棕（極少用）
+  },
+  gold: {
+    300: '#E8D5A8',  // 淺金（已選中 tangle 的光暈）
+    500: '#C9A961',  // 主金色（CTA、簽名標）
+    700: '#8B7335',  // 深金（hover）
+  },
+
+  // === 暗模式（完全反轉）===
+  // 暗模式不是「把白變灰」，而是 Zentangle 的 inverse tile：
+  // 白筆 + 黑紙磚（少數 CZT 大師如 Maria 的進階作品會這樣畫）
+  dark: {
+    bg:        '#0A0A0A',  // 黑紙磚
+    bgCard:    '#1A1917',
+    border:    '#2E2D2A',
+    textMuted: '#8E8B85',
+    text:      '#E8E6E1',
+    textBold:  '#FAFAFA',  // 白墨
+  },
+} as const;
+```
+
+#### 2.1.3 Tailwind config 整合
+
+```ts
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+import { colors } from './tokens/colors';
+
+export default {
+  darkMode: 'class', // 用 .dark class 切換，不用 media query（讓使用者主動選）
+  content: ['./src/**/*.{astro,tsx,jsx,ts,js,mdx}'],
+  theme: {
+    extend: {
+      colors: {
+        ink: colors.ink,
+        sepia: colors.sepia,
+        gold: colors.gold,
+      },
+      backgroundColor: {
+        DEFAULT: colors.ink[50],     // 全站預設背景
+        'dark-default': colors.dark.bg,
+      },
+    },
+  },
+} satisfies Config;
+```
+
+#### 2.1.4 何時可以破例用其他顏色
+
+只有兩種情況：
+
+1. **作品本身有色彩**：這是 ZIA（Zentangle-Inspired Art）的範疇。在 portfolio detail 頁，可以用作品的真實色彩呈現，但**頁面其他元素仍然只用黑白**。
+2. **影片 thumbnail**：YouTube/Vimeo embed 會帶入原色，可接受。
+
+**禁止**：任何商業色（紅綠色 alarm、藍色 trust、紫色 luxury 都不要）、任何 gradient 漸層（除非是 SVG 內畫線的明暗變化）。
+
+#### 2.1.5 對比度（WCAG AA）
+
+| 前景 / 背景 | 對比比 | 用途 |
+|---|---|---|
+| `ink-700` / `ink-50` | 16.8:1 | 標題（AAA） |
+| `ink-600` / `ink-50` | 13.2:1 | 內文（AAA） |
+| `ink-500` / `ink-50` | 8.6:1 | 副文字（AA Large） |
+| `ink-400` / `ink-50` | 4.7:1 | 次要文字（AA） |
+| `gold-500` / `ink-50` | 4.5:1 | 連結（剛好 AA） |
+| `sepia-500` / `ink-50` | 5.2:1 | hover 連結（AA） |
+
+不要把文字放到比 `ink-400` 更淺的色——再「美」也不行。
+
+### 2.2 字體系統
+
+#### 2.2.1 設計哲學
+
+Maria Thomas 的本業是**英式書法家**（calligrapher）。她在創立 Zentangle 之前，做的是給訂婚卡、邀請函寫手寫字。整套 Zentangle 的視覺語言因此天然帶有「手寫」「呼吸」「個人」的氣質。
+
+我們的字體選擇也要呼應這件事——但要克制，不要「整篇都是書法字」（會難讀）。原則：**標題用書法／手寫感，內文用安靜的襯線體**。
+
+#### 2.2.2 字體家族
+
+```ts
+// tokens/fonts.ts
+export const fonts = {
+  // 顯示用（hero、大標題）
+  display: {
+    en: '"Caveat Brush", "Caveat", cursive', // 手寫感、有筆觸
+    zh: '"王漢宗中楷體", "Noto Serif TC", serif', // 中文標題用書法感襯線
+  },
+
+  // 標題（h1, h2）
+  heading: {
+    en: '"Crimson Pro", "Lora", Georgia, serif',
+    zh: '"思源宋體", "Noto Serif TC", serif',
+  },
+
+  // 內文
+  body: {
+    en: '"Lora", Georgia, "Times New Roman", serif',
+    zh: '"思源宋體", "Noto Serif TC", "PMingLiU", serif',
+  },
+
+  // 等寬（極少用，只用在 code 與日期）
+  mono: '"JetBrains Mono", ui-monospace, "Consolas", monospace',
+
+  // 作者簽名專用（mimic Maria Thomas calligraphy）
+  signature: {
+    en: '"Allura", "Great Vibes", cursive',
+    zh: '"王漢宗自由字型", "標楷體", cursive',
+  },
+};
+```
+
+#### 2.2.3 字體載入策略
+
+- 全部用 **Google Fonts** 與 **justfont（中文）** 的 self-host 方式
+- `@font-face` 用 `font-display: swap`
+- 預載 hero 用到的字體（`<link rel="preload">`）
+- 中文字體**只載入 subset**（只包含繁中常用字 + 拼音），檔案小到 200 KB 以內
+- 用 `fonttools` 的 `pyftsubset` 製作 subset：
+
+```bash
+pyftsubset NotoSerifTC-Regular.otf \
+  --unicodes-file=zh-tw-common-3500.txt \
+  --output-file=NotoSerifTC-Regular.subset.woff2 \
+  --flavor=woff2
+```
+
+`zh-tw-common-3500.txt` 用教育部常用字 3,500 字 + 站內所有 tangle 中文名 + 文案中文。
+
+#### 2.2.4 排版規則（Type Scale）
+
+```css
+/* globals.css */
+:root {
+  /* Major Third scale (1.250) — 比 Major Second 慢、更冥想 */
+  --fs-xs:   0.80rem;   /* 12.8px */
+  --fs-sm:   0.90rem;   /* 14.4px */
+  --fs-base: 1.00rem;   /* 16px   */
+  --fs-md:   1.125rem;  /* 18px   */
+  --fs-lg:   1.25rem;   /* 20px   */
+  --fs-xl:   1.563rem;  /* 25px   */
+  --fs-2xl:  1.953rem;  /* 31.2px */
+  --fs-3xl:  2.441rem;  /* 39px   */
+  --fs-4xl:  3.052rem;  /* 48.8px */
+  --fs-5xl:  3.815rem;  /* 61px   */
+  --fs-hero: 4.768rem;  /* 76.3px — hero 標題專用 */
+
+  /* 行高放鬆（contemplative 必備）*/
+  --lh-tight:   1.20;   /* 標題 */
+  --lh-snug:    1.45;   /* 副標 */
+  --lh-relaxed: 1.75;   /* 內文（中文 1.85）*/
+  --lh-loose:   2.00;   /* 詩意段落（about page、process page）*/
+
+  /* 字距 */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.04em;   /* 副標常用 */
+  --tracking-wider:   0.08em;   /* 全大寫小標 */
+}
+
+body {
+  font-family: var(--font-body-zh), var(--font-body-en);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-normal);
+  color: theme(colors.ink.600);
+  background: theme(colors.ink.50);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading-zh), var(--font-heading-en);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: theme(colors.ink.700);
+}
+
+h1.hero {
+  font-family: var(--font-display-en);
+  font-size: var(--fs-hero);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* 中文段落要更鬆一點，不然密度會壓人 */
+:lang(zh-Hant) p {
+  line-height: 1.85;
+  letter-spacing: 0.03em;
+}
+
+/* 數字與英文混排時保持等寬感（避免中文字距撐到英文）*/
+.mixed-script {
+  font-feature-settings: "palt" 1; /* 比例間距 for Japanese/Chinese */
+}
+```
+
+#### 2.2.5 排版禁忌
+
+- **不用** `font-weight: 700+` 在大段內文（會壓迫）
+- **不用** 全大寫超過 4 個字（除了非常少數的 eyebrow label）
+- **不用** 行高 < 1.5 的內文段落
+- **不用** justify（兩端對齊）——中文兩端對齊會出現詭異字距
+- **不用** italic 大段——少量 emphasis 可以
+
+### 2.3 線條動畫系統（網站的靈魂）
+
+#### 2.3.1 為什麼動畫如此重要
+
+在實體 Zentangle 練習中，「**用心的一筆**」（deliberate stroke）是整套方法的核心——線條要慢、有意圖、看著它出現。一張靜態網頁無法傳遞這個感覺。
+
+我們透過**SVG path drawing animation**（`stroke-dasharray` + `stroke-dashoffset`）讓網站上的每一條線都「被畫出來」而非「突然出現」。訪客在無意識中體驗到了 Rick & Maria 想傳達的「線條是有時間性的」這件事。
+
+#### 2.3.2 三種速度層級
+
+| 層級 | 時間 | 用途 | 範例 |
+|---|---|---|---|
+| **Slow** | 4–6 秒 | 永續慢繪：背景裝飾 tangle、頁面角落緩慢生長的藤蔓 | About 頁右下角的 Mooka 慢慢長出來 |
+| **Medium** | 1.5–3 秒 | 頁面切換、區塊出現時的 string 延伸 | 從一頁跳到另一頁時，下一頁的 hero 線條從畫面外延伸進來 |
+| **Fast** | 0.3–0.6 秒 | hover/click 即時回饋 | 滑鼠移到連結，連結下方畫一條 string |
+
+#### 2.3.3 庫推薦（從強到弱）
+
+1. **GSAP + DrawSVGPlugin**（首選但付費）
+   - 優點：精確、效能最好、可暫停／反向／seek
+   - 缺點：DrawSVGPlugin 是 Club GreenSock 會員制，個人 $99/year
+   - 用法：適合 hero 動畫這種「線條一筆一筆按順序畫」的場景
+2. **Framer Motion**（次選、免費）
+   - 優點：React-native、API 友善、與 page transition 整合好
+   - 缺點：path drawing 要自己用 `pathLength` + `motion.path` 做
+3. **純 CSS `stroke-dasharray`**（最簡、免費）
+   - 優點：零 JS、效能最好、SSR 友善
+   - 缺點：無法 seek、無法反向、複雜時間軸難寫
+
+**建議**：
+
+- Sprint 1–3 全部用純 CSS + Framer Motion（免費路線）
+- Sprint 4 的 tangle step animation 也用 CSS（每個 tangle 一個小 keyframe）
+- Sprint 5 evaluate 是否升級 GSAP（如果 hero 動畫不夠絲滑）
+
+#### 2.3.4 純 CSS path drawing 範例
+
+```tsx
+// src/components/ui/DrawnPath.tsx
+import { useEffect, useRef } from 'react';
+
+interface DrawnPathProps {
+  d: string;            // SVG path data
+  duration?: number;    // 秒
+  delay?: number;       // 秒
+  stroke?: string;
+  strokeWidth?: number;
+  loop?: boolean;
+}
+
+export function DrawnPath({
+  d, duration = 2, delay = 0,
+  stroke = 'currentColor', strokeWidth = 2,
+  loop = false,
+}: DrawnPathProps) {
+  const ref = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const length = el.getTotalLength();
+    el.style.strokeDasharray = `${length}`;
+    el.style.strokeDashoffset = `${length}`;
+    el.getBoundingClientRect(); // force reflow
+    el.style.transition = `stroke-dashoffset ${duration}s cubic-bezier(0.4, 0.0, 0.2, 1) ${delay}s`;
+    el.style.strokeDashoffset = '0';
+
+    if (loop) {
+      const timer = setInterval(() => {
+        el.style.transition = 'none';
+        el.style.strokeDashoffset = `${length}`;
+        el.getBoundingClientRect();
+        el.style.transition = `stroke-dashoffset ${duration}s cubic-bezier(0.4, 0.0, 0.2, 1)`;
+        el.style.strokeDashoffset = '0';
+      }, (duration + delay + 1) * 1000);
+      return () => clearInterval(timer);
+    }
+  }, [d, duration, delay, loop]);
+
+  return (
+    <path
+      ref={ref}
+      d={d}
+      fill="none"
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  );
+}
+```
+
+#### 2.3.5 GSAP 版本（升級用）
+
+```tsx
+// src/components/ui/DrawnPathGSAP.tsx
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+gsap.registerPlugin(DrawSVGPlugin);
+
+export function DrawnPathGSAP({
+  d, duration = 2, delay = 0,
+  stroke = 'currentColor', strokeWidth = 2,
+}: DrawnPathProps) {
+  const ref = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    gsap.fromTo(ref.current,
+      { drawSVG: '0%' },
+      { drawSVG: '100%', duration, delay, ease: 'power2.inOut' }
+    );
+  }, [d, duration, delay]);
+
+  return (
+    <path ref={ref}
+      d={d}
+      fill="none"
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round" />
+  );
+}
+```
+
+#### 2.3.6 hero 動畫的 GSAP timeline 骨架
+
+```tsx
+// src/components/hero/HeroAnimation.tsx
+const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+
+// 第 1 步：四個角點（dot）
+tl.from('.hero-dot-1', { opacity: 0, scale: 0, duration: 0.3 }, 0)
+  .from('.hero-dot-2', { opacity: 0, scale: 0, duration: 0.3 }, 0.15)
+  .from('.hero-dot-3', { opacity: 0, scale: 0, duration: 0.3 }, 0.30)
+  .from('.hero-dot-4', { opacity: 0, scale: 0, duration: 0.3 }, 0.45)
+
+// 第 2 步：邊框（border）
+  .fromTo('.hero-border', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.2 }, 0.8)
+
+// 第 3 步：string（隨手曲線）
+  .fromTo('.hero-string', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.5 }, 2.0)
+
+// 第 4–5 步：第一個 tangle（Crescent Moon）
+  .fromTo('.tangle-crescent path', { drawSVG: '0%' },
+    { drawSVG: '100%', duration: 0.4, stagger: 0.1 }, 3.6)
+
+// 第 6 步：第二個 tangle（Hollibaugh）
+  .fromTo('.tangle-hollibaugh path', { drawSVG: '0%' },
+    { drawSVG: '100%', duration: 0.4, stagger: 0.1 }, 5.2)
+
+// 第 7 步：陰影（shade）— 用 opacity fade in
+  .from('.hero-shading', { opacity: 0, duration: 1.0 }, 7.0)
+
+// 第 8 步：簽名（initial）
+  .fromTo('.hero-signature path', { drawSVG: '0%' },
+    { drawSVG: '100%', duration: 1.5 }, 8.0)
+
+// 最後：標題文字 fade in
+  .from('.hero-title', { opacity: 0, y: 20, duration: 0.8 }, 9.0)
+  .from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.8 }, 9.4);
+```
+
+### 2.4 自訂 cursor 效果
+
+#### 2.4.1 設計
+
+桌機版：滑鼠移動時，留下一條淡淡的 tangle 線條（fade out 2 秒）。hover 連結時，cursor 變成「小 tangle 圖示」（如 Crescent Moon 的弧）。
+
+#### 2.4.2 為什麼用 canvas 而非 DOM
+
+每秒 60 個 mouse move event，如果用 DOM 元素疊加，幾秒就 1,000+ 個 DOM 節點，效能崩潰。canvas 一個畫布從頭到尾用 `requestAnimationFrame` 渲染，效能穩定。
+
+#### 2.4.3 實作 code
+
+```tsx
+// src/components/cursor/TangleCursor.tsx
+import { useEffect, useRef } from 'react';
+
+interface Point { x: number; y: number; t: number; }
+
+export function TangleCursor() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pointsRef = useRef<Point[]>([]);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d')!;
+
+    const resize = () => {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    let lastT = 0;
+    const onMove = (e: MouseEvent) => {
+      const now = performance.now();
+      // throttle to ~60fps (16ms)
+      if (now - lastT < 16) return;
+      lastT = now;
+      pointsRef.current.push({ x: e.clientX, y: e.clientY, t: now });
+      // 上限 200 點
+      if (pointsRef.current.length > 200) pointsRef.current.shift();
+    };
+    window.addEventListener('mousemove', onMove);
+
+    const draw = () => {
+      const now = performance.now();
+      const lifetime = 2000; // 2 秒 fade out
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 過濾掉太老的點
+      pointsRef.current = pointsRef.current.filter(p => now - p.t < lifetime);
+
+      if (pointsRef.current.length < 2) {
+        rafRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 1; i < pointsRef.current.length; i++) {
+        const p1 = pointsRef.current[i - 1];
+        const p2 = pointsRef.current[i];
+        const age = now - p2.t;
+        const opacity = 1 - age / lifetime;
+        ctx.strokeStyle = `rgba(46, 45, 42, ${opacity * 0.4})`; // ink-600 with fade
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+
+      rafRef.current = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[9999] hidden md:block"
+      aria-hidden="true"
+    />
+  );
+}
+```
+
+#### 2.4.4 hover 連結時的 cursor 變化
+
+```css
+/* globals.css */
+@media (pointer: fine) {
+  a, button {
+    cursor: url('/cursors/tangle-crescent.svg') 12 12, pointer;
+  }
+}
+
+/* 尊重使用者偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .tangle-cursor-canvas { display: none !important; }
+}
+```
+
+### 2.5 視覺隱喻
+
+#### 2.5.1 整個網站像「3.5 inch tile」的微縮宇宙
+
+每個內容區塊都用「**tile 容器**」承載——白色背景、極細的 ink-200 邊框、輕微的 box-shadow（模擬紙磚的物理感）。
+
+```tsx
+// src/components/ui/Tile.tsx
+export function Tile({ children, className = '' }) {
+  return (
+    <div className={`
+      relative bg-ink-50 dark:bg-dark-bgCard
+      border border-ink-200 dark:border-dark-border
+      shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)]
+      rounded-sm
+      p-8 md:p-12
+      ${className}
+    `}>
+      {children}
+    </div>
+  );
+}
+```
+
+#### 2.5.2 Hero 8 步驟視覺化
+
+首頁 hero 是整個網站的高潮——必須完整呈現「dot → border → string → tangle → shade → embellish → admire → sign」八個步驟。詳見 Part 6.1。
+
+#### 2.5.3 Page transitions = "draw a string"
+
+從 A 頁跳到 B 頁時，B 頁的內容不是「突然出現」——而是 B 頁的 hero 線條從畫面外延伸進來（500ms），其他內容隨後慢慢 fade in。
+
+```tsx
+// src/components/layout/PageTransition.tsx
+import { motion } from 'framer-motion';
+
+export function PageTransition({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+---
+
+## Part 3：資訊架構與頁面
+
+### 3.1 全站 sitemap
+
+```
+/                           Home（hero 動畫 + 三個入口）
+├── /portfolio              作品集瀑布流（可篩 series / year / mood）
+│   └── /portfolio/[slug]   單件作品深度頁
+├── /videos                 影片牆
+│   └── /videos/[slug]      單支影片頁（嵌入 + 創作筆記）
+├── /tangles                41 個 tangle 字典首頁
+│   └── /tangles/[name]     單一 tangle（步驟動畫 + 我的應用）
+├── /process                我的創作流程（8 步驟方法 + 個人哲學）
+├── /about                  個人故事、CZT status、學習歷程
+├── /journal                Blog（v2 才開）
+│   └── /journal/[slug]
+└── /contact                聯絡 + 社群連結
+```
+
+URL 結構：
+
+- 預設語言根據 `Accept-Language` header
+- 顯式語言路徑：`/zh/...` 與 `/en/...`
+- 切換語言保留同一頁的相對路徑
+- 所有頁面 emit `<link rel="alternate" hreflang="zh-Hant-TW">` 與 `hreflang="en"`
+
+### 3.2 頁面細節
+
+#### 3.2.1 Home `/`
+
+**頁面目的**：在 5 秒內讓訪客感受到「contemplative」氛圍 + 提供三個明確去處（作品集 / 字典 / About）。
+
+**頁面結構**：
+
+```
+┌─────────────────────────────────────────────┐
+│  Header: logo + nav + EN/ZH switcher        │
+├─────────────────────────────────────────────┤
+│                                             │
+│       Hero Animation Canvas                 │
+│       （8 步驟串接，10 秒）                  │
+│                                             │
+│       〔主標〕：一筆一畫，皆是可能          │
+│       〔副標〕：個人纏繞畫作品集 +          │
+│                  41 個經典圖樣字典           │
+│                                             │
+├─────────────────────────────────────────────┤
+│  ↓ scroll cue（一條向下畫的細線）           │
+├─────────────────────────────────────────────┤
+│                                             │
+│   三個入口（左右排列，hover 時線條延伸）   │
+│                                             │
+│   ┌──────────┐ ┌──────────┐ ┌──────────┐ │
+│   │ Portfolio│ │ Tangles  │ │  About   │ │
+│   │ 作品集   │ │ 圖樣字典 │ │  關於    │ │
+│   │ 32 件作品│ │ 41 個圖樣│ │  我的故事│ │
+│   └──────────┘ └──────────┘ └──────────┘ │
+│                                             │
+├─────────────────────────────────────────────┤
+│   最近作品（橫向 scroll）                   │
+│   [Artwork 1] [Artwork 2] [Artwork 3] ...  │
+├─────────────────────────────────────────────┤
+│   一段個人哲學引言（letterpress 風格）      │
+│   "There are no mistakes, only opportunities."│
+├─────────────────────────────────────────────┤
+│   Footer                                    │
+└─────────────────────────────────────────────┘
+```
+
+**動畫策略**：hero 用 medium-fast（10 秒總時長）、scroll cue 用 slow loop（5 秒重複）、三個入口卡的下緣線條用 fast hover。
+
+**SEO meta**：
+- title (zh): `Dr. G. — 纏繞畫個人作品集 | 41 個經典圖樣字典`
+- title (en): `Dr. G. — Personal Zentangle Portfolio | Tangle Dictionary`
+- description (zh, ≤80 字): `台灣個人創作者的纏繞畫作品集。展示原創 tile 作品、影片紀錄、與 41 個經典 tangle 圖樣的雙語介紹。慢慢看，一筆一畫。`
+- description (en, ≤160 chars): `A personal Zentangle artist's portfolio in Taiwan. Original tile artwork, time-lapse videos, and a bilingual reference of 41 classic tangle patterns. Take your time.`
+- OG image: 一張原創代表作 + 站名疊圖（1200×630）
+
+**必要 components**：`HeroAnimation`、`Tile`、`PortfolioRow`（橫向滾動）、`SiteHeader`、`SiteFooter`、`TangleCursor`。
+
+#### 3.2.2 Portfolio `/portfolio`
+
+**頁面目的**：以瀑布流呈現所有作品，提供清楚的篩選與排序。
+
+**頁面結構**：
+
+```
+┌────────────────────────────────────────────────┐
+│ Header                                         │
+├────────────────────────────────────────────────┤
+│ H1: 作品集 / Portfolio                         │
+│ Subtitle: 32 件作品，2022–2026                 │
+├────────────────────────────────────────────────┤
+│ Filters bar：                                  │
+│   [所有] [Bijou] [3.5"] [Phicops] [Renaissance]│
+│   [tangle 系列 ▼] [年份 ▼] [mood ▼]           │
+│   [瀑布流 / 網格] [新→舊 / 舊→新]              │
+├────────────────────────────────────────────────┤
+│                                                │
+│   Masonry layout（CSS Grid + auto-rows）       │
+│   ┌────┐ ┌─────┐ ┌────┐                       │
+│   │    │ │     │ │    │                       │
+│   │ 1  │ │  2  │ │ 3  │                       │
+│   │    │ │     │ │    │                       │
+│   └────┘ │     │ └────┘                       │
+│   ┌────┐ │     │ ┌─────┐                      │
+│   │ 4  │ └─────┘ │     │                      │
+│   │    │ ┌────┐ │  6  │                      │
+│   └────┘ │ 5  │ │     │                      │
+│          └────┘ └─────┘                       │
+│                                                │
+└────────────────────────────────────────────────┘
+```
+
+**動畫**：每張作品 card 在 hover 時，**作品的主要 tangle 線條重新「draw」一次**（fast 0.4 秒）——呼應「每張作品都是被一筆一筆畫出來的」精神。
+
+**SEO**：每張卡 alt text 描述作品；schema.org `ItemList` + 每件 `CreativeWork`。
+
+**必要 components**：`PortfolioGrid`、`PortfolioCard`、`FilterBar`、`SortDropdown`。
+
+#### 3.2.3 Portfolio Detail `/portfolio/[slug]`
+
+**頁面目的**：給作品說一個故事。不只是大圖，而是創作脈絡。
+
+**頁面結構**：
+
+```
+┌────────────────────────────────────────────────┐
+│ ← 返回作品集                                   │
+├────────────────────────────────────────────────┤
+│                                                │
+│   高解析度主圖（最大 1600×1600，aspect ratio  │
+│   依作品比例，可 zoom）                       │
+│                                                │
+├────────────────────────────────────────────────┤
+│ H1: 作品標題（zh）/ Title (en)                 │
+│ 2025 年 9 月 · 3.5" tile · 黑色顏料墨 + 鉛筆   │
+├────────────────────────────────────────────────┤
+│                                                │
+│  使用了哪些 tangle（可點，連到字典頁）：       │
+│  · Crescent Moon  · Hollibaugh  · Mooka       │
+│  · Printemps      · Tipple                    │
+│                                                │
+├────────────────────────────────────────────────┤
+│  創作筆記（zh / en 雙語切換或並列）：          │
+│  「這張的 string 是隨手畫的一個 S，後來        │
+│  變成了一條從左下流到右上的河...」            │
+│                                                │
+│  〔3–5 段，每段 80–150 字〕                   │
+├────────────────────────────────────────────────┤
+│  細節照片（gallery，可放大）：                │
+│  ┌──┐ ┌──┐ ┌──┐ ┌──┐                          │
+│  │  │ │  │ │  │ │  │                          │
+│  └──┘ └──┘ └──┘ └──┘                          │
+├────────────────────────────────────────────────┤
+│  販售狀態（如有）：                            │
+│  □ 已售出 / □ 可訂購 NT$ 3,800 / □ 非賣品     │
+├────────────────────────────────────────────────┤
+│  相關作品（同 series 或 mood）：               │
+│  [Artwork x] [Artwork y] [Artwork z]           │
+└────────────────────────────────────────────────┘
+```
+
+**動畫**：進場時，主圖的「主要外輪廓 SVG」先 draw（如果有）、再 fade in 真實圖片。
+
+**SEO**：schema.org `CreativeWork` + `VisualArtwork`，含 `dateCreated`、`material`、`width`、`height`。
+
+#### 3.2.4 Videos `/videos`
+
+**頁面目的**：呈現影片內容，但保持靜態網頁的安靜氣質——影片預設不自動播放。
+
+**頁面結構**：
+
+```
+┌────────────────────────────────────────────────┐
+│ H1: 影片 / Videos                              │
+│ Subtitle: 創作過程紀錄 + 教學示範             │
+├────────────────────────────────────────────────┤
+│ Filter: [全部] [time-lapse] [tutorial]         │
+│         [reflection] [demo]                    │
+├────────────────────────────────────────────────┤
+│   2 欄影片網格（行動版單欄）                   │
+│   ┌──────────┐ ┌──────────┐                   │
+│   │ thumbnail│ │ thumbnail│                   │
+│   │  ▶       │ │  ▶       │                   │
+│   │ title    │ │ title    │                   │
+│   │ 4:32     │ │ 12:08    │                   │
+│   └──────────┘ └──────────┘                   │
+└────────────────────────────────────────────────┘
+```
+
+**設計細節**：thumbnail 不用 YouTube 預設樣式（太喧鬧），用 lqip + 一個極簡的「⌃」播放圖示。點擊才嵌入 player。
+
+#### 3.2.5 Tangle Dictionary `/tangles`
+
+**頁面目的**：核心功能！41 個 tangle 的互動字典，這是會吸引 SEO 流量的入口。
+
+**頁面結構**：見 Part 6.2 的詳細規格。
+
+#### 3.2.6 Tangle Detail `/tangles/[name]`
+
+**頁面目的**：單一 tangle 的完整介紹 + step animation + 我的應用。
+
+**頁面結構**：
+
+```
+┌────────────────────────────────────────────────┐
+│ ← 返回字典                                     │
+├────────────────────────────────────────────────┤
+│ H1: Hollibaugh / 哈利堡紋                      │
+│ 創作者：Maria Thomas · 2003 年                 │
+│ 難度：★★★☆☆ · 家族：Roberts/Thomas Official  │
+├────────────────────────────────────────────────┤
+│                                                │
+│  ┌────────────────┐                           │
+│  │                │  Step animation            │
+│  │   SVG step     │  （每 0.8 秒一步，         │
+│  │   animation    │   6 步循環）              │
+│  │                │                           │
+│  │   [▶ 重播]    │                           │
+│  └────────────────┘                           │
+│                                                │
+├────────────────────────────────────────────────┤
+│ 為什麼重要（80–120 字 zh / en 並排）          │
+├────────────────────────────────────────────────┤
+│ 我的應用範例（連到 portfolio 中用過此 tangle  │
+│ 的作品）                                       │
+│  [Artwork 1] [Artwork 2] [Artwork 3]           │
+├────────────────────────────────────────────────┤
+│ 相關 tangle（同家族 / 相似手感）：             │
+│  [Cadent] [Munchin] [W2]                       │
+└────────────────────────────────────────────────┘
+```
+
+#### 3.2.7 Process `/process`
+
+**頁面目的**：呈現八步驟方法 + 我自己的創作哲學。這是潛在學員、治療師、合作對象最在意的頁。
+
+**頁面結構**：
+
+```
+┌────────────────────────────────────────────────┐
+│ H1: 我的創作流程 / My Process                  │
+├────────────────────────────────────────────────┤
+│  互動式 8 步驟                                 │
+│  ┌─┬─┬─┬─┬─┬─┬─┬─┐                              │
+│  │1│2│3│4│5│6│7│8│  （點任一步）             │
+│  └─┴─┴─┴─┴─┴─┴─┴─┘                              │
+│                                                │
+│  ┌────────────────────────────────┐           │
+│  │ 1. 感謝 Gratitude              │           │
+│  │ ─────                           │           │
+│  │ 「在筆碰到紙之前，先停一下...」│           │
+│  │ ［我自己的版本：我會...］     │           │
+│  │                                │           │
+│  │ 〔SVG 動畫示範〕              │           │
+│  └────────────────────────────────┘           │
+├────────────────────────────────────────────────┤
+│  關於 ZIA vs 嚴格 Zentangle 的個人立場         │
+├────────────────────────────────────────────────┤
+│  「沒有錯誤，只有機會」— 一段個人哲學文       │
+└────────────────────────────────────────────────┘
+```
+
+#### 3.2.8 About `/about`
+
+**頁面目的**：個人故事。不要做履歷表，做一篇 700 字的散文 + 幾張個人照 + 學習歷程時間線。
+
+#### 3.2.9 Journal `/journal`（v2）
+
+Sprint 1–5 不做。v2 才開。
+
+#### 3.2.10 Contact `/contact`
+
+**頁面目的**：聯絡 + 社群連結。極簡。
+
+```
+┌────────────────────────────────────────────────┐
+│ H1: 聯絡 / Contact                             │
+├────────────────────────────────────────────────┤
+│  email: hello@drg-academy.com                  │
+│  Instagram: @drgacademy_zentangle              │
+│  LINE: @drgacademy                             │
+├────────────────────────────────────────────────┤
+│  訊息表單（極簡：name / email / message）      │
+│  按下送出時，按鈕邊緣畫一條 string             │
+└────────────────────────────────────────────────┘
+```
+
+---
+
+## Part 4：技術選型
+
+### 4.1 推薦 Stack
+
+| 層 | 推薦 | 為什麼（vs 替代方案） |
+|---|---|---|
+| **Framework** | **Astro 4.x** | 個人作品集 95% 是靜態頁，Astro 是 SSG 之王。比 Next.js 輸出的 HTML 小 60%，比 SvelteKit 文件多 100 倍。React 元件可直接用（islands architecture）。 |
+| **Styling** | Tailwind CSS 3.4 + CSS Modules（複雜動畫） | Tailwind 寫 utility 快、design token 集中；CSS Modules 用在動畫專屬的 keyframes（不污染全域）。 |
+| **動畫（基礎）** | Framer Motion 11 | React-native API、page transition 一行寫完、免費。 |
+| **動畫（升級）** | GSAP 3.12 + DrawSVGPlugin（可選，$99/yr） | hero 動畫如果效果不到位，再升級。 |
+| **CMS** | **Sanity Studio v3**（推薦）/ Local MDX（最簡開始） | Sanity 免費 tier 給 3 user / 10k document 已經夠用一輩子。圖片 CDN、即時預覽、TypeScript SDK 友善。預算為 0 可改用 MDX 起步。 |
+| **媒體 CDN** | Cloudinary（推薦）/ Sanity 內建 | Cloudinary 自動轉 WebP/AVIF、自動 responsive、免費 25 credit/mo。Sanity 內建夠用但少了 AVIF。 |
+| **Hosting** | **Cloudflare Pages**（推薦）/ Vercel | CF Pages 免費、全球 edge、unlimited bandwidth。Vercel 對 Next.js 原生但個人 plan 100GB/mo cap。 |
+| **Domain** | Cloudflare Registrar | Cloudflare 不加價賣 domain（成本價）。 |
+| **Search** | Pagefind | 0 server、全靜態、build time 自動 index。tangle 字典搜尋很需要。 |
+| **Analytics** | **Plausible**（推薦）/ Umami / GA4 | Plausible 月費 $9 起，無 cookie、隱私友善、極簡 dashboard——符合品牌氣質。GA4 免費但太重。 |
+| **Email**（newsletter） | Buttondown $9/mo / Beehiiv 免費版 | Buttondown 簡潔、不像 Mailchimp 那麼商業。 |
+| **Form**（contact） | Web3Forms（免費 250/mo）/ Formspree | 不要自己架 backend；用 form 中繼即可。 |
+| **Test** | Vitest + Playwright | Astro 官方推薦組合。 |
+| **CI/CD** | GitHub Actions + Cloudflare Pages 自動 deploy | push 到 main 即 deploy preview，merge 就 production。 |
+
+### 4.2 為什麼是 Astro 而非 Next.js / SvelteKit
+
+| 維度 | Astro | Next.js | SvelteKit |
+|---|---|---|---|
+| **作品集場景適配** | ★★★★★ 為內容站而生 | ★★★★ 但要關掉 RSC | ★★★★ |
+| **效能（首次載入）** | 預設零 JS | 預設帶 React runtime | 中等 |
+| **i18n（雙語）** | 內建路由型 i18n（v4+） | 中等（要 next-intl） | 中等 |
+| **學習曲線** | 低（HTML-like） | 中（React） | 中（Svelte） |
+| **元件相容** | React/Vue/Svelte/Solid | React only | Svelte only |
+| **動畫整合** | 順 | 順 | 順 |
+
+**結論**：用 Astro。React 元件用 `client:visible` 或 `client:idle` 載入（hero 動畫、cursor、tangle dictionary 互動需要 React）。其他純展示頁完全靜態 HTML。
+
+### 4.3 月成本估算
+
+#### 起步配置（個人創作者最務實）
+
+| 項目 | 月成本 |
+|---|---|
+| Domain（cloudflare registrar） | $1（攤提，年 $9.15） |
+| Cloudflare Pages | $0 |
+| Sanity（free tier） | $0 |
+| Cloudinary（free tier） | $0 |
+| Plausible | $0（先不裝，第一年用 Cloudflare Web Analytics 免費） |
+| Buttondown / newsletter | $0（第一年不開 newsletter） |
+| Web3Forms | $0 |
+| **合計** | **~$1/mo** |
+
+#### 升級配置（流量起來後）
+
+| 項目 | 月成本 |
+|---|---|
+| Domain | $1 |
+| Cloudflare Pages（pro） | $0（個人 free 已足夠） |
+| Sanity（free → growth） | $0–$15 |
+| Cloudinary（free → plus） | $0–$89 |
+| Plausible | $9 |
+| Buttondown | $9 |
+| **合計** | **$10–25/mo** |
+
+#### 一次性投資（可選）
+
+| 項目 | 一次性 |
+|---|---|
+| GSAP Club（DrawSVGPlugin） | $99/yr |
+| Pinkoi 上架（如果要販售作品） | $0 + 抽 % |
+
+### 4.4 專案結構（檔案佈局）
+
+```
+zentangle-portfolio/
+├── public/
+│   ├── fonts/                   # 自託管字體 subset
+│   ├── cursors/                 # 自訂 cursor SVG
+│   ├── og/                      # OG image 模板
+│   └── tangle-svgs/             # 41 個 tangle 的 step SVG
+├── src/
+│   ├── pages/
+│   │   ├── [lang]/              # /zh, /en
+│   │   │   ├── index.astro
+│   │   │   ├── portfolio/
+│   │   │   │   ├── index.astro
+│   │   │   │   └── [slug].astro
+│   │   │   ├── tangles/
+│   │   │   │   ├── index.astro
+│   │   │   │   └── [name].astro
+│   │   │   ├── videos/
+│   │   │   ├── process.astro
+│   │   │   ├── about.astro
+│   │   │   └── contact.astro
+│   │   ├── api/
+│   │   │   └── contact.ts        # POST endpoint
+│   │   └── index.astro           # / redirect to /zh or /en
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── SiteHeader.astro
+│   │   │   ├── SiteFooter.astro
+│   │   │   ├── LanguageSwitcher.astro
+│   │   │   └── PageTransition.tsx
+│   │   ├── hero/
+│   │   │   └── HeroAnimation.tsx  # React island
+│   │   ├── ui/
+│   │   │   ├── Tile.astro
+│   │   │   ├── DrawnPath.tsx
+│   │   │   ├── DrawnLink.astro
+│   │   │   └── ScrollCue.astro
+│   │   ├── portfolio/
+│   │   │   ├── PortfolioGrid.tsx
+│   │   │   ├── PortfolioCard.astro
+│   │   │   ├── FilterBar.tsx
+│   │   │   └── Lightbox.tsx
+│   │   ├── tangles/
+│   │   │   ├── TangleDictionary.tsx
+│   │   │   ├── TangleCard.astro
+│   │   │   ├── TangleStepAnimation.tsx
+│   │   │   └── TangleFilter.tsx
+│   │   └── cursor/
+│   │       └── TangleCursor.tsx
+│   ├── content/
+│   │   ├── config.ts              # Astro Content Collections schema
+│   │   ├── artworks/              # MDX 作品（或從 Sanity 拉）
+│   │   ├── tangles/               # MDX or JSON of 41 tangles
+│   │   └── videos/
+│   ├── i18n/
+│   │   ├── zh.json
+│   │   ├── en.json
+│   │   └── useT.ts
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── tokens.css
+│   ├── tokens/
+│   │   ├── colors.ts
+│   │   ├── fonts.ts
+│   │   ├── spacing.ts
+│   │   └── animations.ts
+│   ├── lib/
+│   │   ├── sanity.ts              # Sanity client
+│   │   ├── cloudinary.ts
+│   │   └── seo.ts
+│   └── utils/
+│       ├── formatDate.ts
+│       └── slug.ts
+├── sanity/                        # （若用 Sanity）
+│   ├── schemas/
+│   │   ├── artwork.ts
+│   │   ├── video.ts
+│   │   └── tangle.ts
+│   └── sanity.config.ts
+├── tests/
+│   ├── unit/
+│   └── e2e/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── deploy.yml
+├── astro.config.mjs
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## Part 5：資料模型（CMS Schema）
+
+無論用 Sanity 還是 MDX，schema 必須先定義清楚。以下用 TypeScript / Sanity 風格表達。
+
+### 5.1 Artwork（作品）
+
+```ts
+// sanity/schemas/artwork.ts
+export default {
+  name: 'artwork',
+  title: '作品 Artwork',
+  type: 'document',
+  fields: [
+    { name: 'slug',     title: 'Slug', type: 'slug', options: { source: 'title_en' }, validation: r => r.required() },
+    { name: 'title_en', title: 'Title (EN)', type: 'string', validation: r => r.required().max(80) },
+    { name: 'title_zh', title: '標題 (中)', type: 'string', validation: r => r.required().max(40) },
+
+    { name: 'year',     title: 'Year', type: 'number', validation: r => r.min(2015).max(2100) },
+    { name: 'created_at', title: '創作日期', type: 'date' },
+
+    { name: 'tile_size', title: '尺寸類型', type: 'string',
+      options: { list: ['Bijou (2")', '3.5" Standard', 'Phicops (4")', 'Renaissance (3.5x9)', 'Zendala (4.5)', 'Custom'] },
+      validation: r => r.required() },
+    { name: 'dimensions_cm', title: '實際尺寸 (cm)', type: 'string', description: '如 "9 × 9"' },
+
+    { name: 'tangles_used', title: '使用的 tangle', type: 'array', of: [{ type: 'reference', to: [{ type: 'tangle' }] }] },
+
+    { name: 'series',    title: 'Series（系列名）', type: 'string', description: '如 "Spring 2025"' },
+    { name: 'mood',      title: 'Mood', type: 'array', of: [{ type: 'string' }],
+      options: { list: ['calm', 'energetic', 'meditative', 'organic', 'geometric', 'dark', 'light', 'experimental'] } },
+
+    { name: 'cover_image',    title: '主圖', type: 'image', options: { hotspot: true }, validation: r => r.required() },
+    { name: 'gallery_images', title: '細節圖', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] },
+
+    { name: 'description_en',     title: 'Description (EN)', type: 'array', of: [{ type: 'block' }] },
+    { name: 'description_zh',     title: '描述 (中)', type: 'array', of: [{ type: 'block' }] },
+
+    { name: 'creation_notes_en',  title: 'Creation Notes (EN)', type: 'array', of: [{ type: 'block' }] },
+    { name: 'creation_notes_zh',  title: '創作筆記 (中)', type: 'array', of: [{ type: 'block' }] },
+
+    { name: 'is_for_sale',   title: '是否販售', type: 'boolean', initialValue: false },
+    { name: 'is_sold',       title: '是否已售出', type: 'boolean', initialValue: false },
+    { name: 'price_ntd',     title: '售價 (NTD)', type: 'number', hidden: ({ document }) => !document?.is_for_sale },
+    { name: 'shop_url',      title: '購買連結', type: 'url' },
+
+    { name: 'related_video', title: '相關影片', type: 'reference', to: [{ type: 'video' }] },
+    { name: 'is_featured',   title: '首頁精選', type: 'boolean', initialValue: false },
+    { name: 'sort_order',    title: '排序權重', type: 'number', initialValue: 0 },
+  ],
+  preview: {
+    select: { title: 'title_zh', media: 'cover_image', subtitle: 'year' },
+  },
+};
+```
+
+### 5.2 Video（影片）
+
+```ts
+export default {
+  name: 'video',
+  title: '影片 Video',
+  type: 'document',
+  fields: [
+    { name: 'slug',     title: 'Slug', type: 'slug', options: { source: 'title_en' } },
+    { name: 'title_en', title: 'Title (EN)', type: 'string', validation: r => r.required() },
+    { name: 'title_zh', title: '標題 (中)', type: 'string', validation: r => r.required() },
+
+    { name: 'video_type', title: 'Type', type: 'string',
+      options: { list: ['tutorial', 'time-lapse', 'reflection', 'demo', 'workshop'] },
+      validation: r => r.required() },
+
+    { name: 'embed_provider', title: 'Provider', type: 'string',
+      options: { list: ['youtube', 'vimeo'] },
+      validation: r => r.required() },
+    { name: 'embed_id', title: 'Video ID', type: 'string', validation: r => r.required() },
+
+    { name: 'duration_seconds', title: 'Duration (sec)', type: 'number', validation: r => r.min(1) },
+    { name: 'published_at',     title: 'Published At', type: 'date' },
+
+    { name: 'thumbnail',        title: 'Custom Thumbnail (覆蓋 YouTube 預設)', type: 'image' },
+
+    { name: 'description_en',   title: 'Description (EN)', type: 'array', of: [{ type: 'block' }] },
+    { name: 'description_zh',   title: '描述 (中)', type: 'array', of: [{ type: 'block' }] },
+
+    { name: 'related_artwork',  title: '相關作品', type: 'reference', to: [{ type: 'artwork' }] },
+    { name: 'related_tangles',  title: '相關 tangle', type: 'array', of: [{ type: 'reference', to: [{ type: 'tangle' }] }] },
+  ],
+};
+```
+
+### 5.3 Tangle（圖樣）
+
+```ts
+export default {
+  name: 'tangle',
+  title: 'Tangle 圖樣',
+  type: 'document',
+  fields: [
+    { name: 'slug',    title: 'Slug', type: 'slug', options: { source: 'name_en' } },
+    { name: 'name_en', title: 'Name (EN)', type: 'string', validation: r => r.required() },
+    { name: 'name_zh', title: '中文名', type: 'string', validation: r => r.required() },
+
+    { name: 'creator_name', title: '創作者', type: 'string' },
+    { name: 'creator_role', title: '創作者身份', type: 'string',
+      description: '如 "Co-founder of Zentangle Method", "CZT-15"' },
+    { name: 'first_published_year', title: '首次出版年份', type: 'number' },
+    { name: 'first_published_in',   title: '首次發表來源', type: 'string',
+      description: '如 "Zentangle Primer Vol. 1", "TanglePatterns.com"' },
+
+    { name: 'family', title: '家族', type: 'string',
+      options: { list: [
+        'Roberts/Thomas Official',
+        'Bartholomew',
+        'Farmer',
+        'Other CZT',
+      ] },
+      validation: r => r.required() },
+
+    { name: 'difficulty', title: '難度', type: 'string',
+      options: { list: ['beginner', 'intermediate', 'advanced'] },
+      validation: r => r.required() },
+
+    { name: 'category', title: '視覺類型', type: 'array', of: [{ type: 'string' }],
+      options: { list: ['grid-based', 'organic', 'auras', 'geometric', '3d-illusion', 'border', 'filler'] } },
+
+    // 步驟描述
+    { name: 'steps_en', title: '步驟 (EN)', type: 'array', of: [{ type: 'string' }],
+      description: '3-6 步，每步 1 句話' },
+    { name: 'steps_zh', title: '步驟 (中)', type: 'array', of: [{ type: 'string' }] },
+
+    // SVG step animation 資料
+    { name: 'animation_paths', title: 'Step Animation SVG Paths',
+      type: 'array', of: [{
+        type: 'object',
+        fields: [
+          { name: 'step', type: 'number' },
+          { name: 'path_d', type: 'text', description: 'SVG path d="..." 內容' },
+          { name: 'duration', type: 'number', description: '繪製時長（秒）' },
+        ],
+      }],
+    },
+
+    { name: 'why_important_en', title: 'Why It Matters (EN)', type: 'text' },
+    { name: 'why_important_zh', title: '為什麼重要 (中)', type: 'text' },
+
+    { name: 'related_tangles', title: '相關 tangle', type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'tangle' }] }] },
+
+    { name: 'example_artworks', title: '我的應用作品', type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'artwork' }] }] },
+  ],
+};
+```
+
+### 5.4 SiteSettings（站台設定）
+
+```ts
+{
+  name: 'siteSettings',
+  title: '站台設定',
+  type: 'document',
+  fields: [
+    { name: 'site_title_zh', type: 'string' },
+    { name: 'site_title_en', type: 'string' },
+    { name: 'site_description_zh', type: 'text' },
+    { name: 'site_description_en', type: 'text' },
+    { name: 'logo', type: 'image' },
+    { name: 'og_default', type: 'image' },
+    { name: 'social', type: 'array', of: [{
+      type: 'object',
+      fields: [
+        { name: 'platform', type: 'string' },
+        { name: 'url', type: 'url' },
+      ]
+    }] },
+    { name: 'footer_about_zh', type: 'array', of: [{ type: 'block' }] },
+    { name: 'footer_about_en', type: 'array', of: [{ type: 'block' }] },
+  ],
+}
+```
+
+---
+
+## Part 6：核心功能規格
+
+### 6.1 Hero Animation（首頁開場動畫）
+
+#### 6.1.1 視覺敘事
+
+訪客進站 → 黑色背景 → 第一個白點淡入（左上角的 corner dot）→ 第二、第三、第四個 corner dot → 四個點之間連起 border（鉛筆灰，1.5 秒）→ string 從 border 內畫出一條 S 曲線（1.5 秒）→ 第一個 tangle（Crescent Moon，4 個半月 + auras）填入左上區（1.6 秒）→ 第二個 tangle（Hollibaugh，3 條交錯帶）填入右下區（1.6 秒）→ 陰影 fade in（1.0 秒）→ 簽名手寫感的「Dr. G.」浮現（1.5 秒）→ 主標 fade in（0.8 秒）。
+
+總時長 ~10 秒。
+
+#### 6.1.2 SVG 結構
+
+```html
+<svg viewBox="0 0 800 600" class="hero-svg">
+  <g class="hero-tile">
+    <!-- 邊框（pencil-grey） -->
+    <path class="hero-border" d="M 50 50 L 750 50 L 750 550 L 50 550 Z" />
+
+    <!-- 四個角點 -->
+    <circle class="hero-dot-1" cx="50"  cy="50"  r="3" />
+    <circle class="hero-dot-2" cx="750" cy="50"  r="3" />
+    <circle class="hero-dot-3" cx="750" cy="550" r="3" />
+    <circle class="hero-dot-4" cx="50"  cy="550" r="3" />
+
+    <!-- string -->
+    <path class="hero-string" d="M 100 100 Q 400 300 700 200 T 700 500" />
+
+    <!-- 第一個 tangle: Crescent Moon -->
+    <g class="tangle-crescent" transform="translate(120, 120)">
+      <!-- 4 個半月 + auras (約 16 條 path) -->
+    </g>
+
+    <!-- 第二個 tangle: Hollibaugh -->
+    <g class="tangle-hollibaugh" transform="translate(420, 320)">
+      <!-- 3 條交錯帶 (約 6 條 path) -->
+    </g>
+
+    <!-- 陰影 -->
+    <g class="hero-shading" opacity="0">
+      <!-- 灰階陰影 path with fill="url(#shadingGradient)" -->
+    </g>
+
+    <!-- 簽名 -->
+    <g class="hero-signature" transform="translate(620, 560)">
+      <path d="M ...（手寫 Dr. G. 的 path）" />
+    </g>
+  </g>
+</svg>
+```
+
+#### 6.1.3 Timeline 完整 code
+
+```tsx
+// src/components/hero/HeroAnimation.tsx
+import { useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+
+export function HeroAnimation() {
+  const prefersReduced = useReducedMotion();
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+    if (prefersReduced) {
+      // 直接顯示終態
+      svgRef.current.querySelectorAll('path, circle, g').forEach(el => {
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.strokeDashoffset = '0';
+      });
+      return;
+    }
+
+    // 純 CSS-only path drawing
+    const drawPath = (selector: string, duration: number, delay: number) => {
+      const path = svgRef.current!.querySelector(selector) as SVGPathElement;
+      if (!path) return;
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.getBoundingClientRect();
+      path.style.transition = `stroke-dashoffset ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`;
+      path.style.strokeDashoffset = '0';
+    };
+
+    // Step 1: dots
+    [1, 2, 3, 4].forEach(i => {
+      const dot = svgRef.current!.querySelector(`.hero-dot-${i}`) as SVGElement;
+      if (dot) {
+        dot.style.opacity = '0';
+        setTimeout(() => {
+          dot.style.transition = 'opacity 0.3s ease-out';
+          dot.style.opacity = '1';
+        }, i * 150);
+      }
+    });
+
+    // Step 2: border
+    drawPath('.hero-border', 1.2, 0.8);
+
+    // Step 3: string
+    drawPath('.hero-string', 1.5, 2.0);
+
+    // Step 4: Crescent Moon tangle
+    svgRef.current.querySelectorAll('.tangle-crescent path').forEach((p, idx) => {
+      const path = p as SVGPathElement;
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.getBoundingClientRect();
+      path.style.transition = `stroke-dashoffset 0.4s ease-out ${3.6 + idx * 0.1}s`;
+      path.style.strokeDashoffset = '0';
+    });
+
+    // Step 5: Hollibaugh tangle
+    svgRef.current.querySelectorAll('.tangle-hollibaugh path').forEach((p, idx) => {
+      const path = p as SVGPathElement;
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.getBoundingClientRect();
+      path.style.transition = `stroke-dashoffset 0.4s ease-out ${5.2 + idx * 0.15}s`;
+      path.style.strokeDashoffset = '0';
+    });
+
+    // Step 6: shading
+    const shading = svgRef.current.querySelector('.hero-shading') as SVGElement;
+    if (shading) {
+      setTimeout(() => {
+        shading.style.transition = 'opacity 1.0s ease-out';
+        shading.style.opacity = '1';
+      }, 7000);
+    }
+
+    // Step 7: signature
+    drawPath('.hero-signature path', 1.5, 8.0);
+  }, [prefersReduced]);
+
+  return (
+    <div className="relative w-full max-w-3xl mx-auto aspect-[4/3]">
+      <svg
+        ref={svgRef}
+        viewBox="0 0 800 600"
+        className="w-full h-full"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* SVG 內容如上 */}
+      </svg>
+
+      {/* 標題（在動畫結束後 fade in） */}
+      <motion.div
+        className="absolute inset-x-0 bottom-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: prefersReduced ? 0 : 9.0 }}
+      >
+        <h1 className="text-5xl md:text-7xl font-display tracking-tight">
+          一筆一畫，皆是可能
+        </h1>
+        <p className="mt-4 text-lg text-ink-500">
+          Personal Zentangle Portfolio · 41 Tangle Dictionary
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+```
+
+#### 6.1.4 行動版簡化
+
+`@media (max-width: 768px)`：
+
+- 不畫第二個 tangle（Hollibaugh）——只畫到 Crescent Moon
+- string 用更簡單的曲線
+- 總時長壓縮到 5 秒
+- 標題提早出現（4 秒）
+
+#### 6.1.5 Fallback
+
+`prefers-reduced-motion: reduce`：直接 render 終態（所有 path 完整顯示），標題 immediate fade in。
+
+### 6.2 Tangle Dictionary 互動頁
+
+#### 6.2.1 入口頁（`/tangles`）
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  H1: 41 個經典 tangle 圖樣字典                              │
+│  Subtitle: 跨族系的雙語參考。從 Crescent Moon 開始 ...      │
+├─────────────────────────────────────────────────────────────┤
+│  Filter（黏性 sticky）：                                     │
+│  ┌───────────────────────────────────────────────┐          │
+│  │ 家族：[All] [Roberts/Thomas] [Bartholomew]    │          │
+│  │       [Farmer] [Other CZT]                    │          │
+│  │ 難度：[All] [★] [★★] [★★★]                  │          │
+│  │ 類型：[All] [grid] [organic] [3d] [filler]    │          │
+│  │ 搜尋：[ Pagefind 框 ]                          │          │
+│  └───────────────────────────────────────────────┘          │
+├─────────────────────────────────────────────────────────────┤
+│   Masonry 網格：                                              │
+│   ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐            │
+│   │ SVG 預覽│ │ SVG 預覽│ │ SVG 預覽│ │ SVG 預覽│            │
+│   │ 縮圖    │ │ 縮圖    │ │ 縮圖    │ │ 縮圖    │            │
+│   │         │ │         │ │         │ │         │            │
+│   │ Crescent│ │ Hollibau│ │ Printemp│ │ Cadent  │            │
+│   │  Moon   │ │   gh    │ │   s     │ │         │            │
+│   │ 新月紋  │ │ 哈利堡紋│ │ 春天紋  │ │ 對偶迴環│            │
+│   │ M.Thomas│ │ M.Thomas│ │ M.Thomas│ │ R/T     │            │
+│   │ ★      │ │ ★★    │ │ ★      │ │ ★★    │            │
+│   └─────────┘ └─────────┘ └─────────┘ └─────────┘            │
+│                                                              │
+│   〔hover 卡片時：縮圖內的線條重新 draw 一次（0.5s）〕      │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### 6.2.2 Detail 頁（`/tangles/[name]`）
+
+進場動畫：上一頁的卡片 image 用 Framer Motion `layoutId` 變換到大圖位置（500ms shared element transition）。
+
+主要內容已在 Part 3.2.6 列出。step animation 是核心功能，見 6.2.3。
+
+#### 6.2.3 Step Animation 實作
+
+```tsx
+// src/components/tangles/TangleStepAnimation.tsx
+import { useEffect, useRef, useState } from 'react';
+
+interface Step {
+  step: number;
+  path_d: string;
+  duration: number;
+  description?: string;
+}
+
+interface Props {
+  steps: Step[];
+  viewBox?: string;
+  loopGap?: number; // 結束後等多久重來
+}
+
+export function TangleStepAnimation({ steps, viewBox = '0 0 200 200', loopGap = 1.5 }: Props) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!svgRef.current || !isPlaying) return;
+    let timeouts: number[] = [];
+
+    const playOnce = () => {
+      let cumulative = 0;
+      steps.forEach((step, i) => {
+        const t = setTimeout(() => {
+          setCurrentStep(i);
+          const path = svgRef.current!.querySelector(`#step-${step.step}`) as SVGPathElement;
+          if (!path) return;
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = `${length}`;
+          path.style.strokeDashoffset = `${length}`;
+          path.style.opacity = '1';
+          path.getBoundingClientRect();
+          path.style.transition = `stroke-dashoffset ${step.duration}s ease-out`;
+          path.style.strokeDashoffset = '0';
+        }, cumulative * 1000) as unknown as number;
+        timeouts.push(t);
+        cumulative += step.duration;
+      });
+
+      // loop
+      const loopTimer = setTimeout(() => {
+        // reset
+        steps.forEach(step => {
+          const path = svgRef.current!.querySelector(`#step-${step.step}`) as SVGPathElement;
+          if (path) {
+            path.style.transition = 'none';
+            path.style.opacity = '0';
+          }
+        });
+        setCurrentStep(0);
+        setTimeout(() => playOnce(), 100);
+      }, (cumulative + loopGap) * 1000) as unknown as number;
+      timeouts.push(loopTimer);
+    };
+
+    playOnce();
+    return () => timeouts.forEach(clearTimeout);
+  }, [steps, isPlaying, loopGap]);
+
+  return (
+    <div className="relative">
+      <svg
+        ref={svgRef}
+        viewBox={viewBox}
+        className="w-full aspect-square bg-ink-50 border border-ink-200 rounded-sm"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      >
+        {steps.map(step => (
+          <path
+            key={step.step}
+            id={`step-${step.step}`}
+            d={step.path_d}
+            style={{ opacity: 0 }}
+          />
+        ))}
+      </svg>
+
+      <div className="mt-4 flex items-center justify-between">
+        <div className="text-sm text-ink-500">
+          Step {currentStep + 1} / {steps.length}
+          {steps[currentStep]?.description && (
+            <span className="ml-2 text-ink-700">— {steps[currentStep].description}</span>
+          )}
+        </div>
+        <button
+          onClick={() => setIsPlaying(!isPlaying)}
+          className="text-sm text-ink-600 underline"
+        >
+          {isPlaying ? '暫停' : '重播'}
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+### 6.3 Portfolio 瀑布流
+
+#### 6.3.1 Layout
+
+用 CSS Grid `grid-auto-rows: minmax(0, auto)` + JS 計算每張卡片應佔多少 row（依圖片 aspect ratio）。
+
+```tsx
+// src/components/portfolio/PortfolioGrid.tsx
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface Artwork { /* ... */ }
+
+export function PortfolioGrid({ artworks }: { artworks: Artwork[] }) {
+  const [filter, setFilter] = useState<{ year?: number; mood?: string; tangle?: string }>({});
+
+  const filtered = artworks.filter(a => {
+    if (filter.year && a.year !== filter.year) return false;
+    if (filter.mood && !a.mood.includes(filter.mood)) return false;
+    if (filter.tangle && !a.tangles_used.some(t => t.slug === filter.tangle)) return false;
+    return true;
+  });
+
+  return (
+    <>
+      <FilterBar value={filter} onChange={setFilter} />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <AnimatePresence>
+          {filtered.map(a => (
+            <motion.div
+              key={a.slug}
+              layout
+              layoutId={`artwork-${a.slug}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="break-inside-avoid"
+            >
+              <PortfolioCard artwork={a} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+}
+```
+
+實際 masonry 用 CSS columns 比 grid 簡單：
+
+```css
+.masonry {
+  column-count: 2;
+  column-gap: 1rem;
+}
+@media (min-width: 768px) { .masonry { column-count: 3; } }
+@media (min-width: 1024px) { .masonry { column-count: 4; } }
+.masonry > * { break-inside: avoid; margin-bottom: 1rem; }
+```
+
+#### 6.3.2 hover 動畫
+
+```tsx
+// PortfolioCard
+<div className="group relative">
+  <img src={cover} className="w-full" />
+  {/* SVG overlay：hover 時 path drawing */}
+  <svg className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <path d={mainTangleOutline} className="hover-draw" />
+  </svg>
+</div>
+```
+
+CSS：
+
+```css
+.hover-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+.group:hover .hover-draw {
+  stroke-dashoffset: 0;
+}
+```
+
+### 6.4 Video Player
+
+不要用 YouTube 預設嵌入樣式（紅 logo 太喧鬧）。用 `youtube-nocookie.com` + 自訂 thumbnail：
+
+```tsx
+// src/components/videos/VideoEmbed.tsx
+export function VideoEmbed({ embedId, provider, thumbnail, title }: Props) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  if (!isLoaded) {
+    return (
+      <button
+        onClick={() => setIsLoaded(true)}
+        className="relative w-full aspect-video group"
+      >
+        <img src={thumbnail} alt={title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <PlayIcon className="w-16 h-16 text-white/90 group-hover:scale-110 transition-transform" />
+        </div>
+      </button>
+    );
+  }
+
+  const url = provider === 'youtube'
+    ? `https://www.youtube-nocookie.com/embed/${embedId}?autoplay=1&rel=0&modestbranding=1`
+    : `https://player.vimeo.com/video/${embedId}?autoplay=1`;
+
+  return (
+    <iframe
+      src={url}
+      className="w-full aspect-video"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowFullScreen
+      title={title}
+    />
+  );
+}
+```
+
+### 6.5 雙語切換
+
+#### 6.5.1 URL 結構
+
+`/zh/portfolio/spring-2025` ↔ `/en/portfolio/spring-2025` （slug 共用）
+
+#### 6.5.2 LanguageSwitcher
+
+```astro
+---
+// src/components/layout/LanguageSwitcher.astro
+const { currentPath } = Astro.props;
+const isZh = currentPath.startsWith('/zh');
+const altPath = isZh
+  ? currentPath.replace(/^\/zh/, '/en')
+  : currentPath.replace(/^\/en/, '/zh');
+---
+<a href={altPath} class="lang-switch" hreflang={isZh ? 'en' : 'zh-Hant-TW'}>
+  {isZh ? 'English' : '中文'}
+</a>
+```
+
+#### 6.5.3 hreflang
+
+每頁 `<head>`：
+
+```astro
+<link rel="alternate" hreflang="zh-Hant-TW" href={`https://drg-academy.com/zh${path}`} />
+<link rel="alternate" hreflang="en" href={`https://drg-academy.com/en${path}`} />
+<link rel="alternate" hreflang="x-default" href={`https://drg-academy.com/en${path}`} />
+```
+
+### 6.6 暗 / 淺模式切換
+
+切換動畫：整個畫面 `rotateY(180deg)`（1 秒），同時 `theme` class 切換——感覺像翻轉一張紙磚。
+
+```tsx
+// src/components/layout/ThemeToggle.tsx
+export function ThemeToggle() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  const toggle = () => {
+    document.documentElement.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+    document.documentElement.style.transform = 'rotateY(180deg)';
+    setTimeout(() => {
+      const next = theme === 'light' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      setTheme(next);
+      localStorage.setItem('theme', next);
+      document.documentElement.style.transform = 'rotateY(0deg)';
+    }, 500);
+  };
+
+  return (
+    <button onClick={toggle} aria-label="切換主題">
+      {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+    </button>
+  );
+}
+```
+
+### 6.7 行動版
+
+#### 6.7.1 Bottom navigation
+
+行動版底部固定 5 個 icon：Home / Portfolio / Tangles / About / Menu。
+
+```tsx
+// src/components/layout/MobileNav.tsx
+<nav className="fixed bottom-0 inset-x-0 bg-ink-50/95 backdrop-blur border-t border-ink-200 md:hidden z-50">
+  <div className="grid grid-cols-5">
+    {[
+      { href: '/', icon: HomeIcon, label: '首頁' },
+      { href: '/portfolio', icon: GalleryIcon, label: '作品' },
+      { href: '/tangles', icon: GridIcon, label: '字典' },
+      { href: '/about', icon: PersonIcon, label: '關於' },
+      { href: '#menu', icon: MenuIcon, label: '更多' },
+    ].map(item => (
+      <a key={item.href} href={item.href} className="flex flex-col items-center py-3">
+        <item.icon className="w-6 h-6" />
+        <span className="text-[10px] mt-1">{item.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+```
+
+#### 6.7.2 Touch target
+
+所有可點元素最小 44×44 px（iOS HIG）。Tailwind: `min-h-[44px]` + `min-w-[44px]`。
+
+#### 6.7.3 動畫降級
+
+行動版 disable `TangleCursor`、hero 動畫總時長壓到 5 秒、portfolio hover 動畫改為 tap 觸發。
+
+### 6.8 Accessibility（WCAG 2.1 AA）
+
+| 項目 | 落實方式 |
+|---|---|
+| **色彩對比** | 已在 2.1.5 確認 |
+| **鍵盤導航** | 所有互動元素 `tabIndex`、可見 `:focus` outline（不刪 outline，改成 ink-700 1px） |
+| **ARIA labels** | 所有圖示按鈕 `aria-label`；所有 SVG `role="img"` + `<title>` |
+| **動畫** | `prefers-reduced-motion` 全面尊重 |
+| **alt text** | 每張作品 alt 描述「使用了什麼 tangle、mood」 |
+| **語言** | `<html lang="zh-Hant-TW">` 或 `lang="en"` |
+| **跳到主內容** | 鍵盤使用者第一個 Tab `<a href="#main">Skip to content</a>` |
+
+---
+
+## Part 7：開發階段（5 個 Sprint）
+
+每 Sprint 1–2 週、每週 8–10 小時。
+
+### Sprint 1: Foundation（Week 1–2，6–10 hr）
+
+**目標**：把架構搭起來。第二週末可以看到一個首頁 placeholder 跑在 Cloudflare Pages 上。
+
+**交付物**：
+- GitHub repo + branch protection
+- Astro + TypeScript + Tailwind 設定
+- design tokens（colors、fonts、animations）落實
+- Sanity Studio 啟動 + 三個 schema 完成（artwork、video、tangle）
+- i18n 路由系統可運作（`/zh/`、`/en/`）
+- SiteHeader + SiteFooter + LanguageSwitcher
+- TangleCursor 可運作
+- Cloudflare Pages 自動 deploy（push to main）
+- Plausible / Cloudflare Web Analytics 接好
+
+**預估時數**：6–10 小時
+
+**關鍵風險**：
+- Astro i18n v4 用 Astro 4.5+ 才完整。版本鎖好。
+- Sanity Studio 第一次設定有學習曲線（30 分鐘）
+- 字體 subset 第一次做要 1 小時
+
+**完成條件**：
+- `pnpm dev` 跑起來，`/zh/` 與 `/en/` 都顯示「Hello」
+- Lighthouse 桌機性能 ≥ 95
+- 切換語言保留 path
+- TangleCursor 在桌機可看到
+
+### Sprint 2: Core Pages（Week 3–4，8–14 hr）
+
+**目標**：Home + About + Process 三頁完整 + Hero 動畫上線。
+
+**交付物**：
+- HeroAnimation.tsx 完整 8 步驟動畫（含 fallback）
+- Home 三個入口卡 + 最近作品 row
+- About 頁完整文案 + 個人照片區
+- Process 頁互動式 8 步驟
+- 全頁面 PageTransition 動畫
+- 全頁面 SEO meta（title、description、OG image、hreflang）
+
+**預估時數**：8–14 小時
+
+**關鍵風險**：Hero 動畫效能。在 iPhone SE 級裝置上實測 FPS ≥ 30。
+
+**完成條件**：
+- Lighthouse Performance ≥ 90 行動 / ≥ 95 桌機
+- Hero 動畫在 3G 網路下可載（lazy load OK）
+- `prefers-reduced-motion` fallback 工作
+
+### Sprint 3: Portfolio（Week 5–6，6–10 hr）
+
+**目標**：Portfolio 列表 + Detail 頁。
+
+**交付物**：
+- Sanity 內建立至少 8 件作品資料
+- Cloudinary 整合（自動 responsive、AVIF）
+- PortfolioGrid masonry layout
+- FilterBar（year / mood / tangle）
+- PortfolioCard hover 動畫
+- Portfolio Detail 頁 + lightbox
+- Schema.org `CreativeWork` 落實
+
+**預估時數**：6–10 小時
+
+**關鍵風險**：圖片優化策略。一張未壓縮 5MB 的高解析作品圖必須轉成 WebP/AVIF + 多 resolution。
+
+**完成條件**：
+- 8 件作品 thumbnail < 80KB
+- Detail 頁主圖 < 300KB
+- LCP < 2.5s
+
+### Sprint 4: Tangle Dictionary（Week 7–8，8–12 hr）
+
+**目標**：41 個 tangle 字典 + 互動 step animation（先 8 個，其餘 v1.1）。
+
+**交付物**：
+- 41 個 tangle 資料完整（已研究完成，import 即可）
+- 8 個重點 tangle 的 step animation SVG 手繪完成（Crescent Moon、Hollibaugh、Printemps、Cadent、Mooka、Florz、Tipple、Knightsbridge）
+- TangleDictionary 列表頁
+- TangleDetail 詳細頁
+- TangleStepAnimation 互動播放
+- Pagefind 搜尋整合
+- Schema.org `HowTo` + `CreativeWork`
+
+**預估時數**：8–12 小時（其中 4–6 小時是手繪 SVG）
+
+**關鍵風險**：手繪 SVG 工作量。tangle 不是隨便畫——要讓步驟感清楚。建議用 Figma 或 Inkscape 畫，再 export SVG path。
+
+**完成條件**：
+- 41 個 tangle 都有靜態介紹
+- 8 個 tangle 有動畫（其餘顯示「動畫即將上線」）
+- 搜尋「Hollibaugh」/「哈利堡」/「Maria」都能找到對的 tangle
+- 篩選「Roberts/Thomas」家族顯示 16 個
+
+### Sprint 5: Polish & Launch（Week 9–10，4–8 hr）
+
+**目標**：上線。
+
+**交付物**：
+- Videos 頁完整
+- Contact 表單（Web3Forms）
+- 行動版 bottom nav
+- 暗模式切換
+- Lighthouse 全綠（Performance / Accessibility / Best Practices / SEO 都 ≥ 95）
+- robots.txt + sitemap.xml
+- 404 頁（也帶 tangle 動畫）
+- README.md + CONTRIBUTING.md
+- 上線 checklist 跑完
+- DNS 切到正式 domain
+
+**預估時數**：4–8 小時
+
+**關鍵風險**：行動版動畫掉幀。在低階 Android 機（如 Galaxy A12）實測 ≥ 30 FPS。
+
+**完成條件**：
+- 上線 + 4 個 sitemap submit 完
+- Plausible 看到首日訪客
+- 至少 3 位朋友測過、無 critical bug
+
+---
+
+## Part 8：Claude Code 執行 Prompts
+
+5 個 Sprint 各一個 self-contained prompt（500–800 字）。使用者複製即可貼上 Claude Code。
+
+詳見 `Sprint_Prompts/` 資料夾。每個 sprint 一個 `.md` 檔案。
+
+以下是** prompt 撰寫的大原則**：
+
+1. **每個 prompt 必須先 `read` 三個檔案**：
+   - `Claude_Code_Project_Brief.md`（這份）
+   - 上一個 sprint 的成果（如有）
+   - 該 sprint 對應的 `Sprint_N_*.md`
+
+2. **每個 prompt 必須有明確 acceptance criteria**——可以跑 `pnpm test` 或 `pnpm lighthouse` 自動驗證。
+
+3. **每個 prompt 必須結尾用 TodoWrite + 摘要 commit**——讓 Claude Code 留下完整 git history。
+
+4. **每個 prompt 必須允許 Claude Code 提問**——例如某個設計決策若有兩種選項，明確列出讓使用者決定。
+
+---
+
+## Part 9：成本與預期工時
+
+### 9.1 開發工時
+
+| 模式 | 總時數 | wall-clock |
+|---|---|---|
+| 個人手動 | 80–120 小時 | 10 週 × 10 hr/wk |
+| Claude Code 主導 | 30–50 小時 | 6–8 週（人類做 review、debug、CMS 內容、設計決策） |
+
+**節省的關鍵**：Claude Code 寫 80% 的 boilerplate、design system、元件骨架；人類專注於：
+
+- 41 個 tangle 的手繪 SVG（4–6 hr）
+- 個人作品圖片整理、創作筆記撰寫（10–15 hr）
+- About 頁文案（2–4 hr）
+- 內容輸入 Sanity（5–10 hr）
+- 跨裝置實測（2–4 hr）
+
+### 9.2 月維運成本
+
+如 Part 4.3 所列：起步 ~$1/月、流量起來後 $10–25/月。
+
+### 9.3 一次性投資（建議）
+
+- Domain：$9.15/yr（Cloudflare）
+- 一張正式 logo / monogram 設計（Fiverr / 朋友）：$50–200
+- 4–6 件代表作品的高解析掃描（如果用手機拍效果不夠）：$100–300（送專業掃描店）
+
+---
+
+## Part 10：未來擴充（v2 / Year 2）
+
+第一年只做作品集 + 字典。第二年才考慮：
+
+1. **線上工作坊報名**
+   - Stripe + Calendly 整合
+   - Workshop schema 已預留
+2. **Tangle 創作者社群（投稿自製 tangle）**
+   - 用戶上傳 + 審核流程
+   - 需要 backend（Sanity + Studio 自訂）
+3. **作品收藏家會員制**
+   - 不做 NFT（風險高、與品牌精神不符）
+   - 改用 Patreon 或 Buttondown paid newsletter
+4. **線上 Zentangle Method 課程**
+   - 影片課程平台（Mighty Networks / Teachable）
+   - 但個人作品集站不適合直接賣課程，可能需另起一個 `learn.drg-academy.com` 子站
+5. **Journal / Blog**
+   - 已預留路由
+   - 第二年再開
+6. **電商整合**
+   - Shopify Lite 或 Pinkoi 嵌入
+   - 直接在站上下單作品 / 周邊
+
+**v2 不做的事**（永遠不做）：
+
+- 廣告位（污染品牌）
+- popup 彈窗（與 contemplative 衝突）
+- 即時聊天 chatbot（個人創作者不需要）
+- 強迫註冊牆
+
+---
+
+## 附錄 A：參考檔案路徑表
+
+| 檔案 | 路徑 |
+|---|---|
+| 41 tangle 字典 ZH | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\ZH\04_經典圖樣字典.md` |
+| 41 tangle 字典 EN | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\EN\04_Tangles_Dictionary.md` |
+| 8 步驟方法 ZH | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\ZH\02_哲學與方法.md` |
+| 8 步驟方法 EN | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\EN\02_Philosophy_and_Method.md` |
+| 工具與材料 | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\ZH\03_工具與材料.md` |
+| 網站架構建議 | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\ZH\11_經典網站架構建議.md` |
+| 首頁範本 ZH | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\Website_Wireframe\Sample_Homepage_Copy_ZH.md` |
+| 首頁範本 EN | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\Website_Wireframe\Sample_Homepage_Copy_EN.md` |
+| Sitemap | `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\Website_Wireframe\Sitemap.md` |
+
+## 附錄 B：詞彙表
+
+| 詞 | 定義 |
+|---|---|
+| **Tangle** | 經過命名與整理的小型重複圖樣，纏繞畫的基本單元 |
+| **Tile** | 紙磚，標準 3.5" × 3.5" |
+| **String** | 用鉛筆在 tile 內隨意畫的曲線，劃分區塊 |
+| **Aura** | 沿著一個形狀外側畫的偏移輪廓線 |
+| **CZT** | Certified Zentangle Teacher，認證纏繞畫教師 |
+| **ZIA** | Zentangle-Inspired Art，受纏繞畫啟發的延伸創作（彩色、大尺寸等） |
+| **Path drawing animation** | 用 SVG `stroke-dasharray` + `stroke-dashoffset` 製造「線條被畫出來」的動畫 |
+| **Masonry** | 瀑布流網格佈局 |
+| **Hreflang** | HTML 屬性，告訴搜尋引擎此頁的其他語言版本 |
+| **LCP** | Largest Contentful Paint，Web Vitals 之一 |
+| **AVIF** | 新一代圖片格式，比 WebP 更小 |
+
+---
+
+**END OF BRIEF**
+
+下一步：依序執行 Sprint 1–5 的 prompts（在 `Sprint_Prompts/` 資料夾）。

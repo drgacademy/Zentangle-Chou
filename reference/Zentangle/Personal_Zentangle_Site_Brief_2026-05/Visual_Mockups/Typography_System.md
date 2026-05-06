@@ -1,0 +1,333 @@
+# Typography System — 個人禪繞畫網站
+
+## 設計哲學
+
+Maria Thomas 的本業是書法家。整套 Zentangle 的視覺氣質本就帶有手寫、呼吸、個人感。
+我們的字體選擇要呼應這件事——但**克制**：標題用書法 / 手寫體，內文用安靜的襯線體。
+
+---
+
+## 字體家族（Font Stack）
+
+### 1. Display（hero / 大標題）
+
+**英文**：`"Caveat Brush"` → fallback `"Caveat"` → cursive
+**中文**：`"王漢宗中楷體"` → fallback `"Noto Serif TC"` → serif
+
+備選英文：`"Yellowtail"`、`"Permanent Marker"`（如果想更粗一點）
+
+### 2. Heading（h1, h2, h3）
+
+**英文**：`"Crimson Pro"` → fallback `"Lora"` → Georgia → serif
+**中文**：`"思源宋體 / Noto Serif TC"` → serif
+
+### 3. Body（內文）
+
+**英文**：`"Lora"` → Georgia → "Times New Roman" → serif
+**中文**：`"思源宋體 / Noto Serif TC"` → "PMingLiU" → serif
+
+### 4. Mono（少用，code / 日期）
+
+`"JetBrains Mono"` → `ui-monospace` → "Consolas" → monospace
+
+### 5. Signature（個人簽名）
+
+**英文**：`"Allura"` → `"Great Vibes"` → cursive
+**中文**：`"王漢宗自由字型"` → `"標楷體"` → cursive
+
+---
+
+## CSS Variables
+
+```css
+:root {
+  --font-display-en: "Caveat Brush", "Caveat", cursive;
+  --font-display-zh: "王漢宗中楷體", "Noto Serif TC", serif;
+
+  --font-heading-en: "Crimson Pro", "Lora", Georgia, serif;
+  --font-heading-zh: "思源宋體", "Noto Serif TC", serif;
+
+  --font-body-en: "Lora", Georgia, "Times New Roman", serif;
+  --font-body-zh: "思源宋體", "Noto Serif TC", "PMingLiU", serif;
+
+  --font-mono: "JetBrains Mono", ui-monospace, "Consolas", monospace;
+
+  --font-signature-en: "Allura", "Great Vibes", cursive;
+  --font-signature-zh: "王漢宗自由字型", "標楷體", cursive;
+}
+```
+
+---
+
+## Type Scale（Major Third = 1.250）
+
+```css
+:root {
+  --fs-xs:   0.80rem;   /* 12.8px — 極小（footer copyright） */
+  --fs-sm:   0.90rem;   /* 14.4px — meta（日期、tags） */
+  --fs-base: 1.00rem;   /* 16px   — body 預設 */
+  --fs-md:   1.125rem;  /* 18px   — body large（重要段落） */
+  --fs-lg:   1.25rem;   /* 20px   — H4 */
+  --fs-xl:   1.563rem;  /* 25px   — H3 */
+  --fs-2xl:  1.953rem;  /* 31.2px — H2 */
+  --fs-3xl:  2.441rem;  /* 39px   — H1 (內頁) */
+  --fs-4xl:  3.052rem;  /* 48.8px — H1 (主要) */
+  --fs-5xl:  3.815rem;  /* 61px   — Display */
+  --fs-hero: 4.768rem;  /* 76.3px — Hero 主標 */
+}
+
+/* 行動版降一級 */
+@media (max-width: 768px) {
+  :root {
+    --fs-hero: 3.052rem;  /* 48.8px */
+    --fs-5xl:  2.441rem;
+    --fs-4xl:  1.953rem;
+    --fs-3xl:  1.563rem;
+  }
+}
+```
+
+---
+
+## Line Height & Tracking
+
+```css
+:root {
+  /* line height */
+  --lh-tight:    1.20;   /* h1, h2 */
+  --lh-snug:     1.45;   /* h3, h4 */
+  --lh-relaxed:  1.75;   /* body 英文 */
+  --lh-zh-body:  1.85;   /* body 中文（更鬆） */
+  --lh-loose:    2.00;   /* 詩意段落（about page） */
+
+  /* letter-spacing */
+  --tr-tight:  -0.02em;  /* 大標題 */
+  --tr-normal:  0em;     /* 內文 */
+  --tr-wide:    0.04em;  /* 副標 */
+  --tr-wider:   0.08em;  /* 全大寫小標、eyebrow */
+}
+```
+
+---
+
+## Tailwind extension
+
+```ts
+// tailwind.config.ts (theme.extend)
+fontFamily: {
+  'display-en': ['"Caveat Brush"', '"Caveat"', 'cursive'],
+  'display-zh': ['"王漢宗中楷體"', '"Noto Serif TC"', 'serif'],
+  'heading':    ['"Crimson Pro"', '"Lora"', '"思源宋體"', 'Georgia', 'serif'],
+  'body':       ['"Lora"', '"思源宋體"', 'Georgia', 'serif'],
+  'signature':  ['"Allura"', '"王漢宗自由字型"', 'cursive'],
+  'mono':       ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+},
+fontSize: {
+  'xs':   ['0.80rem', { lineHeight: '1.45' }],
+  'sm':   ['0.90rem', { lineHeight: '1.45' }],
+  'base': ['1.00rem', { lineHeight: '1.75' }],
+  'md':   ['1.125rem', { lineHeight: '1.75' }],
+  'lg':   ['1.25rem', { lineHeight: '1.45' }],
+  'xl':   ['1.563rem', { lineHeight: '1.45' }],
+  '2xl':  ['1.953rem', { lineHeight: '1.20' }],
+  '3xl':  ['2.441rem', { lineHeight: '1.20' }],
+  '4xl':  ['3.052rem', { lineHeight: '1.20' }],
+  '5xl':  ['3.815rem', { lineHeight: '1.10' }],
+  'hero': ['4.768rem', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+},
+letterSpacing: {
+  tight:  '-0.02em',
+  normal: '0',
+  wide:   '0.04em',
+  wider:  '0.08em',
+},
+```
+
+---
+
+## 排版範例
+
+### Hero 主標
+
+```html
+<h1 class="font-display-zh text-5xl md:text-hero text-ink-700 tracking-tight">
+  一筆一畫，皆是可能
+</h1>
+<p class="mt-4 font-body text-md md:text-lg text-ink-500 leading-relaxed">
+  Personal Zentangle Portfolio · 41 Tangle Dictionary
+</p>
+```
+
+### 內文段落
+
+```html
+<article class="prose-zentangle">
+  <h2 class="font-heading text-2xl md:text-3xl text-ink-700 tracking-tight mb-6">
+    什麼是禪繞畫？
+  </h2>
+  <p class="font-body text-base md:text-md text-ink-600 leading-zh-body">
+    禪繞畫（Zentangle®）是 Rick Roberts 與 Maria Thomas 創立的⋯⋯
+  </p>
+</article>
+```
+
+### Tangle 卡片
+
+```html
+<div class="tile">
+  <h3 class="font-heading text-xl text-ink-700">Crescent Moon</h3>
+  <p class="font-mono text-xs text-ink-400 tracking-wider uppercase mt-1">
+    by Maria Thomas
+  </p>
+  <p class="mt-3 font-body text-sm text-ink-500 leading-relaxed">
+    新月紋——基礎中的基礎⋯⋯
+  </p>
+</div>
+```
+
+### 簽名
+
+```html
+<div class="font-signature text-3xl text-gold-500 -rotate-3">
+  Dr. G.
+</div>
+```
+
+---
+
+## 字體載入策略
+
+### 1. Subset（中文字體必做）
+
+中文 Noto Serif TC 完整版 ~10 MB，是個災難。必做 subset。
+
+```bash
+# 用 fonttools
+pip install fonttools brotli zopfli
+
+pyftsubset NotoSerifTC-Regular.otf \
+  --unicodes-file=zh-tw-common.txt \
+  --output-file=NotoSerifTC-Regular.subset.woff2 \
+  --flavor=woff2 \
+  --layout-features='*' \
+  --no-hinting
+```
+
+`zh-tw-common.txt` = 教育部常用 3,500 字 + 站內所有專有名詞（41 個 tangle 中文名 + 創作者名 + 文案中常用字）。預估 subset 後 ~250 KB。
+
+### 2. Google Fonts self-host
+
+不要直接用 `<link href="https://fonts.googleapis.com">`——慢、且需 CSP 開洞。
+用 `google-webfonts-helper` 下載 woff2 後 self-host。
+
+### 3. `@font-face` 設定
+
+```css
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A0-00FF;  /* 只 latin */
+}
+
+@font-face {
+  font-family: 'Noto Serif TC';
+  src: url('/fonts/NotoSerifTC-Regular.subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+}
+```
+
+### 4. Preload hero 字體
+
+```html
+<link rel="preload" href="/fonts/CaveatBrush-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/NotoSerifTC-Bold.subset.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+---
+
+## 中文排版調整（重要）
+
+### 1. 中英混排
+
+中英混排時，Tailwind class `mixed-script`：
+
+```css
+.mixed-script {
+  font-feature-settings: "palt" 1; /* 比例間距 */
+  letter-spacing: 0.03em;          /* 中文字距撐開 */
+}
+
+.mixed-script en {
+  letter-spacing: 0;               /* 英文恢復 */
+}
+```
+
+### 2. 中文段落
+
+```css
+:lang(zh-Hant) p,
+:lang(zh) p {
+  line-height: var(--lh-zh-body);  /* 1.85 */
+  letter-spacing: 0.03em;
+  text-spacing: ideograph-alpha ideograph-numeric;
+  /* 段首縮排（傳統中文）：可選 */
+}
+```
+
+### 3. 不要 justify
+
+中文兩端對齊會造成詭異字距。永遠用 `text-align: left`。
+
+### 4. 標點壓縮
+
+```css
+:lang(zh-Hant) {
+  font-feature-settings: "palt" 1;
+}
+```
+
+---
+
+## 排版禁忌
+
+❌ `font-weight: 700+` 在大段內文（壓迫）
+❌ 全大寫超過 4 個字
+❌ 行高 < 1.5 的內文
+❌ Justify alignment（兩端對齊）
+❌ italic 大段（少量 emphasis 可）
+❌ 連續 3+ 個不同字體混用（畫面混亂）
+❌ 字體大小切換太頻繁（每頁 ≤ 5 個 size 為佳）
+
+---
+
+## 視覺檢查清單
+
+寫完每頁後，問自己：
+
+- [ ] 主標 + 副標 + 內文，三層 hierarchy 清楚嗎？
+- [ ] 中文段落行高 ≥ 1.85？
+- [ ] 中英混排有 `palt` feature？
+- [ ] 字體在 iPhone SE（375px）寬度可讀？
+- [ ] 字體在 iPad（768px）顯得過小或過大？
+- [ ] 字體 fallback 鏈 OK（中文裝置先看到 Noto Serif TC）？
+- [ ] 暗模式對比仍 ≥ AA？
+
+---
+
+## 關鍵字體下載連結
+
+- Lora: https://fonts.google.com/specimen/Lora
+- Crimson Pro: https://fonts.google.com/specimen/Crimson+Pro
+- Caveat: https://fonts.google.com/specimen/Caveat
+- Caveat Brush: https://fonts.google.com/specimen/Caveat+Brush
+- Allura: https://fonts.google.com/specimen/Allura
+- Great Vibes: https://fonts.google.com/specimen/Great+Vibes
+- Noto Serif TC: https://fonts.google.com/noto/specimen/Noto+Serif+TC
+- 思源宋體: https://github.com/adobe-fonts/source-han-serif/releases
+- 王漢宗自由字型: https://github.com/CalligraphyVision/wcl-08（GPL2，可商用）

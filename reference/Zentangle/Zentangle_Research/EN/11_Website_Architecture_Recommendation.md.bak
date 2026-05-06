@@ -1,0 +1,258 @@
+# Website Architecture Recommendation
+
+**Dr. G. Academy — Zentangle Bilingual Website**
+**Strategic build plan, prepared 2026-05-05**
+
+This document converts the Zentangle research package into a buildable website plan. It is the operational deliverable: by the end you should know who the site is for, what pages it needs, how those pages will rank in Google and surface in ChatGPT, what to build it with, what to sell, what legal lines to respect, and what the first 90 days look like.
+
+---
+
+## A. Site Goals and Target Audience
+
+### Primary goals (in priority order)
+
+1. **Educate** — become the most trusted Mandarin/English bilingual entry point for learning Zentangle. Education is the lead generator for everything else.
+2. **Build community** — give Taiwan and broader Chinese-speaking practitioners a non-Pinterest, non-Facebook home base that respects their work and rewards their CZT credentials.
+3. **Optional commerce** — workshops, starter kits, books, and a sponsored CZT directory. Commerce serves the educational mission, not the other way around.
+
+### Three personas
+
+**Persona 1 — Lin, the Curious Beginner.**
+- 38, Taipei, marketing manager, has heard "纏繞畫" mentioned in a wellness podcast.
+- Searches: "纏繞畫是什麼", "what is zentangle", "纏繞畫 入門 推薦".
+- Wants: a 3-minute explainer, a free first lesson, reassurance she's not "bad at art".
+- Key page: **Home → The Method → first tangle tutorial**.
+
+**Persona 2 — Wen, the Active Hobbyist.**
+- 52, Taichung, retired teacher, has been tangling for 18 months, owns three Sakura pens, follows TanglePatterns daily.
+- Searches: "new tangles 2026", "Crescent Moon tangle variation", "禪繞畫 進階".
+- Wants: fresh tangle ideas, a way to share work, peer recognition, an excuse to drive somewhere for a half-day workshop.
+- Key page: **Tangles Library → Gallery → Workshops & Classes**.
+
+**Persona 3 — Dr. Chen, the Buyer.**
+- 44, Kaohsiung, occupational therapist running a senior daycare; OR a school art teacher; OR a corporate HR planning a wellness day.
+- Searches: "zentangle for therapists", "纏繞畫 課程 台北", "zentangle workshop corporate".
+- Wants: credibility (CZT credentials, clinical evidence), price clarity, contact within one click.
+- Key page: **For Therapists & Educators → Workshops & Classes → Contact**.
+
+A site that fails any one persona has cut off a third of its potential traffic. The architecture must serve all three from the home page.
+
+---
+
+## B. Sitemap — Recommended Page Structure
+
+The recommended top-level navigation is intentionally short. Mobile users in Taiwan tap with their thumb; if a top nav has more than seven items, the seventh item gets ignored. Detail belongs in sub-pages, not the nav.
+
+```
+Home  /
+About  /about
+The Method  /method
+  ├ The 8 Steps  /method/eight-steps
+  └ Zentangle vs ZIA  /method/zentangle-vs-zia
+Tangles Library  /tangles
+  └ /tangles/<slug>  (one page per tangle, ~50)
+Gallery  /gallery
+Workshops & Classes  /workshops
+  ├ Upcoming  /workshops/upcoming
+  └ Private & Corporate  /workshops/private
+Books & Tools  /shop
+For Therapists & Educators  /for-professionals
+Find a Teacher (CZT)  /czt-directory
+Blog  /blog
+FAQ  /faq
+Contact  /contact
+```
+
+**Bilingual toggle.** First-class. URLs are language-prefixed: `/en/...` and `/zh/...`. The root `/` redirects based on `Accept-Language` header but always shows a visible language switch in the header. Each page emits `hreflang="en"` and `hreflang="zh-Hant-TW"` link tags pointing at the equivalent slug. Never serve mixed-language pages — that destroys both UX and SEO.
+
+**Why these pages, not others.**
+
+- **Home** — hero with the philosophy quote ("Anything is possible, one stroke at a time"), single primary CTA "Try your first tangle" leading to a free tutorial, secondary CTA "Find a workshop". Three persona doors below the fold.
+- **About** — founders' story, Dr. G. Academy's voice, why we teach this. Builds trust for Persona 3.
+- **The Method** — the SEO pillar page. Long-form (~2,500 words EN / 字 ZH). Hub for cluster pages.
+- **Tangles Library** — searchable, filterable (by difficulty, by creator, by visual motif). Each tangle gets its own page with step-by-step deconstructions. This is the workhorse content engine for organic traffic.
+- **Gallery** — community ZIA submissions with explicit upload + permission flow. Critical: this requires a moderation queue and a written contributor agreement (rights granted, attribution, takedown).
+- **Workshops & Classes** — schedule with structured-data Event markup. Both upcoming public sessions and a private/corporate booking form.
+- **Books & Tools** — affiliate-disclosed buy links to recommended books and tools (no fake "shop" pretending to be a store), plus optional own starter kit.
+- **For Therapists & Educators** — high-intent SEO landing. Cites academic studies. Has a "book a CEU-style workshop" CTA. Persona 3's home.
+- **Find a Teacher (CZT)** — directory of CZTs by region. Free basic listing; paid premium listing as a future revenue line.
+- **Blog** — long-form articles, tangle tutorials, philosophy posts. Internal-linking engine.
+- **FAQ** — structured for Answer Engine Optimization (see Section C).
+- **Contact** — single form, no phone tree, includes an explicit "press / partnerships / workshops / general" radio.
+
+---
+
+## C. SEO + AEO Recommendations
+
+### High-value keyword targets
+
+**English (lower CPC, but strong informational intent):**
+- "what is zentangle" — head term, informational, high volume.
+- "zentangle for beginners" — high commercial intent (workshop adjacent).
+- "zentangle vs doodling" — comparison query, high AEO surface (ChatGPT loves these).
+- "zentangle method" — pillar-page anchor.
+- "how to tangle" — instructional, video opportunity.
+- Long-tail: "zentangle for anxiety", "zentangle vs mandala", "easiest zentangle patterns for beginners".
+
+**Chinese (Taiwan-Mandarin, primary market):**
+- 纏繞畫 — Taiwan-preferred term, head keyword.
+- 禪繞畫 — China-preferred term; rank for both.
+- Zentangle 教學 — instructional intent.
+- 纏繞畫 入門 — beginner intent.
+- Zentangle 課程 台北 — local commercial intent.
+- Long-tail: 纏繞畫 圖樣, 纏繞畫 工具, 纏繞畫 認證, 禪繞畫 療癒, 纏繞畫 線上課程.
+
+### AEO (Answer Engine Optimization)
+
+ChatGPT, Perplexity, Claude, and Google AI Overviews increasingly rewrite the search journey. Optimizing for them requires three structural moves:
+
+1. **H2 questions that match how people ask AI.** Not "Materials" but "What materials do I need to start Zentangle?" Each H2 should be a complete question. Each immediately-following paragraph should be a 40–60 word standalone answer that an AI can lift verbatim with attribution.
+2. **JSON-LD schema, mandatory.** Use:
+   - `Course` for workshops and the eight-step method page.
+   - `Article` + `BlogPosting` for blog content.
+   - `HowTo` for tutorials (each step gets a `HowToStep`).
+   - `Person` for each CZT in the directory.
+   - `Event` for each upcoming workshop.
+   - `FAQPage` for the FAQ and for question-style sections in long articles.
+   - `Organization` for Dr. G. Academy on Home + About.
+3. **FAQ blocks at the bottom of every long page.** Three to five questions that answer the obvious follow-ups. Wrapped in `FAQPage` schema. This is the single highest-leverage AEO tactic available in 2026.
+
+### Internal linking strategy — pillar / cluster / hub
+
+- **Pillar:** `The Method` page is the topical authority anchor.
+- **Clusters:** each of the eight step pages links up to the pillar and laterally to related blog posts.
+- **Hub:** `Tangles Library` is the dictionary hub. Every blog post that mentions a tangle name links to that tangle's page. Every tangle page links back to The Method and to one or two related tangles ("If you like Crescent Moon, try Printemps").
+- **Authority pages:** `For Therapists & Educators` is its own mini-pillar with cited studies; it deserves footnotes and a separate cluster of clinical-application blog posts.
+
+### Content cadence
+
+A sustainable monthly publishing schedule for one writer + one CZT consultant:
+
+- **2 long-form blog posts** (1,500–2,500 words EN; produce ZH counterpart).
+- **1 tangle tutorial** added to the library, with original artwork.
+- **1 short-form video or reel** (optional, but compounds).
+
+Quarterly: refresh the pillar (`The Method`) page and the top-three tangle pages by traffic.
+
+### Authority signals
+
+- Cite Rick Roberts and Maria Thomas by full name on first reference per page.
+- Reference at least one academic study on the `For Therapists & Educators` page (with proper APA citation).
+- List CZT credentials with the certification year on every author bio.
+- Display "Last reviewed: YYYY-MM" at the foot of every educational page. Google's Helpful Content signals reward this.
+
+---
+
+## D. Content Reuse Plan from This Research Package
+
+Each research file feeds specific website pages. This is the production map:
+
+| Research file | Feeds page(s) |
+|---|---|
+| 00 Overview | Home hero copy, About summary block |
+| 01 History and Founders | About → "Our Story", first half of `/method` |
+| 02 Philosophy and Mindfulness | About → "Why we teach this", `/for-professionals` opening |
+| 03 The Eight-Step Method | `/method/eight-steps` (verbatim source), eight individual cluster pages |
+| 04 Tangles Dictionary | `/tangles` library — one page per entry |
+| 05 Tools and Materials | `/shop` editorial copy, FAQ entries |
+| 06 ZIA Zentangle Inspired Art | `/method/zentangle-vs-zia`, Gallery intro |
+| 07 CZT Certification Path | `/czt-directory` intro, "Become a CZT" blog post |
+| 08 Global Community and Events | Blog seed posts, Workshops landing intro |
+| 09 Therapeutic and Educational Applications | `/for-professionals` (the entire pillar) |
+| 10 Taiwan and Chinese-Speaking Market | About → local context, `/czt-directory` Taiwan section |
+| 11 Website Architecture Recommendation | This document — internal only |
+
+Production rule: research files are the source of truth. When site copy and a research file disagree, the research file wins until edited.
+
+---
+
+## E. Monetisation Possibilities
+
+Five revenue streams, ranked by feasibility for year one:
+
+1. **Workshop sales — in-person and online.** Highest gross margin. Use the website to sell, Calendly or a dedicated booking tool to schedule, and a payment processor (Stripe / TapPay) to collect. Bundle a starter kit into the price for in-person.
+2. **Starter kits.** Two paths: drop-ship via the official Sakura distributor in Taiwan, or assemble Dr. G. Academy-branded kits (tile + 01 Micron + 2B pencil + tortillon + welcome card). Branded kit margin is much higher; logistics are heavier. Start drop-ship, graduate to branded.
+3. **Book affiliate revenue.** Books.com.tw has an affiliate program; Amazon Associates covers English-language Zentangle books. Affiliate income is small per click but nearly free to operate — set it up once, refresh quarterly.
+4. **Sponsored CZT directory listings.** Free basic listing for any verified CZT (drives directory traffic). Premium listing (NTD 1,200–3,600/yr) gets top placement, photo, three contact buttons, and "Featured CZT" badge. Year-two opportunity once directory has 30+ CZTs.
+5. **Membership tier.** "Tangle Atelier" at NTD 199–299/month gets premium tutorials, monthly live tangle session over Zoom, downloadable string templates, archive access. Launch in month 9 once content depth justifies the price.
+
+Avoid early: physical books (capital-intensive), printed magazines, sponsorships (audience too small initially), corporate events sales force (long cycle, requires dedicated salesperson).
+
+---
+
+## F. Tech Stack Recommendation
+
+A 2026 best-practice stack for an SEO-first bilingual content site:
+
+- **Static / hybrid framework:** **Astro** (recommended) or Next.js. Astro ships less JavaScript, scores higher on Core Web Vitals, and renders Markdown content natively — ideal for an education-heavy site. Next.js is the alternative if the team prefers React-first DX.
+- **Headless CMS:** **Sanity** (recommended) or Contentful. Sanity's structured content model maps cleanly to a tangles library where each entry has fields like creator, difficulty, year published, related tangles. Contentful is the safer enterprise choice if budget allows.
+- **Image CDN:** **Cloudinary** or Cloudflare Images. Both auto-optimize WebP/AVIF and resize on the fly. Mandatory for a visual-heavy site.
+- **Hosting:** **Vercel** (best Next.js DX) or **Cloudflare Pages** (best price/performance). Cloudflare Pages is recommended for cost-conscious launch.
+- **Bilingual i18n routing:** language-prefixed URLs (`/en/...` and `/zh/...`). Astro and Next.js both support this natively. `hreflang` tags on every page; XML sitemap split by language.
+- **Analytics:** **GA4** as the standard, plus a privacy-respecting alternative (**Plausible** or **Umami**) for the public dashboard. Cookie consent banner mandatory for EU/UK visitors and increasingly expected in Taiwan.
+- **Schema markup:** mandatory on every page. Use a schema component library (e.g., `next-seo` for Next.js) and never hand-write JSON-LD per page — too error-prone.
+- **Search:** **Pagefind** (static, free, excellent for Astro) for the tangles library and blog. Algolia only if budget is comfortable; avoid the lock-in early.
+- **Forms:** **Formspree** or **Netlify Forms** for contact and workshop inquiries. Avoid spinning up a backend for forms in year one.
+
+---
+
+## G. Risk and IP Guardrails
+
+These are non-negotiable. Violating them is how Zentangle, Inc. issues a cease-and-desist.
+
+- **Trademark — "Zentangle®".** Use the registered mark on first reference per page. Never brand the site as "Official Zentangle Taiwan" or imply affiliation. Acceptable framing: "an independent Zentangle® education resource by Dr. G. Academy".
+- **Tangle names belong to their creators.** Always credit (e.g., "*Hollibaugh* by Rick Roberts" or "*Printemps* by Maria Thomas"). Maintain an attribution table on every tangle page. When a creator is unknown, write "Creator unknown" rather than guessing.
+- **Image copyright.** Use only original Dr. G. Academy art, CC0 stock, or images licensed/permitted in writing from CZTs. Do **not** scrape Pinterest, do **not** download from zentangle.com, do **not** use Google Image search results. See `References/Image_Source_Notes.md` for the full sourcing policy.
+- **Affiliate disclosures.** Every page with affiliate links carries a disclosure block at the top of the content area: "This page contains affiliate links. If you purchase through them, Dr. G. Academy may earn a small commission at no extra cost to you." Required by FTC (US visitors) and good practice in Taiwan.
+- **CZT claims.** If the site instructor is a CZT, display the certification year and Zentangle, Inc.'s standard disclaimer ("CZTs are independent teachers; certification does not imply Zentangle, Inc. employment"). If not, do not call workshops "Zentangle workshops" — call them "Zentangle-inspired workshops" or "tangle drawing workshops".
+- **Method reproduction.** The eight steps may be described and taught — that is what CZTs do. But verbatim reproduction of zentangle.com copy is plagiarism and copyright infringement. Always paraphrase and add original commentary.
+- **Children & images.** Any gallery image of a minor requires written guardian consent on file. Build the upload form with a consent checkbox and store the timestamp.
+
+---
+
+## H. Launch Roadmap — 90 Days
+
+Aggressive but achievable for a team of one writer + one developer + one CZT consultant.
+
+### Month 1 — Foundation
+- Build Home, About, The Method, Contact, FAQ.
+- Publish 5 tangle pages (start with the easiest: *Crescent Moon*, *Hollibaugh*, *Printemps*, *Static*, *Tipple*).
+- Set up GA4, Plausible, sitemap, robots, schema.
+- Bilingual EN + ZH parity from day one.
+- Goal: site is indexable and Persona 1 (curious beginner) has a complete journey.
+
+### Month 2 — Content engine
+- Expand Tangles Library to 30 entries.
+- Launch `For Therapists & Educators` with three cited studies.
+- Launch `Workshops & Classes` with the first three scheduled sessions.
+- Add `Books & Tools` with affiliate links.
+- Goal: site serves Persona 3 (the buyer) end-to-end.
+
+### Month 3 — Community + scale
+- Launch Gallery with submission flow + moderation.
+- Publish 10 blog posts (mix of tutorials, philosophy, founder stories).
+- Launch `Find a Teacher (CZT)` directory with first 10 CZTs.
+- Bilingual ZH rollout fully verified — every page has an `hreflang` partner.
+- Goal: site serves Persona 2 (the hobbyist) and starts ranking for long-tail Chinese queries.
+
+By day 90: ~50 indexed pages, two months of analytics history, first paid workshop bookings, first directory listings.
+
+---
+
+## Final 5-Page MVP Recommendation
+
+If 90 days feels too ambitious, ship a credible 5-page MVP in 3 weeks:
+
+1. **Home** — hero, philosophy, three persona doors, newsletter signup.
+2. **What Is Zentangle?** — combines About + The Method in one long page (~2,000 words EN, equivalent ZH).
+3. **Try Your First Tangle** — single instructional page with one tangle (*Crescent Moon*) and a free downloadable string template.
+4. **Workshops** — the offer page. One landing page with three upcoming dates and a booking form.
+5. **Contact** — name, email, message, dropdown.
+
+Bilingual EN/ZH from day one. Full schema. GA4 + Plausible. That's enough to start collecting emails, taking workshop deposits, and ranking for "what is zentangle" + "纏繞畫是什麼" within 60 days.
+
+Everything else in this document is the right way to scale; the MVP is the right way to start.
+
+---
+
+*End of File 11. For supporting research see files 01–10. For wireframe artifacts see `Website_Wireframe/`.*

@@ -1,0 +1,95 @@
+# 個人禪繞畫作品集網站 — Claude Code 開發企劃書
+
+**版本：** v1.0
+**最後更新：** 2026-05-06
+**作者：** Dr. G. Academy
+**目標：** 為個人禪繞畫藝術家／創作者打造一個「網站本身就像一幅禪繞畫」的雙語作品集網站。
+
+---
+
+## 這份企劃書是什麼？
+
+這不是商業課程站、也不是 Zentangle, Inc. 的官方資源站。這是**為一位台灣禪繞畫個人創作者**所設計的：
+
+1. 展示**個人禪繞畫作品**（圖、影片、創作筆記）
+2. 整合 **41 個經典 tangle 字典**（已經研究完成）
+3. 雙語（zh-TW / en）並重
+4. **核心美學：網站就是一幅禪繞畫**——線條會延伸、頁面會慢繪、滑鼠會留下淡淡的線——整體氛圍是 contemplative、stillness、舒壓。
+
+---
+
+## 如何使用這份企劃書
+
+這份企劃書設計成可以「**整份貼進 Claude Code 作為專案 context**」。建議閱讀順序：
+
+1. **先讀 `Claude_Code_Project_Brief.md`**（主檔，繁中 ~22,000 字）
+   - Part 1–10 為完整規格
+   - Part 8 為 5 個 Sprint 的 Claude Code Prompts（最重要！）
+2. **再參考 `Visual_Mockups/` 資料夾**：色票、字體、動畫實作 code
+3. **依序執行 `Sprint_Prompts/` 5 個 sprint**——每個 sprint 都是一個獨立可貼上 Claude Code 的 prompt
+4. **`Reference/` 資料夾**：tangle 資料 JSON 範例 + 風格參考站
+
+---
+
+## 預估時程與成本
+
+| 項目 | 個人手動 | 用 Claude Code |
+|---|---|---|
+| 開發時數 | 80–120 小時 | 30–50 小時 |
+| 開發週期 | 10 週（每週 10 小時） | 6–8 週 |
+| 月維運成本 | $1–20 USD（Domain + CMS + Hosting） | 同左 |
+
+5 個 Sprint 各預估：
+
+| Sprint | 主題 | 預估時數 | 主要風險 |
+|---|---|---|---|
+| 1 | Foundation（架站底盤、design tokens） | 6–10 hr | 動畫 stack 選錯難回頭 |
+| 2 | Core Pages（Home/About/Process + Hero 動畫） | 8–14 hr | Hero 動畫效能 |
+| 3 | Portfolio（作品瀑布流 + Detail） | 6–10 hr | 圖片優化策略 |
+| 4 | Tangle Dictionary（41 個 tangle 互動頁） | 8–12 hr | SVG step animation 工作量大 |
+| 5 | Polish（Videos、SEO、效能、測試、發布） | 4–8 hr | 行動版動畫 fallback |
+
+---
+
+## 最大技術風險（必先確認）
+
+1. **DrawSVGPlugin 是付費 GSAP plugin**（Club GreenSock $99/year）。若不買，需用純 CSS `stroke-dasharray` 替代，效果略差但可行。建議：先做純 CSS 版，若 v2 再升級。
+2. **41 個 tangle 的 step animation SVG 是體力活**——估計每個 tangle 30 分鐘到 1 小時純手繪 SVG path。建議：Sprint 4 先用 5–8 個重點 tangle 上線，其餘漸進補完。
+3. **行動版 hero 動畫**——SVG path drawing 在低階手機可能掉幀。必須提供 `prefers-reduced-motion` fallback，且行動版預設關閉複雜動畫。
+4. **雙語 SEO**：zh-Hant-TW 與 en 必須有獨立 URL 與 hreflang。Astro 預設 i18n 支援度好；Next.js 要手動配置。
+
+---
+
+## 檔案清單
+
+```
+Personal_Zentangle_Site_Brief_2026-05/
+├── README.md                                    ← 你正在讀
+├── Claude_Code_Project_Brief.md                 ← 主企劃書（繁中 ~22,000 字）
+├── Visual_Mockups/
+│   ├── Color_Palette.md                         ← 色票 + Tailwind config
+│   ├── Typography_System.md                     ← 字體選擇與排版
+│   ├── Animation_Patterns.md                    ← 動畫 patterns + GSAP/CSS code
+│   └── Component_Library.md                     ← 預期 React components 清單
+├── Sprint_Prompts/
+│   ├── Sprint_1_Foundation.md
+│   ├── Sprint_2_Core_Pages.md
+│   ├── Sprint_3_Portfolio.md
+│   ├── Sprint_4_Tangle_Dictionary.md
+│   └── Sprint_5_Polish_and_Launch.md
+└── Reference/
+    ├── Tangle_Data_JSON.md                      ← 41 個 tangle 整理成 JSON
+    └── Inspiration_Sites.md                     ← 風格參考站
+```
+
+---
+
+## 給未來的自己一段話
+
+這個網站不要做成「KPI 驅動的內容工廠」。真正成功的指標只有三個：
+
+1. **停留時間**：訪客平均在站上停留 ≥ 3 分鐘（不是因為頁面慢，而是因為他們在看）
+2. **重訪率**：三個月內 ≥ 25% 訪客至少回訪一次
+3. **情緒共鳴**：收到至少一則「看到你的網站讓我感到平靜」的訊息——比任何 GA 指標都重要。
+
+— Dr. G., 2026 年 5 月

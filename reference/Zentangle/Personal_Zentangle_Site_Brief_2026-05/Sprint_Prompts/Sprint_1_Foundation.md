@@ -1,0 +1,294 @@
+# Sprint 1: Foundation — Claude Code Prompt
+
+> 複製整段下方內容，貼到 Claude Code（在你想 init 專案的空資料夾下）。Claude Code 會自動依序執行。預估 wall-clock：6–10 小時。
+
+---
+
+## 給 Claude Code 的指令
+
+你是這個專案的 lead engineer。我們要從零開始建立一個個人禪繞畫作品集網站。這是 Sprint 1：Foundation。
+
+### Step 0：先讀以下檔案（按順序）
+
+1. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Claude_Code_Project_Brief.md`（主企劃書，特別注意 Part 1、Part 2、Part 4、Part 5）
+2. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Visual_Mockups\Color_Palette.md`
+3. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Visual_Mockups\Typography_System.md`
+4. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Visual_Mockups\Animation_Patterns.md`
+5. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Visual_Mockups\Component_Library.md`
+
+讀完後簡述你理解到的「核心美學」（不超過 3 句），然後再開始動手。
+
+### Step 1：建立專案
+
+```bash
+pnpm create astro@latest zentangle-portfolio -- --template minimal --typescript strict --install --git
+cd zentangle-portfolio
+```
+
+選項：
+- 是否安裝依賴：是
+- 是否初始化 git：是
+- TypeScript strict mode：是
+
+加裝以下：
+
+```bash
+pnpm add -D tailwindcss @tailwindcss/typography postcss autoprefixer
+pnpm add -D @astrojs/tailwind @astrojs/react @astrojs/sitemap
+pnpm add react@18 react-dom@18 framer-motion
+pnpm add @types/react @types/react-dom -D
+pnpm add @sanity/client @sanity/image-url
+pnpm add -D vitest @vitest/ui playwright @playwright/test
+```
+
+### Step 2：設定檔
+
+**`astro.config.mjs`**：
+
+```js
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
+
+export default defineConfig({
+  site: 'https://drg-academy.com', // 暫時，發布時換
+  output: 'static',
+  integrations: [
+    tailwind({ applyBaseStyles: false }),
+    react(),
+    sitemap(),
+  ],
+  i18n: {
+    defaultLocale: 'zh',
+    locales: ['zh', 'en'],
+    routing: {
+      prefixDefaultLocale: true, // 預設語言也要 /zh/ prefix
+    },
+  },
+});
+```
+
+**`tailwind.config.ts`**：完整貼 `Color_Palette.md` 與 `Typography_System.md` 的 config。
+
+**`tsconfig.json`**：加 path alias
+
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"]
+    }
+  }
+}
+```
+
+### Step 3：建立資料夾結構
+
+依 `Claude_Code_Project_Brief.md` Part 4.4 的結構建立：
+
+```
+src/
+├── pages/
+│   ├── index.astro              # 根 redirect
+│   ├── zh/
+│   │   └── index.astro          # 暫時 placeholder
+│   └── en/
+│       └── index.astro          # 暫時 placeholder
+├── components/
+│   ├── layout/
+│   ├── ui/
+│   ├── hero/
+│   ├── portfolio/
+│   ├── tangles/
+│   └── cursor/
+├── content/
+│   └── config.ts                # Astro Content Collections
+├── i18n/
+│   ├── zh.json
+│   ├── en.json
+│   └── useT.ts
+├── styles/
+│   ├── globals.css
+│   └── tokens.css
+├── tokens/
+│   ├── colors.ts
+│   ├── fonts.ts
+│   └── animations.ts
+└── lib/
+    ├── sanity.ts
+    └── seo.ts
+```
+
+### Step 4：design tokens 落實
+
+依 `Color_Palette.md` 與 `Typography_System.md`：
+1. 把所有 CSS variables 寫進 `src/styles/tokens.css`
+2. `src/styles/globals.css` import tokens.css，加上 base styles（reset、focus styles、smooth scroll）
+3. `src/tokens/colors.ts` & `fonts.ts` & `animations.ts` 用 `as const` 輸出 TypeScript objects
+
+### Step 5：字體 self-host
+
+1. 在 `public/fonts/` 放置：
+   - Lora-Regular.woff2、Lora-Italic.woff2、Lora-Bold.woff2
+   - Crimson Pro 同上
+   - Caveat Brush
+   - Allura
+   - **NotoSerifTC（subset 過的版本）**——subset 工具見 `Typography_System.md`
+2. `globals.css` 加 `@font-face` 宣告（每個字體完整含 unicode-range）
+3. 在 `Layout.astro` 的 `<head>` 加 `<link rel="preload">` 預載核心字體
+
+### Step 6：建立 Layout 與基本元件
+
+依 `Component_Library.md`：
+
+1. `src/layouts/Layout.astro`：根 layout，`<html lang>` + `<head>` SEO + body slots
+2. `src/components/layout/SiteHeader.astro`：頂部 nav
+3. `src/components/layout/SiteFooter.astro`：頁尾
+4. `src/components/layout/LanguageSwitcher.astro`：zh ↔ en
+5. `src/components/layout/ThemeToggle.tsx`：暗模式 toggle
+6. `src/components/cursor/TangleCursor.tsx`：自訂 cursor（code 在 `Animation_Patterns.md`）
+
+### Step 7：i18n 系統
+
+`src/i18n/zh.json`：
+
+```json
+{
+  "site": {
+    "title": "Dr. G. — 禪繞畫個人作品集",
+    "description": "台灣個人創作者的禪繞畫作品集..."
+  },
+  "nav": {
+    "home": "首頁",
+    "portfolio": "作品集",
+    "tangles": "圖樣字典",
+    "videos": "影片",
+    "process": "創作流程",
+    "about": "關於",
+    "contact": "聯絡"
+  }
+}
+```
+
+`src/i18n/en.json`：對應翻譯。
+
+`src/i18n/useT.ts`：簡單 hook 從 lang 取對應 JSON。
+
+### Step 8：Sanity Studio 設定
+
+```bash
+mkdir studio && cd studio
+pnpm create sanity@latest -- --create-project "Zentangle Portfolio" --dataset production --typescript --template clean
+```
+
+把 `Claude_Code_Project_Brief.md` Part 5 的三個 schema 放進 `studio/schemas/`：
+- `artwork.ts`
+- `video.ts`
+- `tangle.ts`
+- `siteSettings.ts`
+
+`studio/sanity.config.ts` 註冊所有 schema。
+
+`pnpm sanity start` 跑起 studio（http://localhost:3333），手動建一個 placeholder artwork 確認 schema 工作。
+
+### Step 9：Cloudflare Pages 部署
+
+1. 推 repo 到 GitHub
+2. Cloudflare Pages → 連 GitHub repo
+3. Build command: `pnpm build`
+4. Output: `dist`
+5. Environment variables：先空（之後再加 SANITY_PROJECT_ID 等）
+6. 部署後，preview URL 應顯示 `/zh/` placeholder
+
+### Step 10：首頁 placeholder
+
+`src/pages/zh/index.astro` 與 `src/pages/en/index.astro`：
+
+```astro
+---
+import Layout from '@layouts/Layout.astro';
+import { useT } from '@/i18n/useT';
+const t = useT('zh');
+---
+<Layout lang="zh" title={t('site.title')} description={t('site.description')} currentPath="/">
+  <main class="min-h-screen flex items-center justify-center">
+    <h1 class="font-display-zh text-5xl md:text-hero text-ink-700">
+      一筆一畫，皆是可能
+    </h1>
+  </main>
+</Layout>
+```
+
+### Step 11：CI
+
+`.github/workflows/ci.yml`：
+
+```yaml
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: 'pnpm' }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+      - run: pnpm vitest run
+```
+
+### Acceptance Criteria
+
+執行下列驗證，全部通過才算 Sprint 1 完成：
+
+- [ ] `pnpm dev` 跑起來無錯誤
+- [ ] 訪問 `http://localhost:4321/zh/` 顯示 placeholder + 主標 with 中文字體
+- [ ] 訪問 `/en/` 顯示英文 placeholder
+- [ ] 點 LanguageSwitcher 從 `/zh/` 切到 `/en/` 保留同 path
+- [ ] 切換 dark mode 整個畫面 rotateY 翻轉，背景變黑
+- [ ] 桌機 hover 滑鼠看得到 cursor trail（淡淡的線跟著走，2 秒淡出）
+- [ ] iPhone 模擬器（375px）TangleCursor 不出現（pointer: coarse）
+- [ ] `prefers-reduced-motion: reduce` 啟用時 cursor 隱藏、無 rotateY
+- [ ] `pnpm build` 成功 + Lighthouse 桌機 Performance ≥ 95、SEO ≥ 95、A11y ≥ 95
+- [ ] git commit 至少 5 個小 commit（不是一個大 commit）
+- [ ] Cloudflare Pages 自動部署成功，preview URL 訪問正常
+- [ ] Sanity Studio 跑起來，可手動加一筆 artwork
+
+### Step 12：commit + 寫 Sprint 1 完成報告
+
+git commit message 用中英雙語：
+
+```
+chore: complete Sprint 1 — Foundation
+
+- Project init with Astro 4.x + TypeScript + Tailwind
+- Design tokens (colors, fonts, animations) wired to CSS vars + Tailwind
+- i18n routing (zh / en) with language switcher
+- Layout components (Header, Footer, MobileNav, ThemeToggle)
+- TangleCursor (canvas-based, throttled, a11y-aware)
+- Sanity Studio with artwork/video/tangle schemas
+- CI/CD: GitHub Actions + Cloudflare Pages auto-deploy
+- Lighthouse scores: Perf 96 / A11y 100 / SEO 100
+```
+
+最後在 `docs/sprints/sprint-1-report.md` 寫一份簡短報告：
+- 完成項目
+- 卡關點與如何解決
+- 偏離企劃書的決策（如有，列原因）
+- Sprint 2 啟動前需確認的事
+
+### 如果遇到問題
+
+若某個決策有兩個合理選項（例：Sanity vs MDX、Tailwind vs CSS Modules 比例、cursor trail 顏色濃淡），**停下來明確列出兩個選項與優缺**，等使用者回應再繼續——不要私自決定影響整體美學的事。
+
+開始吧。整個 sprint 完成預估 6–10 小時。請每完成一個 step 用 TodoWrite 更新進度，每個 commit 後簡短摘要給使用者。

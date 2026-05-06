@@ -1,0 +1,137 @@
+# Sprint 2: Core Pages — Claude Code Prompt
+
+> 前置條件：Sprint 1 已完成（Foundation 跑得起來、Cloudflare Pages 部署 OK、Sanity Studio 可用）。
+> 預估 wall-clock：8–14 小時。
+
+---
+
+## 給 Claude Code 的指令
+
+你正接續執行這個個人纏繞畫網站專案的 Sprint 2：Core Pages（Home + About + Process + Hero 動畫）。
+
+### Step 0：閱讀順序
+
+1. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Claude_Code_Project_Brief.md` Part 3（頁面）、Part 6.1（hero 動畫）
+2. `C:\Claude\DrG_Academy\Personal_Zentangle_Site_Brief_2026-05\Visual_Mockups\Animation_Patterns.md` Pattern 2（hero 完整 timeline）
+3. `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\Website_Wireframe\Sample_Homepage_Copy_ZH.md`（首頁範本文案）
+4. `C:\Claude\DrG_Academy\Zentangle_Research_2026-05\ZH\02_哲學與方法.md`（8 步驟方法，給 Process 頁）
+5. `docs/sprints/sprint-1-report.md`（Sprint 1 結尾的報告）
+
+### Step 1：Hero 動畫
+
+這是整個網站最關鍵的元件。**不要急著寫**——先在 Figma 或紙上畫完整 8 步驟的 SVG layout，再轉 path。
+
+1. 建立 `src/components/hero/HeroAnimation.tsx`
+2. SVG viewBox `0 0 800 600`
+3. 包含：4 個角點、邊框、string 曲線、Crescent Moon tangle（含 4 個半月 + 4 條 aura）、Hollibaugh tangle（3 條交錯帶）、shading group、signature path
+4. 每個元素的 path 自己手繪——不要用 AI 生成（會醜）。建議用 Figma 畫好 export
+5. timeline 完整對應 `Claude_Code_Project_Brief.md` Part 6.1.3 的 code
+6. 行動版簡化（< 768px）：去掉 Hollibaugh、總時長壓到 5 秒
+7. `prefers-reduced-motion`：直接 render 終態 + 標題立即 fade
+
+**驗證**：在 iPhone SE 模擬器測 FPS 應 ≥ 30。Chrome DevTools → Rendering → "Frame Rendering Stats"。
+
+### Step 2：首頁 `/zh/` 與 `/en/`
+
+完整實作 `Claude_Code_Project_Brief.md` Part 3.2.1 的所有區塊：
+
+1. Hero 動畫區（占 100vh）
+2. ScrollCue（向下捲動提示）
+3. 三個入口卡（Portfolio / Tangles / About）—— 用 `Tile.astro`，hover 時下緣畫 string
+4. 「最近作品」橫向 scroll 區（先用 placeholder image，Sprint 3 接 Sanity）
+5. 引言 quote 區（用 Maria Thomas 名言「There are no mistakes, only opportunities.」）
+6. Footer
+
+文案請從 `Sample_Homepage_Copy_ZH.md` 與 `Sample_Homepage_Copy_EN.md` 取用，但**做兩個調整**：
+- 把「不會畫畫也學得會」「15 分鐘進入心流」這類**商業課程口吻**全部刪除
+- 改成個人作品集口吻：「這是我的纏繞畫旅程」「41 個經典圖樣的雙語介紹」
+
+### Step 3：About 頁
+
+700 字散文 + 個人照片區 + 學習歷程時間線。
+
+結構：
+1. 開場一句話（hero level，64px）
+2. 700 字散文（雙語並排或分開頁）：
+   - 「我為什麼開始畫纏繞畫」
+   - 「從 _____ 那一張紙磚開始」
+   - 「我目前的練習狀態」（含 CZT status if applicable）
+   - 「我為什麼建這個網站」
+3. 個人照片 grid（最多 6 張，可放 placeholder）
+4. 時間線：學習歷程（年份、事件）
+
+**寫作風格**：散文感、第一人稱、不要 LinkedIn 履歷口氣。如果使用者沒提供原始素材，**先用 placeholder 文字**（標明 `<!-- TODO: 待補真實內容 -->`）並列出需要使用者填寫的資訊清單。
+
+### Step 4：Process 頁
+
+互動式 8 步驟方法，依 `Claude_Code_Project_Brief.md` Part 3.2.7 與 `02_哲學與方法.md`。
+
+實作要點：
+1. 上方 8 個 tab（小 SVG 圖示 + 數字 + 步驟名）
+2. 點任一 tab，下方內容區切換到該步驟
+3. 每個步驟內容：
+   - 官方步驟說明（從 `02_哲學與方法.md` 改寫）
+   - 「我的版本」個人化補充（先 placeholder）
+   - 一個小 SVG 動畫示範（非必要，可後補）
+4. 切換 tab 時內容區用 fade transition
+5. 最下方一段「ZIA vs 嚴格 Zentangle」的個人立場
+
+### Step 5：SEO 與 metadata 完整化
+
+每頁 emit：
+- `<title>` 與 `<meta name="description">`
+- Open Graph：`og:title`、`og:description`、`og:image`、`og:type`、`og:locale`、`og:site_name`
+- Twitter Cards：`twitter:card="summary_large_image"`
+- `<link rel="alternate" hreflang>` × 3（zh / en / x-default）
+- `<link rel="canonical">`
+- JSON-LD：依頁面類型（首頁 = `WebSite` + `Person`，detail page = `Article` 或 `CreativeWork`）
+
+建立 `src/components/seo/SEO.astro` 統一處理。
+
+### Step 6：PageTransition
+
+整合 Astro ViewTransitions：
+
+`Layout.astro` 加：
+```astro
+import { ViewTransitions } from 'astro:transitions';
+<head>
+  <ViewTransitions />
+</head>
+```
+
+主要區塊加 `transition:animate="fade"`。Hero 區塊不要加（避免和 hero 動畫衝突）。
+
+### Step 7：路由 fallback
+
+新增：
+- `src/pages/index.astro`：根 redirect 依 `Accept-Language`：
+  ```astro
+  ---
+  const lang = Astro.request.headers.get('accept-language')?.includes('zh') ? 'zh' : 'en';
+  return Astro.redirect(`/${lang}/`);
+  ---
+  ```
+- `src/pages/[lang]/404.astro`：404 頁也帶 tangle 動畫
+
+### Acceptance Criteria
+
+- [ ] 桌機 Chrome 開 `/zh/`，hero 動畫流暢播放完整 10 秒
+- [ ] iPhone SE 模擬器（375×667）hero 動畫 ≤ 5 秒、FPS ≥ 30
+- [ ] `prefers-reduced-motion` 啟用後 hero 即時顯示終態
+- [ ] About 頁雙語切換無誤
+- [ ] Process 頁 8 個 tab 切換流暢、內容正確
+- [ ] 每頁 OG image preview 用 https://opengraph.xyz 檢查無誤
+- [ ] hreflang 在 `/zh/about` 與 `/en/about` 都正確指對方
+- [ ] Lighthouse Performance ≥ 90 行動 / ≥ 95 桌機
+- [ ] LCP < 2.5s
+- [ ] `pnpm typecheck` 無錯誤
+- [ ] git commit ≥ 8 個小 commit
+
+### Step 8：commit + Sprint 2 報告
+
+寫 `docs/sprints/sprint-2-report.md`：完成項、Hero 動畫設計決策、Sprint 3 之前需確認的事（特別是 portfolio image strategy）。
+
+如果在實作 hero 動畫遇到瓶頸（效能、視覺不對），**先停下來問**，不要硬幹。
+
+開始吧。預估 8–14 小時。
