@@ -8,10 +8,12 @@ import ScrollReveal from '@/components/common/ScrollReveal';
 import Tile from '@/components/common/Tile.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import { useT } from '@/i18n/useT';
+import { withBase } from '@/lib/withBase';
 
 const t = useT('zh');
 const lang = 'zh';
 const currentPath = '/zh/';
+const heroImage = withBase('/artworks/hero-tile.jpg');
 ---
 
 <Layout
@@ -26,7 +28,7 @@ const currentPath = '/zh/';
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div class="w-full max-w-3xl">
-        <HeroAnimation client:visible />
+        <HeroAnimation client:visible title={t('hero.title')} subtitle={t('hero.subtitle')} imageSrc={heroImage} />
       </div>
       <ScrollCue client:visible />
     </section>
