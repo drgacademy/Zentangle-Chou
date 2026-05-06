@@ -2,7 +2,7 @@
 
 > *「Ten years ago, I picked up a pen and found my peace. Now, I want to share it with you."* — YuChiao Chou
 
-🔗 **Live Site**: [https://drgacademy.github.io/Zentangle-Chou](https://drgacademy.github.io/Zentangle-Chou)
+🔗 **Live Site**: [https://yuchiaochou.github.io/Zentangle-Chou](https://yuchiaochou.github.io/Zentangle-Chou)
 
 ---
 

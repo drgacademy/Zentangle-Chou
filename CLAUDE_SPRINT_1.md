@@ -53,7 +53,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://drgacademy.github.io/Zentangle-Chou',
+  site: 'https://yuchiaochou.github.io/Zentangle-Chou',
   output: 'static',
   integrations: [
     tailwind({ applyBaseStyles: false }),
@@ -159,7 +159,7 @@ site/src/
 ```json
 {
   "site": {
-    "title": "Zentangle Chou — 禪繞畫個人作品集",
+    "title": "Zentangle Chou — YuChiao Chou 的禪繞畫作品集",
     "description": "台灣個人創作者的禪繞畫作品集..."
   },
   "nav": {
