@@ -129,7 +129,52 @@ html[lang='zh'] .prose-zentangle {
   border-color: var(--color-border);
 }
 
+/* Hand-drawn ink wobble: applied to .hand-drawn elements site-wide.
+   The actual SVG filter (#hand-drawn) is rendered once in Layout.astro. */
+.hand-drawn {
+  filter: url(#hand-drawn);
+}
+
+/* Breathing — anything wearing .breathe gets a subtle 8s scale pulse,
+   synced to the global --breath-cycle CSS variable. */
+.breathe {
+  animation: zen-breathe var(--breath-cycle, 8s) ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes zen-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.008); }
+}
+
+/* Section divider: a hand-drawn flowing curve replaces <hr> between sections. */
+.zen-divider {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 3rem auto;
+  opacity: 0.45;
+  color: var(--ink-pencil);
+}
+
+.zen-divider svg { width: 100%; height: 100%; }
+.zen-divider path { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
+
+/* Paper texture overlay — fills entire viewport, behind everything. */
+.paper-texture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  mix-blend-mode: multiply;
+}
+.dark .paper-texture { mix-blend-mode: screen; }
+
 @media (prefers-reduced-motion: reduce) {
+  .breathe { animation: none !important; }
+  .hand-drawn { filter: none !important; }
   * {
     animation-duration: 0.01s !important;
     animation-iteration-count: 1 !important;

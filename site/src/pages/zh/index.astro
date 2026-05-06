@@ -5,7 +5,6 @@ import SiteFooter from '@/components/layout/SiteFooter.astro';
 import HeroAnimation from '@/components/hero/HeroAnimation';
 import ScrollCue from '@/components/common/ScrollCue';
 import ScrollReveal from '@/components/common/ScrollReveal';
-import FloatingStrings from '@/components/common/FloatingStrings';
 import Tile from '@/components/common/Tile.astro';
 import TangleCursor from '@/components/cursor/TangleCursor';
 import { useT } from '@/i18n/useT';
@@ -21,7 +20,6 @@ const currentPath = '/zh/';
   lang={lang}
   currentPath={currentPath}
 >
-  <FloatingStrings client:idle />
   <SiteHeader currentPath={currentPath} lang={lang} />
 
   <main class="flex-1 relative z-10">

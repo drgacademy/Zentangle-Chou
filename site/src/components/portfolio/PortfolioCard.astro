@@ -1,4 +1,6 @@
 ---
+import { drawTile } from '@/lib/tangles';
+
 interface Props {
   id: number;
   titleZh: string;
@@ -20,6 +22,13 @@ const dateObj = new Date(date);
 const dateStr = lang === 'zh'
   ? `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`
   : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// If the artwork has no real thumbnail (or it points to a non-existent svg),
+// fall back to a deterministic procedural tile so the gallery is never empty.
+const hasRealImage = thumbnail && !thumbnail.endsWith('.svg');
+const proceduralTile = !hasRealImage
+  ? drawTile({ seed: `artwork-${id}-${titleEn}`, size: 600, tangles: tangles.map(t => t.toLowerCase().replace(/\s+/g, '-')) as any })
+  : null;
 ---
 
 <a
@@ -29,15 +38,23 @@ const dateStr = lang === 'zh'
 >
   <!-- 圖片區域 -->
   <div class="relative aspect-square bg-ink-100 dark:bg-ink-600 overflow-hidden">
-    <img
-      src={thumbnail}
-      alt={title}
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-      loading="lazy"
-    />
+    {hasRealImage ? (
+      <img
+        src={thumbnail}
+        alt={title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+    ) : (
+      <div
+        class="w-full h-full flex items-center justify-center text-ink-700 dark:text-ink-100 group-hover:scale-105 transition-transform duration-500 hand-drawn"
+        style="background-color: var(--paper-bg);"
+        set:html={proceduralTile}
+      />
+    )}
 
     <!-- Overlay - 浮現效果 -->
-    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
+    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
   </div>
 
   <!-- 文字區域 -->

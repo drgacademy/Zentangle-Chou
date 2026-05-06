@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "sanity.config.ts", "sanity", "scripts/seed-sanity.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
