@@ -27,7 +27,7 @@ interface HeroAnimationProps {
   title: string;
   /** localized hero subtitle. */
   subtitle: string;
-  /** path to the real artwork to reveal (default `/artworks/hero-tile.jpg`).
+  /** path to the real artwork to reveal (default `/artworks/zentangle.png`).
    *  If the file is missing, we fall back to a procedural tile drawn from
    *  the same region geometry so the page still looks like a zentangle. */
   imageSrc?: string;
@@ -49,14 +49,14 @@ interface HeroAnimationProps {
  *   19.4–21.0s  shading + signature
  *   21.0s+      enters permanent breathing loop
  *
- * If `/artworks/hero-tile.jpg` is missing, each region falls back to a
+ * If `/artworks/zentangle.png` is missing, each region falls back to a
  * procedurally-drawn tangle that matches the reference composition, so the
  * page is never empty and dev/preview always works.
  */
 export default function HeroAnimation({
   title,
   subtitle,
-  imageSrc = '/artworks/hero-tile.jpg',
+  imageSrc = '/artworks/zentangle.png',
   isReduced = false,
   seed = 'zentangle-chou-hero-v3',
 }: HeroAnimationProps) {
