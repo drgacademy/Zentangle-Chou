@@ -1,17 +1,18 @@
 ---
-
+// Root redirect — prefixDefaultLocale:true means root has no content.
+// Redirect browser to the default locale (zh).
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>Zentangle Chou — YuChiao Chou 的禪繞畫作品集</title>
+  <meta http-equiv="refresh" content="0;url=/zh/" />
+  <link rel="canonical" href="/zh/" />
+</head>
+<body>
+  <p>正在導向首頁… <a href="/zh/">點擊這裡</a> 如果沒有自動跳轉。</p>
+  <script>window.location.replace('/zh/');</script>
+</body>
 </html>

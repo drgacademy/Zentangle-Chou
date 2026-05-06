@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yuchiaochou.github.io/Zentangle-Chou',
+  site: 'https://drgacademy.github.io/Zentangle-Chou',
   output: 'static',
   integrations: [
     tailwind({ applyBaseStyles: false }),
