@@ -11,6 +11,7 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     transition: background-color 0.3s ease, color 0.3s ease;
+    scroll-behavior: smooth;
   }
 
   html[lang='zh'] {
@@ -99,6 +100,19 @@ html[lang='zh'] .prose-zentangle {
 
 .mixed-script :lang(en) {
   letter-spacing: 0;
+}
+
+/* Parallax & Motion Effects */
+.parallax {
+  will-change: transform;
+}
+
+.parallax-slow {
+  transform: translateY(0);
+}
+
+.parallax-fast {
+  transform: translateY(0);
 }
 
 .tile {
