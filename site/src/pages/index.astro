@@ -1,6 +1,7 @@
 ---
 // Root redirect — prefixDefaultLocale:true means root has no content.
 // Redirect browser to the default locale (zh).
+// Use relative path ./zh/ so it works both locally and under /Zentangle-Chou/
 ---
 
 <!DOCTYPE html>
@@ -8,11 +9,11 @@
 <head>
   <meta charset="utf-8" />
   <title>Zentangle Chou — YuChiao Chou 的禪繞畫作品集</title>
-  <meta http-equiv="refresh" content="0;url=/zh/" />
-  <link rel="canonical" href="/zh/" />
+  <meta http-equiv="refresh" content="0;url=./zh/" />
+  <link rel="canonical" href="./zh/" />
 </head>
 <body>
-  <p>正在導向首頁… <a href="/zh/">點擊這裡</a> 如果沒有自動跳轉。</p>
-  <script>window.location.replace('/zh/');</script>
+  <p>正在導向首頁… <a href="./zh/">點擊這裡</a> 如果沒有自動跳轉。</p>
+  <script>window.location.replace('./zh/');</script>
 </body>
 </html>
