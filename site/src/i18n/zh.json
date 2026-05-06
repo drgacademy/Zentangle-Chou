@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Zentangle Chou — 禪繞畫個人作品集",
-    "description": "台灣個人創作者的禪繞畫作品集。展示原創 tile 作品、影片紀錄、與 41 個經典 tangle 圖樣的雙語介紹。"
+    "title": "Zentangle Chou — YuChiao Chou 的禪繞畫作品集",
+    "description": "台灣個人創作者的禪繞畫作品集與41個圖樣字典"
   },
   "nav": {
     "home": "首頁",
@@ -17,6 +17,8 @@
     "subtitle": "Personal Zentangle Portfolio · 41 Tangle Dictionary"
   },
   "footer": {
-    "copyright": "© 2026 Dr. G. Academy. All rights reserved."
+    "learn": "學習",
+    "connect": "聯絡",
+    "about": "關於"
   }
 }

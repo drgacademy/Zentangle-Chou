@@ -1,46 +1,47 @@
 ---
-import { getT } from '@lib/i18n';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle';
 
 interface Props {
-  lang: 'zh' | 'en';
   currentPath: string;
+  lang: 'zh' | 'en';
 }
 
-const { lang, currentPath } = Astro.props;
-const t = getT(lang);
-const basePath = lang === 'zh' ? '/zh' : '/en';
+const { currentPath, lang } = Astro.props;
 
-const navItems = [
-  { label: t.nav.home, href: `${basePath}/` },
-  { label: t.nav.portfolio, href: `${basePath}/portfolio` },
-  { label: t.nav.tangles, href: `${basePath}/tangles` },
-  { label: t.nav.videos, href: `${basePath}/videos` },
-  { label: t.nav.process, href: `${basePath}/process` },
-  { label: t.nav.about, href: `${basePath}/about` },
-  { label: t.nav.contact, href: `${basePath}/contact` },
-];
-
-const isActive = (href: string) => {
-  return currentPath === href || currentPath.startsWith(href + '/');
-};
+const navItems = lang === 'zh'
+  ? [
+      { label: '首頁', href: '/zh/' },
+      { label: '作品集', href: '/zh/portfolio' },
+      { label: '圖樣字典', href: '/zh/tangles' },
+      { label: '影片', href: '/zh/videos' },
+      { label: '創作流程', href: '/zh/process' },
+      { label: '關於', href: '/zh/about' },
+    ]
+  : [
+      { label: 'Home', href: '/en/' },
+      { label: 'Portfolio', href: '/en/portfolio' },
+      { label: 'Tangle Dictionary', href: '/en/tangles' },
+      { label: 'Videos', href: '/en/videos' },
+      { label: 'Process', href: '/en/process' },
+      { label: 'About', href: '/en/about' },
+    ];
 ---
 
-<header class="sticky top-0 z-40 bg-ink-50 dark:bg-ink-900 border-b border-ink-200 dark:border-ink-700">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-    {/* Logo */}
-    <a href={`${basePath}/`} class="flex items-center gap-2 font-display-zh text-2xl text-ink-700 dark:text-ink-100 hover:text-sepia-500">
-      禪繞
+<header class="sticky top-0 z-50 w-full border-b border-ink-200 dark:border-ink-600 bg-ink-50/80 dark:bg-ink-900/80 backdrop-blur-sm transition-all duration-300">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href={lang === 'zh' ? '/zh/' : '/en/'} class="text-ink-700 dark:text-ink-50 font-display-zh text-2xl hover:text-sepia-500 dark:hover:text-sepia-300 transition-colors">
+      Zentangle Chou
     </a>
 
-    {/* Nav Items */}
+    <!-- Desktop Nav -->
     <div class="hidden md:flex items-center gap-8">
-      {navItems.map((item) => (
+      {navItems.map(item => (
         <a
           href={item.href}
           class={`text-sm font-body transition-colors ${
-            isActive(item.href)
+            currentPath === item.href
               ? 'text-ink-700 dark:text-ink-50 font-semibold'
               : 'text-ink-500 dark:text-ink-400 hover:text-sepia-500 dark:hover:text-sepia-300'
           }`}
@@ -50,9 +51,9 @@ const isActive = (href: string) => {
       ))}
     </div>
 
-    {/* Right Actions */}
+    <!-- Right Actions -->
     <div class="flex items-center gap-4">
-      <LanguageSwitcher currentPath={currentPath} lang={lang} />
+      <LanguageSwitcher currentPath={currentPath} />
       <ThemeToggle client:idle />
     </div>
   </nav>

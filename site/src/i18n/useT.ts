@@ -1,14 +1,21 @@
 import zh from './zh.json';
 import en from './en.json';
 
-type LanguageCode = 'zh' | 'en';
+type Language = 'zh' | 'en';
 
-const translations = { zh, en };
+export function useT(lang: Language) {
+  const dict = lang === 'zh' ? zh : en;
 
-export function useT(lang: LanguageCode) {
-  return translations[lang];
-}
+  const t = (key: string): string => {
+    const keys = key.split('.');
+    let value: any = dict;
 
-export function getT(lang: LanguageCode) {
-  return translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+    }
+
+    return typeof value === 'string' ? value : key;
+  };
+
+  return t;
 }

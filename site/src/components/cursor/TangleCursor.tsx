@@ -3,94 +3,118 @@ import { useEffect, useRef } from 'react';
 interface Point {
   x: number;
   y: number;
-  t: number;
+  opacity: number;
 }
 
 export default function TangleCursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointsRef = useRef<Point[]>([]);
-  const rafRef = useRef<number>(0);
+  const lastPosRef = useRef({ x: 0, y: 0 });
+  const animationFrameRef = useRef<number>();
 
   useEffect(() => {
+    // Only render on desktop
+    const isDesktop = !matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isDesktop || prefersReducedMotion) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    // Don't show on mobile or if reduced motion is preferred
-    const isMobile = matchMedia('(pointer: coarse)').matches;
-    const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isMobile || prefersReduced) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const resize = () => {
-      canvas.width = window.innerWidth * window.devicePixelRatio;
-      canvas.height = window.innerHeight * window.devicePixelRatio;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    };
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    resize();
-    window.addEventListener('resize', resize);
+    const lineWidth = 1.5;
+    const lineColor = 'rgba(46, 45, 42, 0.4)'; // ink-600 with opacity
+    const maxPoints = 200;
+    const throttleMs = 16; // ~60fps
+    let lastTime = Date.now();
 
-    let lastT = 0;
-    const onMove = (e: MouseEvent) => {
-      const now = performance.now();
-      if (now - lastT < 16) return; // throttle to ~60fps
-      lastT = now;
-      pointsRef.current.push({ x: e.clientX, y: e.clientY, t: now });
-      if (pointsRef.current.length > 200) pointsRef.current.shift();
-    };
+    const handleMouseMove = (e: MouseEvent) => {
+      const now = Date.now();
+      if (now - lastTime < throttleMs) return;
+      lastTime = now;
 
-    window.addEventListener('mousemove', onMove);
+      const x = e.clientX;
+      const y = e.clientY;
 
-    const draw = () => {
-      const now = performance.now();
-      const lifetime = 2000; // 2 second fade out
+      // Add new point
+      pointsRef.current.push({ x, y, opacity: 1 });
 
-      ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
-
-      pointsRef.current = pointsRef.current.filter(p => now - p.t < lifetime);
-
-      if (pointsRef.current.length < 2) {
-        rafRef.current = requestAnimationFrame(draw);
-        return;
+      // Cap points
+      if (pointsRef.current.length > maxPoints) {
+        pointsRef.current.shift();
       }
 
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-
-      for (let i = 1; i < pointsRef.current.length; i++) {
-        const p1 = pointsRef.current[i - 1];
-        const p2 = pointsRef.current[i];
-        const age = now - p2.t;
-        const opacity = 1 - age / lifetime;
-        ctx.strokeStyle = `rgba(46, 45, 42, ${opacity * 0.4})`;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-      }
-
-      rafRef.current = requestAnimationFrame(draw);
+      lastPosRef.current = { x, y };
     };
 
-    draw();
+    const handleWindowResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    const animate = () => {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw points
+      const points = pointsRef.current;
+      for (let i = 0; i < points.length; i++) {
+        const point = points[i];
+
+        // Fade out
+        point.opacity -= 0.02;
+
+        if (point.opacity <= 0) {
+          points.splice(i, 1);
+          i--;
+          continue;
+        }
+
+        // Draw line segment
+        ctx.strokeStyle = lineColor.replace('0.4', String(point.opacity * 0.4));
+        ctx.lineWidth = lineWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        if (i > 0) {
+          const prevPoint = points[i - 1];
+          ctx.beginPath();
+          ctx.moveTo(prevPoint.x, prevPoint.y);
+          ctx.lineTo(point.x, point.y);
+          ctx.stroke();
+        }
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleWindowResize);
+
+    animate();
 
     return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleWindowResize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999] hidden md:block"
-      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none z-10"
+      style={{ cursor: 'none' }}
     />
   );
 }

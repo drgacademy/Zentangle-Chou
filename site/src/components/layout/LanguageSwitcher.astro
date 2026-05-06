@@ -1,39 +1,37 @@
 ---
 interface Props {
   currentPath: string;
-  lang: 'zh' | 'en';
 }
 
-const { currentPath, lang } = Astro.props;
+const { currentPath } = Astro.props;
 
-const cleanPath = currentPath
-  .replace(/^\/(zh|en)/, '')
-  .replace(/\/$/, '') || '/';
+// Extract language and rest of path
+const isZh = currentPath.startsWith('/zh');
+const pathWithoutLang = currentPath.replace(/^\/(zh|en)/, '');
 
-const zhHref = `/zh${cleanPath}`;
-const enHref = `/en${cleanPath}`;
+const zhUrl = `/zh${pathWithoutLang}`;
+const enUrl = `/en${pathWithoutLang}`;
 ---
 
-<div class="flex items-center gap-2 text-sm font-body">
+<div class="flex gap-2">
   <a
-    href={zhHref}
+    href={zhUrl}
     hreflang="zh-Hant"
-    class={`px-2 py-1 rounded-sm transition-colors ${
-      lang === 'zh'
+    class={`px-3 py-1 text-sm rounded transition-colors ${
+      isZh
         ? 'bg-ink-200 dark:bg-ink-700 text-ink-700 dark:text-ink-50 font-semibold'
-        : 'text-ink-500 dark:text-ink-400 hover:text-sepia-500'
+        : 'text-ink-500 dark:text-ink-400 hover:text-ink-600 dark:hover:text-ink-300'
     }`}
   >
     中文
   </a>
-  <span class="text-ink-300 dark:text-ink-600">/</span>
   <a
-    href={enHref}
+    href={enUrl}
     hreflang="en"
-    class={`px-2 py-1 rounded-sm transition-colors ${
-      lang === 'en'
+    class={`px-3 py-1 text-sm rounded transition-colors ${
+      !isZh
         ? 'bg-ink-200 dark:bg-ink-700 text-ink-700 dark:text-ink-50 font-semibold'
-        : 'text-ink-500 dark:text-ink-400 hover:text-sepia-500'
+        : 'text-ink-500 dark:text-ink-400 hover:text-ink-600 dark:hover:text-ink-300'
     }`}
   >
     EN

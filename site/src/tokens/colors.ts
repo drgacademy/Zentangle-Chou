@@ -20,12 +20,28 @@ export const colors = {
     500: '#C9A961',
     700: '#8B7335',
   },
-  dark: {
-    bg:        '#0A0A0A',
-    bgCard:    '#1A1917',
-    border:    '#2E2D2A',
-    textMuted: '#8E8B85',
-    text:      '#E8E6E1',
-    textBold:  '#FAFAFA',
-  },
+} as const;
+
+export const lightMode = {
+  bg: colors.ink[50],
+  bgCard: colors.ink[100],
+  border: colors.ink[200],
+  text: colors.ink[600],
+  textBold: colors.ink[700],
+  textMuted: colors.ink[400],
+  accent: colors.gold[500],
+  link: colors.ink[600],
+  linkHover: colors.sepia[500],
+} as const;
+
+export const darkMode = {
+  bg: colors.ink[900],
+  bgCard: colors.ink[700],
+  border: colors.ink[600],
+  text: colors.ink[200],
+  textBold: colors.ink[50],
+  textMuted: colors.ink[400],
+  accent: colors.gold[300],
+  link: colors.ink[200],
+  linkHover: colors.sepia[300],
 } as const;

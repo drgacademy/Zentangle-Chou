@@ -1,72 +1,65 @@
 ---
-import '../styles/globals.css';
-import SiteHeader from '@components/layout/SiteHeader.astro';
-import SiteFooter from '@components/layout/SiteFooter.astro';
-import TangleCursor from '@components/cursor/TangleCursor';
+import '@/styles/globals.css';
 
 interface Props {
   title: string;
-  description: string;
-  lang: 'zh' | 'en';
-  currentPath?: string;
+  description?: string;
   ogImage?: string;
+  lang: 'zh' | 'en';
+  currentPath: string;
   noIndex?: boolean;
 }
 
-const {
-  title,
-  description,
-  lang,
-  currentPath = '/',
-  ogImage,
-  noIndex = false,
-} = Astro.props;
+const { title, description, ogImage, lang, currentPath, noIndex } = Astro.props;
 
-const siteUrl = 'https://drgacademy.github.io/Zentangle-Chou';
+const siteTitle = lang === 'zh'
+  ? 'Zentangle Chou — YuChiao Chou 的禪繞畫作品集'
+  : 'Zentangle Chou — YuChiao Chou\'s Zentangle Portfolio';
+
+const siteDescription = description || (
+  lang === 'zh'
+    ? '台灣個人創作者的禪繞畫作品集與41個圖樣字典'
+    : 'Personal Zentangle Portfolio & 41 Tangle Dictionary from Taiwan'
+);
 ---
 
-<!doctype html>
-<html lang={lang === 'zh' ? 'zh-Hant-TW' : 'en'} class="scroll-smooth">
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={siteDescription} />
+    <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+
+    <!-- SEO -->
+    <title>{title} | {siteTitle}</title>
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`https://yuchiaochou.github.io/Zentangle-Chou${currentPath}`} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={siteDescription} />
 
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
-
-    {/* OG Meta */}
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={`${siteUrl}${currentPath}`} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-
-    {/* Favicon */}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    {/* Google Fonts CDN - Sprint 1 temporary solution */}
+    <!-- Fonts: Google Fonts CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Caveat+Brush&family=Lora:wght@400;600&family=Crimson+Pro:wght@400;600&family=Noto+Serif+TC:wght@400;600&family=Allura&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Caveat+Brush&family=Crimson+Pro:wght@400;600;700&family=Noto+Serif+TC:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
-    {/* Preload hero fonts */}
-    <link rel="preload" href="https://fonts.gstatic.com/s/caveatbrush/v11/vm8zudTKh36l8-rw5ouM2z_T2I1fVKhq8mM.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="bg-ink-50 text-ink-600 dark:bg-ink-900 dark:text-ink-100">
-    <SiteHeader lang={lang} currentPath={currentPath} />
 
-    <main>
+  <body>
+    <div class="flex flex-col min-h-screen bg-ink-50 dark:bg-ink-900 text-ink-600 dark:text-ink-200 transition-colors">
       <slot />
-    </main>
-
-    <SiteFooter lang={lang} />
-
-    {/* Custom Cursor (desktop only) */}
-    <TangleCursor client:idle />
+    </div>
   </body>
 </html>

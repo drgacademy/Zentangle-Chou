@@ -1,25 +1,37 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import { getT } from '@lib/i18n';
+import Layout from '@/layouts/Layout.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import TangleCursor from '@/components/cursor/TangleCursor';
+import { useT } from '@/i18n/useT';
 
-const t = getT('zh');
+const t = useT('zh');
+const lang = 'zh';
 const currentPath = '/zh/';
 ---
 
 <Layout
-  title={t.site.title}
-  description={t.site.description}
-  lang="zh"
+  title={t('site.title')}
+  description={t('site.description')}
+  lang={lang}
   currentPath={currentPath}
 >
-  <div class="min-h-screen flex items-center justify-center px-4">
-    <div class="max-w-3xl text-center">
-      <h1 class="font-display-zh text-5xl md:text-hero text-ink-700 dark:text-ink-50 leading-tight mb-6">
-        {t.hero.title}
+  <SiteHeader currentPath={currentPath} lang={lang} />
+
+  <main class="flex-1 flex items-center justify-center px-4 py-32">
+    <div class="max-w-4xl text-center">
+      <h1 class="font-display-zh text-hero md:text-5xl text-ink-700 dark:text-ink-50 leading-tight mb-6">
+        {t('hero.title')}
       </h1>
-      <p class="font-body text-lg md:text-xl text-ink-500 dark:text-ink-400">
-        {t.hero.subtitle}
+      <p class="font-body text-lg md:text-xl text-ink-500 dark:text-ink-400 mb-12">
+        {t('hero.subtitle')}
       </p>
+      <div class="h-32 flex items-center justify-center text-ink-400 dark:text-ink-600">
+        <p class="text-sm">— Sprint 1 Placeholder —</p>
+      </div>
     </div>
-  </div>
+  </main>
+
+  <SiteFooter lang={lang} />
+  <TangleCursor client:idle />
 </Layout>

@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Zentangle Chou — Personal Zentangle Portfolio",
-    "description": "A personal Zentangle artist's portfolio from Taiwan. Original tile artwork, time-lapse videos, and a bilingual reference of 41 classic tangle patterns."
+    "title": "Zentangle Chou — YuChiao Chou's Zentangle Portfolio",
+    "description": "Personal Zentangle Portfolio & 41 Tangle Dictionary from Taiwan"
   },
   "nav": {
     "home": "Home",
@@ -13,10 +13,12 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "One Line at a Time, All Things Possible",
+    "title": "Every line, every stroke, all possibilities",
     "subtitle": "Personal Zentangle Portfolio · 41 Tangle Dictionary"
   },
   "footer": {
-    "copyright": "© 2026 Dr. G. Academy. All rights reserved."
+    "learn": "Learn",
+    "connect": "Connect",
+    "about": "About"
   }
 }
