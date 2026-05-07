@@ -1,0 +1,94 @@
+{
+  "site": {
+    "title": "Zentangle Chou",
+    "tagline": "One Stroke. One Breath.",
+    "description": "A flagship Zentangle portfolio — 41 patterns, ritual drawings, and reflections."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Works",
+    "tangles": "Tangles",
+    "process": "Process",
+    "videos": "Videos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Zentangle Chou",
+    "subtitle": "One Stroke. One Breath.",
+    "kicker": "A flagship Zentangle portfolio"
+  },
+  "manifesto": {
+    "quoteEn": "There are no mistakes, only opportunities.",
+    "quoteZh": "沒有錯誤，只有契機。"
+  },
+  "signature": {
+    "stamp": "禪"
+  },
+  "tile": {
+    "phases": {
+      "dots": "Corner dots",
+      "border": "Pencil border",
+      "string": "Pencil string",
+      "hollibaugh": "Hollibaugh",
+      "paradox": "Paradox",
+      "printemps": "Printemps × Tipple",
+      "nzeppel": "'Nzeppel",
+      "shade": "Graphite shading"
+    },
+    "controls": {
+      "restart": "Restart",
+      "speed": "Speed"
+    },
+    "ariaLabel": "An animated Zentangle tile drawing in five canonical layers"
+  },
+  "eightBreaths": {
+    "title": "Eight Breaths",
+    "subtitle": "The Zentangle ritual: from gratitude to appreciation",
+    "step1": { "title": "Gratitude & Breath", "desc": "Before beginning, pause. Be grateful for this moment." },
+    "step2": { "title": "Corner Dots", "desc": "Place four pencil dots — the start of the boundary." },
+    "step3": { "title": "Pencil Border", "desc": "Connect the dots with a gentle, freehand edge." },
+    "step4": { "title": "Pencil String", "desc": "One free line, dividing the space into zones." },
+    "step5": { "title": "Tangle", "desc": "In each zone, slowly fill the pattern." },
+    "step6": { "title": "Shade", "desc": "Soft graphite shading lifts the drawing into depth." },
+    "step7": { "title": "Initial", "desc": "Tuck your mark into the pattern." },
+    "step8": { "title": "Appreciate", "desc": "Step back. Look at what you made without a plan." }
+  },
+  "patternIndex": {
+    "title": "Tangle dictionary",
+    "intro": "Every pattern is a sentence rewritten many times."
+  },
+  "portfolio": {
+    "title": "Works",
+    "intro": "Each piece is the breath of a stretch of time."
+  },
+  "about": {
+    "title": "About",
+    "lede": "An artist who picked up a pen ten years ago and found a quiet ritual.",
+    "body": "Zentangle Chou is a portfolio orbiting the phrase 'one stroke, one breath.' Each piece grows slowly without a plan. There is no eraser — because in life there is no eraser either.",
+    "tools": "Tools",
+    "influences": "Influences"
+  },
+  "process": {
+    "title": "Process",
+    "intro": "The Zentangle ritual: from gratitude to appreciation"
+  },
+  "contact": {
+    "title": "Contact",
+    "lede": "For collaborations, prints, or just to talk tangling — reach out via Instagram or email."
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "instagram": "Instagram",
+    "language": "Language",
+    "theme": "Theme",
+    "motion": "Motion",
+    "motionOn": "Full",
+    "motionOff": "Reduced",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "rights": "© 2026 Zentangle Chou"
+  },
+  "scrollCue": "Scroll · keep reading"
+}

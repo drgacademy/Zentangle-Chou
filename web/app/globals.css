@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/*
+ * Zentangle Chou — design tokens
+ *
+ * Cream paper × sumi ink × graphite × red stamp.
+ * Light is default; .dark on <html> swaps to a moonlit night palette.
+ */
+
+:root {
+  /* paper variants */
+  --paper-bg: #faf7f1;
+  --paper-rice: #fcfaf4;
+  --paper-cream: #f6efdf;
+  --paper-tea: #efe6d2;
+  --paper-tile: #f0e4c8;
+  --paper-night: #1b1a18;
+  --bg-spotlight: linear-gradient(135deg, #2a1f15 0%, #1a1410 50%, #0f0a07 100%);
+  --accent-warm: linear-gradient(90deg, #d4a574, #f0e4c8);
+
+  /* ink variants */
+  --ink: #1a1a1a;
+  --ink-warm: #2a1f12;
+  --ink-cool: #1f2024;
+  --ink-pencil: #c8c2b5;
+  --ink-shade: rgba(26, 26, 26, 0.55);
+  --ink-bleed: rgba(26, 26, 26, 0.18);
+  --ink-red-stamp: #b23a38;
+
+  /* sepia & gold accents */
+  --sepia-300: #d8c39a;
+  --sepia-500: #b89668;
+  --sepia-700: #7a5a32;
+  --color-accent: #c9a961;
+  --gold-300: #e8d5a8;
+  --gold-500: #c9a961;
+  --gold-700: #8a7434;
+
+  /* type scale */
+  --fs-caption: 0.75rem;
+  --fs-body: 1.0625rem;
+  --fs-lede: 1.25rem;
+  --fs-h3: 1.75rem;
+  --fs-h2: 2.5rem;
+  --fs-h1: 4rem;
+  --fs-display: clamp(4rem, 12vw, 9rem);
+  --fs-pull: clamp(2rem, 5vw, 3.5rem);
+
+  /* spacing */
+  --space-margin-l: clamp(2rem, 10vw, 12rem);
+  --space-margin-r: clamp(2rem, 14vw, 18rem);
+
+  /* motion */
+  --breath-cycle: 8s;
+  --ease-breath: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --breath-phase: 0;
+
+  /* base for legacy Tailwind tokens */
+  --background: var(--paper-bg);
+  --foreground: var(--ink);
+}
+
+html.dark {
+  --paper-bg: #1b1a18;
+  --paper-rice: #1f1d1a;
+  --paper-cream: #25211c;
+  --paper-tea: #2a251e;
+  --paper-tile: #2a251e;
+  --paper-night: #0f0e0c;
+
+  --ink: #f2efe9;
+  --ink-warm: #ece4d3;
+  --ink-cool: #f5f3ee;
+  --ink-pencil: #6b665b;
+  --ink-shade: rgba(242, 239, 233, 0.55);
+  --ink-bleed: rgba(242, 239, 233, 0.18);
+  --ink-red-stamp: #d26462;
+
+  --color-accent: #e8d5a8;
+  --gold-300: #efe1bf;
+  --gold-500: #e8d5a8;
+  --gold-700: #c9a961;
+}
+
+@theme inline {
+  --color-paper: var(--paper-bg);
+  --color-paper-rice: var(--paper-rice);
+  --color-paper-cream: var(--paper-cream);
+  --color-paper-tea: var(--paper-tea);
+  --color-paper-tile: var(--paper-tile);
+  --color-paper-night: var(--paper-night);
+  --color-ink: var(--ink);
+  --color-ink-warm: var(--ink-warm);
+  --color-ink-cool: var(--ink-cool);
+  --color-ink-pencil: var(--ink-pencil);
+  --color-ink-shade: var(--ink-shade);
+  --color-ink-bleed: var(--ink-bleed);
+  --color-ink-stamp: var(--ink-red-stamp);
+  --color-gold-300: var(--gold-300);
+  --color-gold-500: var(--gold-500);
+  --color-gold-700: var(--gold-700);
+  --color-sepia-300: var(--sepia-300);
+  --color-sepia-500: var(--sepia-500);
+  --color-sepia-700: var(--sepia-700);
+  --font-masthead: var(--font-masthead-serif);
+  --font-body: var(--font-body-serif);
+  --font-mono: var(--font-mono-stack);
+  --font-script: var(--font-display-script);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body-serif), "Noto Serif TC", Georgia, serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Scrollbar — keep it subtle so the paper texture remains the visual focus. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-bleed);
+  border-radius: 999px;
+}
+
+/* When reduced motion is on, neutralise transition/animation entirely. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
