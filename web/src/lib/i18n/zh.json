@@ -1,0 +1,67 @@
+{
+  "site": {
+    "title": "周語喬・禪繞畫",
+    "tagline": "一筆一畫，找回安靜"
+  },
+  "nav": {
+    "home": "首頁",
+    "about": "關於",
+    "portfolio": "作品",
+    "tangles": "圖樣",
+    "process": "過程",
+    "contact": "聯絡"
+  },
+  "hero": {
+    "kicker": "Zentangle 旗艦作品集",
+    "title": "周語喬",
+    "subtitle": "一筆，一畫，一個呼吸",
+    "place": "2026 春・台北"
+  },
+  "manifesto": {
+    "quoteEn": "There are no mistakes, only opportunities.",
+    "quoteZh": "沒有錯誤，只有契機。",
+    "note": "這句話陪伴我十年。\n— 語喬"
+  },
+  "featured": {
+    "title": "精選作品",
+    "caption1": "Florz・初春",
+    "caption2": "Crescent Moon・夜雨",
+    "caption3": "Mooka・南風"
+  },
+  "demo": {
+    "title": "即時：花瓣 Florz",
+    "intro": "把畫筆交給時間。\n捲動頁面，看著一格一格，慢慢長出來。",
+    "step1": "1. 鋪格",
+    "step2": "2. 畫菱",
+    "step3": "3. 點芯",
+    "step4": "4. 收邊",
+    "reseed": "再來一次"
+  },
+  "process": {
+    "title": "三個步驟，一段呼吸",
+    "step1": "邊框",
+    "step2": "字串",
+    "step3": "圖樣",
+    "step1Desc": "畫一個正方，把世界框出來。",
+    "step2Desc": "鉛筆輕輕畫一條線，這就是字串。",
+    "step3Desc": "在每一塊裡，慢慢填入圖樣。"
+  },
+  "signature": {
+    "name": "YuChiao Chou",
+    "stamp": "語喬"
+  },
+  "footer": {
+    "about": "關於",
+    "contact": "聯絡",
+    "instagram": "Instagram",
+    "language": "語言",
+    "theme": "主題",
+    "motion": "動畫",
+    "motionOn": "完整",
+    "motionOff": "減少",
+    "themeLight": "淺",
+    "themeDark": "深",
+    "rights": "© 2026 周語喬・YuChiao Chou"
+  },
+  "scrollCue": "向下捲動・繼續閱讀"
+}

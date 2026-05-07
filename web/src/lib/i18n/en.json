@@ -1,0 +1,67 @@
+{
+  "site": {
+    "title": "YuChiao Chou · Zentangle",
+    "tagline": "Find Your Peace, One Stroke at a Time"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Works",
+    "tangles": "Tangles",
+    "process": "Process",
+    "contact": "Contact"
+  },
+  "hero": {
+    "kicker": "A flagship Zentangle portfolio",
+    "title": "YuChiao Chou",
+    "subtitle": "One Stroke. One Breath.",
+    "place": "Spring 2026 · Taipei"
+  },
+  "manifesto": {
+    "quoteEn": "There are no mistakes, only opportunities.",
+    "quoteZh": "沒有錯誤，只有契機。",
+    "note": "This sentence has walked with me for ten years.\n— YuChiao"
+  },
+  "featured": {
+    "title": "Featured Works",
+    "caption1": "Florz · Early Spring",
+    "caption2": "Crescent Moon · Night Rain",
+    "caption3": "Mooka · South Wind"
+  },
+  "demo": {
+    "title": "Live: Florz",
+    "intro": "Hand the brush to time.\nScroll, and watch each cell grow stroke by stroke.",
+    "step1": "1. Set the grid",
+    "step2": "2. Draw the diamond",
+    "step3": "3. Place the seed",
+    "step4": "4. Close the edge",
+    "reseed": "Re-draw"
+  },
+  "process": {
+    "title": "Three steps. One breath.",
+    "step1": "Border",
+    "step2": "String",
+    "step3": "Pattern",
+    "step1Desc": "Draw a square. Frame the world.",
+    "step2Desc": "Lightly pencil a line — that is the string.",
+    "step3Desc": "In each cell, slowly fill in the pattern."
+  },
+  "signature": {
+    "name": "YuChiao Chou",
+    "stamp": "語喬"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "instagram": "Instagram",
+    "language": "Language",
+    "theme": "Theme",
+    "motion": "Motion",
+    "motionOn": "Full",
+    "motionOff": "Reduced",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "rights": "© 2026 YuChiao Chou · 周語喬"
+  },
+  "scrollCue": "Scroll · keep reading"
+}
