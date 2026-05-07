@@ -1,0 +1,88 @@
+/*
+ * Design tokens — Zentangle Chou
+ *
+ * Editorial diary palette: rice paper / sumi ink / sepia / red stamp.
+ * Light is the default; .dark on <html> swaps to a moonlit night palette.
+ */
+
+:root {
+  /* paper variants */
+  --paper-bg: #faf7f1;
+  --paper-rice: #fcfaf4;
+  --paper-cream: #f6efdf;
+  --paper-tea: #efe6d2;
+  --paper-night: #1b1a18;
+
+  /* ink variants */
+  --ink: #1a1a1a;
+  --ink-warm: #2a1f12;
+  --ink-cool: #1f2024;
+  --ink-pencil: #c8c2b5;
+  --ink-shade: rgba(26, 26, 26, 0.55);
+  --ink-bleed: rgba(26, 26, 26, 0.18);
+  --ink-red-stamp: #b23a38;
+
+  /* sepia & gold accents */
+  --sepia-300: #d8c39a;
+  --sepia-500: #b89668;
+  --sepia-700: #7a5a32;
+  --color-accent: #c9a961;
+  --gold-300: #e8d5a8;
+  --gold-500: #c9a961;
+  --gold-700: #8a7434;
+
+  /* fonts — fall back through the stack until self-hosted WOFF2 land */
+  --font-masthead: 'Crimson Pro', 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', serif;
+  --font-body: 'Noto Serif TC', 'Source Han Serif TC', 'Crimson Pro', Georgia, serif;
+  --font-display-script: 'Caveat Brush', 'Caveat', cursive;
+  --font-marginal: 'Homemade Apple', 'Caveat', cursive;
+  --font-signature: 'Allura', 'Caveat Brush', cursive;
+  --font-mono: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+
+  /* type scale */
+  --fs-caption: 0.75rem;
+  --fs-body: 1.0625rem;
+  --fs-lede: 1.25rem;
+  --fs-h3: 1.75rem;
+  --fs-h2: 2.5rem;
+  --fs-h1: 4rem;
+  --fs-display: clamp(4rem, 12vw, 9rem);
+  --fs-pull: clamp(2rem, 5vw, 3.5rem);
+
+  /* spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 2rem;
+  --space-5: 4rem;
+  --space-6: 8rem;
+  --space-7: 12rem;
+  --space-margin-l: clamp(2rem, 10vw, 12rem);
+  --space-margin-r: clamp(2rem, 14vw, 18rem);
+
+  /* motion */
+  --breath-cycle: 8s;
+  --ease-breath: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --breath-phase: 0;
+}
+
+html.dark {
+  --paper-bg: #1b1a18;
+  --paper-rice: #1f1d1a;
+  --paper-cream: #25211c;
+  --paper-tea: #2a251e;
+  --paper-night: #0f0e0c;
+
+  --ink: #f2efe9;
+  --ink-warm: #ece4d3;
+  --ink-cool: #f5f3ee;
+  --ink-pencil: #6b665b;
+  --ink-shade: rgba(242, 239, 233, 0.55);
+  --ink-bleed: rgba(242, 239, 233, 0.18);
+  --ink-red-stamp: #d26462;
+
+  --color-accent: #e8d5a8;
+  --gold-300: #efe1bf;
+  --gold-500: #e8d5a8;
+  --gold-700: #c9a961;
+}
