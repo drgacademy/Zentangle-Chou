@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "check:branding": "! grep -RIE '(YuChiao|YuJiao|語喬|周語喬|周玉嬌|玉嬌)' src",
     "test": "vitest run",
     "format": "prettier --write ."
   },

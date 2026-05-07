@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "YuChiao Chou · Zentangle",
+    "title": "Zentangle Chou",
     "tagline": "Find Your Peace, One Stroke at a Time"
   },
   "nav": {
@@ -13,14 +13,13 @@
   },
   "hero": {
     "kicker": "A flagship Zentangle portfolio",
-    "title": "YuChiao Chou",
+    "title": "Zentangle Chou",
     "subtitle": "One Stroke. One Breath.",
     "place": "Spring 2026 · Taipei"
   },
   "manifesto": {
     "quoteEn": "There are no mistakes, only opportunities.",
-    "quoteZh": "沒有錯誤，只有契機。",
-    "note": "This sentence has walked with me for ten years.\n— YuChiao"
+    "quoteZh": "沒有錯誤，只有契機。"
   },
   "featured": {
     "title": "Featured Works",
@@ -47,8 +46,40 @@
     "step3Desc": "In each cell, slowly fill in the pattern."
   },
   "signature": {
-    "name": "YuChiao Chou",
-    "stamp": "語喬"
+    "stamp": "禪"
+  },
+  "tile": {
+    "phases": {
+      "dots": "Corner dots",
+      "border": "Pencil border",
+      "string": "Pencil string",
+      "hollibaugh": "Hollibaugh",
+      "paradox": "Paradox",
+      "printemps": "Printemps × Tipple",
+      "nzeppel": "'Nzeppel",
+      "shade": "Graphite shading"
+    },
+    "controls": {
+      "restart": "Restart",
+      "speed": "Speed"
+    },
+    "ariaLabel": "An animated Zentangle tile drawing in five canonical layers"
+  },
+  "eightBreaths": {
+    "title": "Eight Breaths",
+    "subtitle": "The Zentangle ritual: from gratitude to appreciation",
+    "step1": { "title": "Gratitude & Breath", "desc": "Before beginning, pause. Be grateful for this moment." },
+    "step2": { "title": "Corner Dots", "desc": "Place four pencil dots — the start of the boundary." },
+    "step3": { "title": "Pencil Border", "desc": "Connect the dots with a gentle, freehand edge." },
+    "step4": { "title": "Pencil String", "desc": "One free line, dividing the space into zones." },
+    "step5": { "title": "Tangle", "desc": "In each zone, slowly fill the pattern." },
+    "step6": { "title": "Shade", "desc": "Soft graphite shading lifts the drawing into depth." },
+    "step7": { "title": "Initial", "desc": "Tuck your mark into the pattern." },
+    "step8": { "title": "Appreciate", "desc": "Step back. Look at what you made without a plan." }
+  },
+  "patternIndex": {
+    "title": "Tangle dictionary",
+    "intro": "Every pattern is a sentence rewritten many times."
   },
   "footer": {
     "about": "About",
@@ -61,7 +92,7 @@
     "motionOff": "Reduced",
     "themeLight": "Light",
     "themeDark": "Dark",
-    "rights": "© 2026 YuChiao Chou · 周語喬"
+    "rights": "© 2026 Zentangle Chou"
   },
   "scrollCue": "Scroll · keep reading"
 }

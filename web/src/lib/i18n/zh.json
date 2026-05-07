@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "周語喬・禪繞畫",
+    "title": "Zentangle Chou",
     "tagline": "一筆一畫，找回安靜"
   },
   "nav": {
@@ -13,14 +13,13 @@
   },
   "hero": {
     "kicker": "Zentangle 旗艦作品集",
-    "title": "周語喬",
-    "subtitle": "一筆，一畫，一個呼吸",
+    "title": "Zentangle Chou",
+    "subtitle": "一筆，一息",
     "place": "2026 春・台北"
   },
   "manifesto": {
     "quoteEn": "There are no mistakes, only opportunities.",
-    "quoteZh": "沒有錯誤，只有契機。",
-    "note": "這句話陪伴我十年。\n— 語喬"
+    "quoteZh": "沒有錯誤，只有契機。"
   },
   "featured": {
     "title": "精選作品",
@@ -47,8 +46,40 @@
     "step3Desc": "在每一塊裡，慢慢填入圖樣。"
   },
   "signature": {
-    "name": "YuChiao Chou",
-    "stamp": "語喬"
+    "stamp": "禪"
+  },
+  "tile": {
+    "phases": {
+      "dots": "點四角",
+      "border": "鉛筆邊框",
+      "string": "鉛筆引線",
+      "hollibaugh": "立體編帶 Hollibaugh",
+      "paradox": "矛盾螺旋 Paradox",
+      "printemps": "春之螺・點點 Printemps × Tipple",
+      "nzeppel": "鏈環 'Nzeppel",
+      "shade": "鉛筆陰影"
+    },
+    "controls": {
+      "restart": "重新繪製",
+      "speed": "速度"
+    },
+    "ariaLabel": "一格 Zentangle 圖樣依五個層次逐筆繪出"
+  },
+  "eightBreaths": {
+    "title": "八個呼吸",
+    "subtitle": "Zentangle 的儀式：從感謝到欣賞",
+    "step1": { "title": "感謝與呼吸", "desc": "在開始之前，先停下來，感謝這一刻。" },
+    "step2": { "title": "點四角", "desc": "鉛筆輕點四個角，這是邊界的起點。" },
+    "step3": { "title": "鉛筆邊框", "desc": "連接四點，畫一個微微歪斜的邊。" },
+    "step4": { "title": "鉛筆引線", "desc": "一條自由的線，把空間分成幾塊。" },
+    "step5": { "title": "圖樣", "desc": "在每一塊裡，慢慢填入圖樣。" },
+    "step6": { "title": "陰影", "desc": "鉛筆輕輕加上陰影，讓畫作浮起。" },
+    "step7": { "title": "簽名", "desc": "把你的印記，藏進畫裡。" },
+    "step8": { "title": "欣賞", "desc": "退一步，看看你剛才在沒有計畫之下完成的事。" }
+  },
+  "patternIndex": {
+    "title": "圖樣字典",
+    "intro": "每一個圖樣，都是一個被反覆書寫的句子。"
   },
   "footer": {
     "about": "關於",
@@ -61,7 +92,7 @@
     "motionOff": "減少",
     "themeLight": "淺",
     "themeDark": "深",
-    "rights": "© 2026 周語喬・YuChiao Chou"
+    "rights": "© 2026 Zentangle Chou"
   },
   "scrollCue": "向下捲動・繼續閱讀"
 }

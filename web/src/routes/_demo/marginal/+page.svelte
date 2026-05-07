@@ -9,7 +9,7 @@
     禪繞畫中，每一筆都是一個決定。沒有橡皮擦，因為人生中從來沒有橡皮擦。
     一道走偏的線，是新圖樣的種子；一個意外的點，是下一筆的起點。
   </p>
-  <MarginalNote side="right">這是雜誌風格的<br/>側邊註記，<br/>—— 語喬</MarginalNote>
+  <MarginalNote side="right">這是雜誌風格的<br/>側邊註記，<br/>—— 一筆一息</MarginalNote>
 
   <p class="text-lede leading-relaxed mb-6 mt-12">
     Zentangle is yoga with a pen. Eight steps, beginning and ending with breath.

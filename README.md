@@ -1,6 +1,6 @@
 # Zentangle Chou — 禪繞畫旗艦形象網站
 
-> *「Ten years ago, I picked up a pen and found my peace.」* — YuChiao Chou (周語喬)
+> *One stroke. One breath.* — Zentangle Chou
 
 ## Active app
 

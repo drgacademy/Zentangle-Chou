@@ -10,6 +10,7 @@
     { href: '/_demo/parallax', label: 'ParallaxLayer — scroll-driven offset' },
     { href: '/_demo/scroll-scene', label: 'ScrollScene — pinned scroll progress' },
     { href: '/_demo/tangle', label: 'TangleCanvas — interactive tangle engine' },
+    { href: '/_demo/tile', label: 'TangleTile — full 4-region tile with phases + controls' },
     { href: '/_demo/transitions', label: 'InkTransition — page transition wash' }
   ];
 </script>

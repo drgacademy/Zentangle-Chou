@@ -8,7 +8,7 @@ export type FeaturedWork = {
 };
 
 // Until real artwork photos arrive, all polaroids point at the favicon as a
-// placeholder. Replace with /static/artworks/*.jpg when YuChiao provides them.
+// placeholder. Replace with /static/artworks/*.jpg when supplied.
 export const featured: FeaturedWork[] = [
   {
     src: '/favicon.svg',

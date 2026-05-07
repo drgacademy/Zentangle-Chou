@@ -46,10 +46,10 @@
 <section>
   <h2 class="text-h3 mb-4">Fonts</h2>
   <div class="space-y-4">
-    <p class="h-masthead">禪繞 · YuChiao</p>
+    <p class="h-masthead">Zentangle Chou</p>
     <p class="h-pull">There are no mistakes, only opportunities.</p>
     <p class="h-script text-3xl">One Stroke at a Time</p>
     <p class="h-marginal">這頁的字 — 都是手寫感。</p>
-    <p class="h-signature">YuChiao Chou</p>
+    <p class="h-signature">Zentangle Chou</p>
   </div>
 </section>
