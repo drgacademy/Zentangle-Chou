@@ -1,5 +1,4 @@
 <script lang="ts">
-  import MarginalNote from '$lib/components/primitives/MarginalNote.svelte';
   import ParallaxLayer from '$lib/components/primitives/ParallaxLayer.svelte';
   import PaperTexture from '$lib/components/primitives/PaperTexture.svelte';
   import { t, type Lang } from '$lib/i18n';
@@ -20,11 +19,6 @@
           {lang === 'zh' ? t(dict, 'manifesto.quoteEn') : t(dict, 'manifesto.quoteZh')}
         </p>
       </blockquote>
-    </ParallaxLayer>
-    <ParallaxLayer speed={0.7}>
-      <div class="margin-block">
-        <MarginalNote side="right" rotate={2}>{t(dict, 'manifesto.note')}</MarginalNote>
-      </div>
     </ParallaxLayer>
   </div>
 </section>
@@ -62,11 +56,6 @@
     font-size: clamp(1.4rem, 2.5vw, 1.9rem);
     color: var(--ink-warm);
     margin: 0;
-  }
-  .margin-block {
-    position: relative;
-    height: 100%;
-    min-height: 8rem;
   }
   @media (max-width: 767px) {
     .grid {

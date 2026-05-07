@@ -25,6 +25,7 @@ export type Stroke = {
   opacity?: number;
   stepIndex?: number; // teaching step within an ink-layer pattern
   drawMs?: number; // override per-stroke draw duration (default derived from path length)
+  clipPathId?: string; // when set, render this stroke under <clipPath id={clipPathId}>
 };
 
 export type PatternCtx = {

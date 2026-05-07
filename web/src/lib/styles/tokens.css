@@ -11,7 +11,10 @@
   --paper-rice: #fcfaf4;
   --paper-cream: #f6efdf;
   --paper-tea: #efe6d2;
+  --paper-tile: #f0e4c8; /* warmer than rice — used for the hero tile face */
   --paper-night: #1b1a18;
+  --bg-spotlight: linear-gradient(135deg, #2a1f15 0%, #1a1410 50%, #0f0a07 100%);
+  --accent-warm: linear-gradient(90deg, #d4a574, #f0e4c8);
 
   /* ink variants */
   --ink: #1a1a1a;
@@ -71,6 +74,7 @@ html.dark {
   --paper-rice: #1f1d1a;
   --paper-cream: #25211c;
   --paper-tea: #2a251e;
+  --paper-tile: #2a251e;
   --paper-night: #0f0e0c;
 
   --ink: #f2efe9;

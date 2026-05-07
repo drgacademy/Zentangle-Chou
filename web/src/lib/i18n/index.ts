@@ -19,8 +19,11 @@ export function isLang(value: string): value is Lang {
 
 /**
  * dot-path lookup: t(dict, "footer.rights")
+ *
+ * Accepts the strict Dict type as well as the looser Record<string, unknown>
+ * shape used by SvelteKit's PageData (which widens nested objects).
  */
-export function t(dict: Dict, key: string): string {
+export function t(dict: Dict | Record<string, unknown>, key: string): string {
   const parts = key.split('.');
   let cur: unknown = dict;
   for (const p of parts) {

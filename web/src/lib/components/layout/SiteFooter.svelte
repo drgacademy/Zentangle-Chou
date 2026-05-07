@@ -8,7 +8,7 @@
 <footer class="footer">
   <div class="cols">
     <div class="brand">
-      <p class="name">YuChiao Chou · 周語喬</p>
+      <p class="name">Zentangle Chou</p>
       <p class="tag">{t(dict, 'site.tagline')}</p>
     </div>
     <nav class="links" aria-label="footer">

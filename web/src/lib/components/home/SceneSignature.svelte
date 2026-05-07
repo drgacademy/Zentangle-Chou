@@ -6,7 +6,7 @@
   type Props = { dict: Record<string, unknown> };
   let { dict }: Props = $props();
 
-  let host: HTMLDivElement | null = $state(null);
+  let host: HTMLElement | null = $state(null);
   let visible = $state(false);
 
   onMount(() => {
@@ -31,7 +31,7 @@
   {#if visible}
     <HandDrawnText
       el="p"
-      text={t(dict, 'signature.name')}
+      text="Zentangle Chou"
       font="var(--font-signature)"
       size="clamp(3rem, 8vw, 6rem)"
       perCharMs={260}

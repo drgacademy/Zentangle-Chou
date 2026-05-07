@@ -1,10 +1,9 @@
 <script lang="ts">
-  import SceneCover from '$lib/components/home/SceneCover.svelte';
+  import SceneHeroTile from '$lib/components/home/SceneHeroTile.svelte';
   import SceneManifesto from '$lib/components/home/SceneManifesto.svelte';
-  import SceneFeatured from '$lib/components/home/SceneFeatured.svelte';
-  import SceneTangleDemo from '$lib/components/home/SceneTangleDemo.svelte';
-  import SceneProcess from '$lib/components/home/SceneProcess.svelte';
-  import SceneSignature from '$lib/components/home/SceneSignature.svelte';
+  import SceneEightBreaths from '$lib/components/home/SceneEightBreaths.svelte';
+  import ScenePatternIndex from '$lib/components/home/ScenePatternIndex.svelte';
+  import SceneFooterMark from '$lib/components/home/SceneFooterMark.svelte';
   import { t, type Lang } from '$lib/i18n';
 
   type Props = { data: { lang: Lang; dict: Record<string, unknown> } };
@@ -18,9 +17,8 @@
   <meta name="description" content={t(dict, 'site.tagline')} />
 </svelte:head>
 
-<SceneCover {dict} {lang} />
+<SceneHeroTile {dict} {lang} />
 <SceneManifesto {dict} {lang} />
-<SceneFeatured {dict} {lang} />
-<SceneTangleDemo {dict} {lang} />
-<SceneProcess {dict} />
-<SceneSignature {dict} />
+<SceneEightBreaths {dict} {lang} />
+<ScenePatternIndex {dict} {lang} />
+<SceneFooterMark {dict} {lang} />
