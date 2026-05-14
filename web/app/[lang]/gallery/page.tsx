@@ -61,7 +61,7 @@ export default async function GalleryPage({ params }: Props) {
         {content.artworks.map((a, i) => (
           <ScrollInkReveal key={a.slug} delay={i * 0.06}>
             <figure className="group">
-              <div className="tile-frame paper-grain aspect-square">
+              <div className="glass glass-sweep aspect-square">
                 <TilePlaceholder seed={i + 1} />
               </div>
               <figcaption className="mt-4">

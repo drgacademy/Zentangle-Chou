@@ -104,7 +104,7 @@ export default async function MethodPage({ params }: Props) {
                 <h3 className="mt-2 text-3xl md:text-5xl tracking-wide">{step.name}</h3>
                 <p className="mt-6 leading-relaxed text-ink-soft text-lg max-w-xl">{step.body}</p>
               </div>
-              <div className="tile-frame paper-grain aspect-square">{stepArt[step.index]}</div>
+              <div className="glass glass-sweep aspect-square p-4">{stepArt[step.index]}</div>
             </li>
           </ScrollInkReveal>
         ))}
@@ -112,15 +112,17 @@ export default async function MethodPage({ params }: Props) {
 
       <ScrollInkReveal>
         <section className="mt-24 md:mt-32 max-w-3xl">
-          <p className="eyebrow">{content.tools.title}</p>
-          <ul className="mt-6 grid gap-3 text-lg text-ink-soft">
-            {content.tools.items.map((t) => (
-              <li key={t} className="flex gap-3">
-                <span className="text-ink-mute select-none">·</span>
-                <span>{t}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="glass glass-sweep p-10 md:p-12">
+            <p className="eyebrow">{content.tools.title}</p>
+            <ul className="mt-6 grid gap-3 text-lg text-ink-soft">
+              {content.tools.items.map((t) => (
+                <li key={t} className="flex gap-3">
+                  <span className="text-ink-mute select-none">·</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
       </ScrollInkReveal>
 
