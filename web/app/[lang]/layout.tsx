@@ -1,31 +1,32 @@
 import { notFound } from "next/navigation";
-import { getDict, isLang, type Lang } from "@/lib/i18n";
-import SiteHeader from "@/components/layout/SiteHeader";
-import SiteFooter from "@/components/layout/SiteFooter";
-import InkPageTransition from "@/components/atmosphere/InkPageTransition";
-import HtmlLang from "@/components/layout/HtmlLang";
+import type { ReactNode } from "react";
+import { locales, isLocale, type Locale } from "@/lib/i18n/config";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return [{ lang: "zh" }, { lang: "en" }];
+  return locales.map((lang) => ({ lang }));
 }
 
-export default async function LangLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
+type Props = {
+  children: ReactNode;
   params: Promise<{ lang: string }>;
-}) {
+};
+
+export default async function LocaleLayout({ children, params }: Props) {
   const { lang } = await params;
-  if (!isLang(lang)) notFound();
-  const dict = getDict(lang as Lang);
+  if (!isLocale(lang)) notFound();
+  const locale = lang as Locale;
 
   return (
-    <>
-      <HtmlLang lang={lang as Lang} />
-      <SiteHeader lang={lang as Lang} dict={dict} />
-      <InkPageTransition>{children}</InkPageTransition>
-      <SiteFooter lang={lang as Lang} dict={dict} />
-    </>
+    <div lang={locale === "zh" ? "zh-Hant" : "en"} className="min-h-dvh flex flex-col">
+      <SmoothScroll />
+      <SiteHeader locale={locale} />
+      <main className="flex-1">{children}</main>
+      <SiteFooter locale={locale} />
+    </div>
   );
 }

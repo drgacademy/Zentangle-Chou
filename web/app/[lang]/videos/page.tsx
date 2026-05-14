@@ -1,47 +1,64 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDict, isLang, type Lang } from "@/lib/i18n";
-import RevealOnScroll from "@/components/motion/RevealOnScroll";
-import { getVideos } from "@/lib/sanity/queries";
+import { isLocale, type Locale } from "@/lib/i18n/config";
+import { getVideos } from "@/content/videos";
+import { PageShell } from "@/components/layout/PageShell";
+import { ScrollInkReveal } from "@/components/motion/ScrollInkReveal";
+import { InkStroke } from "@/components/motion/InkStroke";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 
-export default async function VideosPage({ params }: { params: Promise<{ lang: string }> }) {
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  if (!isLang(lang)) notFound();
-  const dict = getDict(lang as Lang);
-  const videos = await getVideos();
-  const isZh = lang === "zh";
+  if (!isLocale(lang)) return {};
+  const content = getVideos(lang as Locale);
+  return { title: content.title };
+}
+
+export default async function VideosPage({ params }: Props) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const locale = lang as Locale;
+  const content = getVideos(locale);
+  const dict = getDictionary(locale);
 
   return (
-    <main className="mx-auto max-w-7xl px-6 pt-32 pb-24 text-ink">
-      <RevealOnScroll>
-        <h1 className="mb-16 text-center font-masthead text-[var(--fs-pull)] font-semibold">
-          {dict.nav.videos}
-        </h1>
-      </RevealOnScroll>
+    <PageShell eyebrow={content.eyebrow} title={content.title} intro={content.intro}>
+      <p className="mt-2 max-w-3xl text-sm text-ink-mute">{content.placeholderNotice}</p>
 
-      {videos.length === 0 ? (
-        <RevealOnScroll>
-          <p className="text-center text-ink-shade">
-            {isZh ? "影片即將上線。" : "Videos coming soon."}
-          </p>
-        </RevealOnScroll>
-      ) : (
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {videos.map((v, i) => (
-            <RevealOnScroll key={v.id} yFrom={28} delay={i * 0.05}>
-              <article className="rounded border border-ink-bleed bg-paper-rice p-5">
-                <h3 className="mb-2 font-masthead text-[1.15rem] font-medium">
-                  {isZh ? v.titleZh : v.titleEn}
-                </h3>
-                {v.url && (
-                  <a href={v.url} target="_blank" rel="noopener noreferrer" className="font-mono text-[var(--fs-caption)] uppercase tracking-[0.18em] text-ink-shade hover:text-ink">
-                    {isZh ? "觀看" : "Watch"} →
-                  </a>
-                )}
-              </article>
-            </RevealOnScroll>
-          ))}
-        </div>
-      )}
-    </main>
+      <div className="mt-16 grid gap-12 md:grid-cols-2">
+        {content.videos.map((v, i) => (
+          <ScrollInkReveal key={v.slug} delay={i * 0.06}>
+            <article className="group">
+              <div className="tile-frame paper-grain aspect-video relative flex items-center justify-center">
+                <svg viewBox="0 0 200 100" className="absolute inset-0 w-full h-full text-ink">
+                  <InkStroke
+                    d={`M 10 50 Q 50 ${20 + i * 6} 100 50 T 190 50`}
+                    duration={2.8}
+                    length={320}
+                    delay={0.3}
+                  />
+                </svg>
+                <span className="relative inline-flex items-center justify-center w-16 h-16 rounded-full border border-ink/40 bg-paper-soft/90 backdrop-blur-sm transition-transform group-hover:scale-105">
+                  <svg width="18" height="20" viewBox="0 0 18 20" className="ml-1" aria-hidden>
+                    <path d="M 0 0 L 18 10 L 0 20 Z" fill="currentColor" />
+                  </svg>
+                </span>
+                <span className="absolute bottom-3 right-4 text-xs text-ink-mute font-mono tracking-wider">
+                  {v.duration}
+                </span>
+              </div>
+              <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-ink-mute">
+                {v.pattern}
+              </p>
+              <h3 className="mt-2 text-xl md:text-2xl tracking-wide">{v.title}</h3>
+              <p className="mt-3 text-ink-soft leading-relaxed">{v.note}</p>
+              <p className="mt-3 text-xs text-ink-faint">{dict.common.comingSoon}</p>
+            </article>
+          </ScrollInkReveal>
+        ))}
+      </div>
+    </PageShell>
   );
 }

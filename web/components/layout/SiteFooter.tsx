@@ -1,27 +1,51 @@
 import Link from "next/link";
-import { t, type Dict, type Lang } from "@/lib/i18n";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import type { Locale } from "@/lib/i18n/config";
+import { localePath } from "@/lib/utils";
+import { InkBrushDivider } from "@/components/motion/InkBrushDivider";
 
-export default function SiteFooter({ lang, dict }: { lang: Lang; dict: Dict }) {
+type Props = {
+  locale: Locale;
+};
+
+export function SiteFooter({ locale }: Props) {
+  const dict = getDictionary(locale);
+  const year = new Date().getFullYear();
+
+  const links: { href: string; label: string }[] = [
+    { href: localePath(locale, "/history"), label: dict.nav.history },
+    { href: localePath(locale, "/masters"), label: dict.nav.masters },
+    { href: localePath(locale, "/method"), label: dict.nav.method },
+    { href: localePath(locale, "/mindset"), label: dict.nav.mindset },
+    { href: localePath(locale, "/interactive"), label: dict.nav.interactive },
+    { href: localePath(locale, "/gallery"), label: dict.nav.gallery },
+    { href: localePath(locale, "/videos"), label: dict.nav.videos },
+    { href: localePath(locale, "/about"), label: dict.nav.about },
+  ];
+
   return (
-    <footer className="relative z-10 border-t border-ink-bleed bg-paper px-6 pt-16 pb-12 text-ink mt-16">
-      <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-8">
-        <div>
-          <p className="font-masthead text-[1.1rem] tracking-[0.04em]">Zentangle Chou</p>
-          <p className="mt-1 font-script text-ink-warm" style={{ fontFamily: "var(--font-display-script)" }}>
-            {t(dict, "site.tagline")}
-          </p>
+    <footer className="mt-32">
+      <div className="container-paper">
+        <InkBrushDivider />
+      </div>
+      <div className="container-paper py-16 grid gap-10 md:grid-cols-[1fr_auto]">
+        <div className="max-w-md space-y-3">
+          <p className="eyebrow">Zentangle Zhou</p>
+          <p className="text-lg leading-relaxed text-ink-soft">{dict.common.tagline}</p>
+          <p className="text-sm text-ink-mute">{dict.footer.pseudonymNote}</p>
         </div>
-        <nav aria-label="footer" className="flex gap-6 font-mono text-[var(--fs-caption)] uppercase tracking-[0.2em] text-ink-shade">
-          <Link href={`/${lang}/about`} className="hover:text-ink">{t(dict, "footer.about")}</Link>
-          <Link href={`/${lang}/contact`} className="hover:text-ink">{t(dict, "footer.contact")}</Link>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink">
-            {t(dict, "footer.instagram")}
-          </a>
+        <nav className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm" aria-label="Footer">
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} className="nav-link">
+              {l.label}
+            </Link>
+          ))}
         </nav>
       </div>
-      <p className="mx-auto mt-10 max-w-7xl text-center font-mono text-[var(--fs-caption)] uppercase tracking-[0.2em] text-ink-shade">
-        {t(dict, "footer.rights")}
-      </p>
+      <div className="container-paper pb-10 text-xs text-ink-mute flex flex-wrap justify-between gap-3">
+        <span>© {year} Zentangle Zhou — {dict.footer.rights}.</span>
+        <span>Zentangle® is a registered trademark of Zentangle, Inc.</span>
+      </div>
     </footer>
   );
 }
