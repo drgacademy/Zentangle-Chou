@@ -1,160 +1,202 @@
 @import "tailwindcss";
 
-/*
- * Zentangle Chou — design tokens
- *
- * Cream paper × sumi ink × graphite × red stamp.
- * Light is default; .dark on <html> swaps to a moonlit night palette.
- */
+@theme {
+  --color-paper: #f5efe4;
+  --color-paper-deep: #ece4d3;
+  --color-paper-soft: #faf6ed;
+  --color-ink: #181513;
+  --color-ink-soft: #2b2520;
+  --color-ink-mute: #6a5e51;
+  --color-ink-faint: #b8ac99;
+  --color-rouge: #8a3c2c;
+  --color-sumi: #0c0a09;
 
-:root {
-  /* paper variants */
-  --paper-bg: #faf7f1;
-  --paper-rice: #fcfaf4;
-  --paper-cream: #f6efdf;
-  --paper-tea: #efe6d2;
-  --paper-tile: #f0e4c8;
-  --paper-night: #1b1a18;
-  --bg-spotlight: linear-gradient(135deg, #2a1f15 0%, #1a1410 50%, #0f0a07 100%);
-  --accent-warm: linear-gradient(90deg, #d4a574, #f0e4c8);
+  --font-serif-zh: var(--font-serif-zh-loaded), "Noto Serif TC", "Source Han Serif TC", "Songti TC", "PMingLiU", serif;
+  --font-serif-en: var(--font-serif-en-loaded), "EB Garamond", "Iowan Old Style", Georgia, serif;
+  --font-sans-zh: var(--font-sans-zh-loaded), "Noto Sans TC", "PingFang TC", "Heiti TC", system-ui, sans-serif;
 
-  /* ink variants */
-  --ink: #1a1a1a;
-  --ink-warm: #2a1f12;
-  --ink-cool: #1f2024;
-  --ink-pencil: #c8c2b5;
-  --ink-shade: rgba(26, 26, 26, 0.55);
-  --ink-bleed: rgba(26, 26, 26, 0.18);
-  --ink-red-stamp: #b23a38;
+  --radius-tile: 2px;
 
-  /* sepia & gold accents */
-  --sepia-300: #d8c39a;
-  --sepia-500: #b89668;
-  --sepia-700: #7a5a32;
-  --color-accent: #c9a961;
-  --gold-300: #e8d5a8;
-  --gold-500: #c9a961;
-  --gold-700: #8a7434;
-
-  /* type scale */
-  --fs-caption: 0.75rem;
-  --fs-body: 1.0625rem;
-  --fs-lede: 1.25rem;
-  --fs-h3: 1.75rem;
-  --fs-h2: 2.5rem;
-  --fs-h1: 4rem;
-  --fs-display: clamp(4rem, 12vw, 9rem);
-  --fs-pull: clamp(2rem, 5vw, 3.5rem);
-
-  /* spacing */
-  --space-margin-l: clamp(2rem, 10vw, 12rem);
-  --space-margin-r: clamp(2rem, 14vw, 18rem);
-
-  /* motion */
-  --breath-cycle: 8s;
-  --ease-breath: cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  --breath-phase: 0;
-
-  /* base for legacy Tailwind tokens */
-  --background: var(--paper-bg);
-  --foreground: var(--ink);
+  --shadow-tile:
+    0 1px 0 rgba(24, 21, 19, 0.05),
+    0 8px 30px -10px rgba(24, 21, 19, 0.18);
 }
 
-html.dark {
-  --paper-bg: #1b1a18;
-  --paper-rice: #1f1d1a;
-  --paper-cream: #25211c;
-  --paper-tea: #2a251e;
-  --paper-tile: #2a251e;
-  --paper-night: #0f0e0c;
+@layer base {
+  :root {
+    color-scheme: light;
+  }
 
-  --ink: #f2efe9;
-  --ink-warm: #ece4d3;
-  --ink-cool: #f5f3ee;
-  --ink-pencil: #6b665b;
-  --ink-shade: rgba(242, 239, 233, 0.55);
-  --ink-bleed: rgba(242, 239, 233, 0.18);
-  --ink-red-stamp: #d26462;
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-feature-settings: "kern", "liga", "calt", "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-  --color-accent: #e8d5a8;
-  --gold-300: #efe1bf;
-  --gold-500: #e8d5a8;
-  --gold-700: #c9a961;
+  body {
+    font-family: var(--font-serif-zh);
+    background:
+      radial-gradient(1200px 600px at 80% -20%, rgba(138, 60, 44, 0.04), transparent 60%),
+      radial-gradient(900px 500px at -20% 110%, rgba(24, 21, 19, 0.05), transparent 60%),
+      var(--color-paper);
+    min-height: 100dvh;
+    letter-spacing: 0.01em;
+    line-height: 1.75;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper-soft);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif-zh);
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+  }
+
+  :lang(en) {
+    font-family: var(--font-serif-en);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid color-mix(in oklab, var(--color-ink-faint), transparent 40%);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
-@theme inline {
-  --color-paper: var(--paper-bg);
-  --color-paper-rice: var(--paper-rice);
-  --color-paper-cream: var(--paper-cream);
-  --color-paper-tea: var(--paper-tea);
-  --color-paper-tile: var(--paper-tile);
-  --color-paper-night: var(--paper-night);
-  --color-ink: var(--ink);
-  --color-ink-warm: var(--ink-warm);
-  --color-ink-cool: var(--ink-cool);
-  --color-ink-pencil: var(--ink-pencil);
-  --color-ink-shade: var(--ink-shade);
-  --color-ink-bleed: var(--ink-bleed);
-  --color-ink-stamp: var(--ink-red-stamp);
-  --color-gold-300: var(--gold-300);
-  --color-gold-500: var(--gold-500);
-  --color-gold-700: var(--gold-700);
-  --color-sepia-300: var(--sepia-300);
-  --color-sepia-500: var(--sepia-500);
-  --color-sepia-700: var(--sepia-700);
-  --font-masthead: var(--font-masthead-serif);
-  --font-body: var(--font-body-serif);
-  --font-mono: var(--font-mono-stack);
-  --font-script: var(--font-display-script);
+@layer components {
+  .container-paper {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    max-width: 78rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-paper {
+      padding-inline: 3rem;
+    }
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-size: 0.72rem;
+    color: var(--color-ink-mute);
+    font-family: var(--font-sans-zh);
+    font-weight: 500;
+  }
+
+  .display {
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 1.04;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .lede {
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    color: var(--color-ink-soft);
+    max-width: 38rem;
+  }
+
+  .quiet {
+    color: var(--color-ink-mute);
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-ink), transparent 50%) 25%,
+      color-mix(in oklab, var(--color-ink), transparent 50%) 75%,
+      transparent
+    );
+  }
+
+  /* Ink stroke animation primitive */
+  .ink-path {
+    stroke-dasharray: var(--ink-len, 1000);
+    stroke-dashoffset: var(--ink-len, 1000);
+    animation: ink-draw var(--ink-duration, 2.2s) cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    animation-delay: var(--ink-delay, 0s);
+  }
+
+  @keyframes ink-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .ink-path-loop {
+    stroke-dasharray: var(--ink-len, 1000);
+    stroke-dashoffset: var(--ink-len, 1000);
+    animation: ink-draw var(--ink-duration, 2.4s) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    animation-delay: var(--ink-delay, 0s);
+  }
+
+  /* Hand-drawn frame (tile look) */
+  .tile-frame {
+    position: relative;
+    background: var(--color-paper-soft);
+    box-shadow: var(--shadow-tile);
+    border-radius: var(--radius-tile);
+  }
+
+  .tile-frame::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid color-mix(in oklab, var(--color-ink), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Subtle paper grain */
+  .paper-grain {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .paper-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.09  0 0 0 0 0.08  0 0 0 0 0.07  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-link {
+    color: var(--color-ink-mute);
+    transition: color 0.2s ease;
+  }
+
+  .nav-link[data-active="true"],
+  .nav-link:hover {
+    color: var(--color-ink);
+  }
+
+  .nav-link[data-active="true"] {
+    text-decoration: underline;
+    text-underline-offset: 0.5em;
+    text-decoration-thickness: 1px;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-body-serif), "Noto Serif TC", Georgia, serif;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: inherit;
-}
-
-/* Scrollbar — keep it subtle so the paper texture remains the visual focus. */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--ink-bleed);
-  border-radius: 999px;
-}
-
-/* When reduced motion is on, neutralise transition/animation entirely. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .ink-path,
+  .ink-path-loop {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
   }
 }

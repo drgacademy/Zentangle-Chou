@@ -2,27 +2,35 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LANGUAGES, type Lang } from "@/lib/i18n";
+import { locales, type Locale } from "@/lib/i18n/config";
+import { cn } from "@/lib/utils";
 
-export default function LanguageSwitcher({ lang }: { lang: Lang }) {
-  const pathname = usePathname();
+type Props = {
+  currentLocale: Locale;
+};
+
+export function LanguageSwitcher({ currentLocale }: Props) {
+  const pathname = usePathname() ?? "/";
+  const segments = pathname.split("/").filter(Boolean);
+  const rest = segments.slice(1).join("/");
+
   return (
-    <div className="flex items-center gap-1 font-mono text-[var(--fs-caption)] uppercase tracking-[0.18em]">
-      {LANGUAGES.map((l) => {
-        const target = pathname.replace(/^\/(zh|en)/, `/${l}`);
+    <div className="flex items-center gap-3 text-xs uppercase tracking-[0.32em]">
+      {locales.map((loc, idx) => {
+        const href = rest ? `/${loc}/${rest}` : `/${loc}`;
+        const active = loc === currentLocale;
         return (
-          <Link
-            key={l}
-            href={target || `/${l}`}
-            aria-current={l === lang ? "page" : undefined}
-            className={
-              l === lang
-                ? "px-1.5 underline underline-offset-4"
-                : "px-1.5 opacity-60 hover:opacity-100"
-            }
-          >
-            {l}
-          </Link>
+          <span key={loc} className="flex items-center gap-3">
+            {idx > 0 && <span aria-hidden className="text-ink-faint">/</span>}
+            <Link
+              href={href}
+              className={cn("nav-link", active && "text-ink")}
+              data-active={active}
+              aria-current={active ? "true" : undefined}
+            >
+              {loc === "zh" ? "中" : "EN"}
+            </Link>
+          </span>
         );
       })}
     </div>

@@ -1,64 +1,48 @@
 import type { Metadata } from "next";
-import { Crimson_Pro, Noto_Serif_TC, JetBrains_Mono, Caveat_Brush } from "next/font/google";
-import PaperBackground from "@/components/atmosphere/PaperBackground";
-import BreathingDriver from "@/components/atmosphere/BreathingDriver";
+import type { ReactNode } from "react";
+import { Noto_Serif_TC, Noto_Sans_TC, EB_Garamond } from "next/font/google";
 import "./globals.css";
 
-const masthead = Crimson_Pro({
-  variable: "--font-masthead-serif",
+const serifTC = Noto_Serif_TC({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-serif-zh-loaded",
   display: "swap",
 });
 
-const body = Noto_Serif_TC({
-  variable: "--font-body-serif",
+const sansTC = Noto_Sans_TC({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500"],
+  variable: "--font-sans-zh-loaded",
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
-  variable: "--font-mono-stack",
+const garamond = EB_Garamond({
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-const script = Caveat_Brush({
-  variable: "--font-display-script",
-  subsets: ["latin"],
-  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-serif-en-loaded",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Zentangle Chou",
-  description: "One stroke. One breath. — A Zentangle artist portfolio.",
-  metadataBase: new URL("https://zentangle-chou.vercel.app"),
+  title: {
+    default: "Zentangle Zhou — 禪繞畫的安靜時刻",
+    template: "%s · Zentangle Zhou",
+  },
+  description:
+    "Zentangle Zhou — 一個獻給禪繞畫的個人網站：歷史、名家、畫法、心法，與作畫的安靜時刻。",
+  metadataBase: new URL("https://zentangle-zhou.example"),
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="zh-Hant"
-      className={`${masthead.variable} ${body.variable} ${mono.variable} ${script.variable}`}
       suppressHydrationWarning
+      className={`${serifTC.variable} ${sansTC.variable} ${garamond.variable}`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`,
-          }}
-        />
-      </head>
-      <body className="relative min-h-screen">
-        <PaperBackground />
-        <BreathingDriver />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,102 +1,63 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDict, isLang, type Lang } from "@/lib/i18n";
-import RevealOnScroll from "@/components/motion/RevealOnScroll";
-import SketchBorder from "@/components/motion/SketchBorder";
-import EnsoStamp from "@/components/motion/EnsoStamp";
+import { isLocale, type Locale } from "@/lib/i18n/config";
+import { getAbout } from "@/content/about";
+import { PageShell } from "@/components/layout/PageShell";
+import { ScrollInkReveal } from "@/components/motion/ScrollInkReveal";
+import { HandDrawnFrame } from "@/components/motion/HandDrawnFrame";
 
-const tools = [
-  { zh: "紙", en: "Paper", descZh: "3.5 × 3.5 英吋，奶油色純棉。沒有純白。", descEn: "3.5 × 3.5 in. cream cotton vellum. Never pure white." },
-  { zh: "墨筆", en: "Pen", descZh: "Sakura Pigma Micron 01／05，純黑、單線寬。", descEn: "Sakura Pigma Micron 01/05. Pure black, monoline." },
-  { zh: "鉛筆", en: "Pencil", descZh: "2B 或 4B，畫邊框、字串、最後的陰影。", descEn: "2B or 4B for borders, strings, and the final shading." },
-  { zh: "抹擦筆", en: "Tortillon", descZh: "紙捲擦筆，把鉛筆暈開成柔和漸層。", descEn: "Paper stump that smudges graphite into soft gradients." },
-];
+type Props = { params: Promise<{ lang: string }> };
 
-const influences = [
-  { quoteZh: "禪繞畫不是畫技，是一種專注的儀式。", quoteEn: "Zentangle is not a drawing skill — it is a ritual of presence.", attr: "Maria Thomas & Rick Roberts" },
-  { quoteZh: "沒有錯誤，只有契機。", quoteEn: "There are no mistakes, only opportunities.", attr: "Zentangle Method" },
-  { quoteZh: "一筆一畫，一切都成為可能。", quoteEn: "Anything is possible, one stroke at a time.", attr: "Zentangle Method" },
-];
-
-export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  if (!isLang(lang)) notFound();
-  const dict = getDict(lang as Lang);
-  const isZh = lang === "zh";
+  if (!isLocale(lang)) return {};
+  const content = getAbout(lang as Locale);
+  return { title: content.title };
+}
+
+export default async function AboutPage({ params }: Props) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const content = getAbout(lang as Locale);
 
   return (
-    <main className="mx-auto max-w-7xl px-6 pt-32 pb-24 text-ink">
-      <section className="mb-24">
-        <RevealOnScroll>
-          <div className="mx-auto grid max-w-4xl items-center gap-10 sm:grid-cols-[auto_1fr]">
-            <EnsoStamp size={160} seed="about-enso" delay={0.2} />
-            <div>
-              <p className="mb-2 font-mono text-[var(--fs-caption)] uppercase tracking-[0.32em] text-ink-shade">
-                {dict.about.title}
-              </p>
-              <p className="mb-5 font-masthead text-[var(--fs-h2)] font-medium leading-tight">
-                {dict.about.lede}
-              </p>
-              <p className="text-ink-shade leading-relaxed">{dict.about.body}</p>
+    <PageShell eyebrow={content.eyebrow} title={content.title}>
+      <div className="grid gap-16 md:gap-20 md:grid-cols-[300px_1fr] items-start max-w-5xl">
+        <ScrollInkReveal>
+          <HandDrawnFrame ratio="tile">
+            <div className="text-center">
+              <p className="eyebrow mb-3">{content.penName}</p>
+              <p className="font-serif text-5xl md:text-6xl tracking-[0.08em]">ZZ</p>
+              <p className="mt-4 text-sm text-ink-mute">Zentangle Zhou</p>
             </div>
-          </div>
-        </RevealOnScroll>
-      </section>
+          </HandDrawnFrame>
+        </ScrollInkReveal>
 
-      <section className="mb-24">
-        <RevealOnScroll>
-          <h2 className="mb-10 text-center font-masthead text-[var(--fs-h2)] font-medium">
-            {dict.about.tools}
-          </h2>
-        </RevealOnScroll>
-        <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {tools.map((tool, i) => (
-            <RevealOnScroll key={tool.en} yFrom={32} duration={0.6} delay={i * 0.05}>
-              <SketchBorder seed={`tool-${i}`} pad={20} className="min-h-[180px] p-8">
-                <h3 className="mb-2 flex items-baseline gap-2">
-                  <span className="font-masthead text-[1.4rem] font-medium">{tool.zh}</span>
-                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-shade">
-                    {tool.en}
-                  </span>
-                </h3>
-                <p className="text-ink-shade leading-relaxed">{isZh ? tool.descZh : tool.descEn}</p>
-              </SketchBorder>
-            </RevealOnScroll>
+        <div className="space-y-8">
+          {content.body.map((para, i) => (
+            <ScrollInkReveal key={i} delay={i * 0.05}>
+              <p className="text-lg leading-relaxed text-ink-soft">{para}</p>
+            </ScrollInkReveal>
           ))}
-        </div>
-      </section>
 
-      <section>
-        <RevealOnScroll>
-          <h2 className="mb-10 text-center font-masthead text-[var(--fs-h2)] font-medium">
-            {dict.about.influences}
-          </h2>
-        </RevealOnScroll>
-        <div className="mx-auto grid max-w-2xl gap-10">
-          {influences.map((q, i) => (
-            <RevealOnScroll key={q.attr} yFrom={20} delay={i * 0.05}>
-              <blockquote
-                className={[
-                  "text-center",
-                  i > 0 ? "border-t border-ink-bleed pt-8" : "",
-                ].join(" ")}
-              >
-                <p
-                  className="mb-4 leading-relaxed text-ink-warm"
-                  style={{
-                    fontFamily: "var(--font-display-script)",
-                    fontSize: "clamp(1.5rem, 3vw, 2rem)",
-                  }}
-                >
-                  {isZh ? q.quoteZh : q.quoteEn}
-                </p>
-                <footer className="font-mono text-[var(--fs-caption)] uppercase tracking-[0.18em] text-ink-shade">
-                  — {q.attr}
-                </footer>
-              </blockquote>
-            </RevealOnScroll>
-          ))}
+          <ScrollInkReveal>
+            <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-ink-faint/60 pt-8">
+              {content.practice.map((p) => (
+                <div key={p.label}>
+                  <dt className="eyebrow">{p.label}</dt>
+                  <dd className="mt-2 text-lg">{p.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </ScrollInkReveal>
         </div>
-      </section>
-    </main>
+      </div>
+
+      <ScrollInkReveal>
+        <p className="mt-24 md:mt-32 text-center text-2xl md:text-4xl tracking-wide max-w-3xl mx-auto leading-[1.5]">
+          “{content.pullQuote}”
+        </p>
+      </ScrollInkReveal>
+    </PageShell>
   );
 }
