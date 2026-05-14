@@ -78,7 +78,7 @@ export function InkPad({ className, locale }: Props) {
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <div className="tile-frame paper-grain relative aspect-square">
+      <div className="glass glass-sweep relative aspect-square">
         <svg
           ref={svgRef}
           viewBox="0 0 100 100"

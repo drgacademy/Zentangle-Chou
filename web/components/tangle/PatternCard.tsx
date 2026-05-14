@@ -17,7 +17,7 @@ export function PatternCard({ pattern, className }: Props) {
   return (
     <article
       className={cn(
-        "group relative tile-frame paper-grain p-5 aspect-[3/4] flex flex-col",
+        "group glass-card glass-sweep p-5 aspect-[3/4] flex flex-col",
         className
       )}
       onMouseEnter={restart}

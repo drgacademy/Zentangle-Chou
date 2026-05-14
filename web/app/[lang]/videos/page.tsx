@@ -31,7 +31,7 @@ export default async function VideosPage({ params }: Props) {
         {content.videos.map((v, i) => (
           <ScrollInkReveal key={v.slug} delay={i * 0.06}>
             <article className="group">
-              <div className="tile-frame paper-grain aspect-video relative flex items-center justify-center">
+              <div className="glass glass-sweep aspect-video relative flex items-center justify-center">
                 <svg viewBox="0 0 200 100" className="absolute inset-0 w-full h-full text-ink">
                   <InkStroke
                     d={`M 10 50 Q 50 ${20 + i * 6} 100 50 T 190 50`}
@@ -40,7 +40,7 @@ export default async function VideosPage({ params }: Props) {
                     delay={0.3}
                   />
                 </svg>
-                <span className="relative inline-flex items-center justify-center w-16 h-16 rounded-full border border-ink/40 bg-paper-soft/90 backdrop-blur-sm transition-transform group-hover:scale-105">
+                <span className="glass relative inline-flex items-center justify-center w-16 h-16 rounded-full transition-transform group-hover:scale-105">
                   <svg width="18" height="20" viewBox="0 0 18 20" className="ml-1" aria-hidden>
                     <path d="M 0 0 L 18 10 L 0 20 Z" fill="currentColor" />
                   </svg>

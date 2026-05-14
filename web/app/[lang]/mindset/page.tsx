@@ -33,10 +33,16 @@ export default async function MindsetPage({ params }: Props) {
       </div>
 
       <ScrollInkReveal>
-        <section className="mt-28 md:mt-36 max-w-3xl mx-auto tile-frame paper-grain p-10 md:p-14">
-          <p className="eyebrow">Meditation</p>
-          <h2 className="mt-3 text-3xl md:text-4xl tracking-wide">{content.meditation.title}</h2>
-          <p className="mt-6 leading-relaxed text-lg text-ink-soft">{content.meditation.body}</p>
+        <section className="relative mt-28 md:mt-36 max-w-3xl mx-auto">
+          <div className="glass glass-sweep p-10 md:p-14">
+            <p className="eyebrow">Meditation</p>
+            <h2 className="mt-3 text-3xl md:text-4xl tracking-wide">
+              {content.meditation.title}
+            </h2>
+            <p className="mt-6 leading-relaxed text-lg text-ink-soft">
+              {content.meditation.body}
+            </p>
+          </div>
         </section>
       </ScrollInkReveal>
 
